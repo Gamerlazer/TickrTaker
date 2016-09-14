@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
-import AuctionEntry from './Listing.jsx';
+import {Link} from 'react-router';
+import Listing from './Listing.jsx';
+import PostItem from './PostItem.jsx';
+import Filters from './Filters.jsx'
 
 export default class Auction extends Component {
   constructor(props) {
@@ -45,31 +48,34 @@ export default class Auction extends Component {
   }
 
   render () {
+    var postItemUrl = '/postitem'
     return (
-      <div className="row">
-        <div className="col-xs-12">
-          <div className="col-xs-12">
-            <div className="auction-header col-xs-12">
-              <h3 className="col-xs-4 pull-xs-left">Current Auctions</h3>
-              <div className="col-xs-8 pull-xs-right">
-                <form className="search-form" onSubmit={this.grabAuctions.bind(this)}>
-                  <input id="search" className="col-xs-6" />
-                  <div className="col-xs-6 search-text">Search:</div>
-                </form>
-              </div>
-            </div>
+      <div className="home container">
+        <div className="row">
+          <div className="col-sm-4">
+            <Link className='btn btn-primary' to={postItemUrl}>
+              Post Item
+            </Link>
           </div>
-        <div className="auction-listings col-xs-12">
-          {
-            this.state.entrys.map((entry, i) => {
-              console.log(entry);
-              return (<AuctionEntry key={i} parity={i % 2} item={entry} auth={this.props.auth} />);
-            })
-          }
+          <div className="col-sm-8 pull-xs-right">
+            <form className="search-form" onSubmit={this.grabAuctions.bind(this)}>
+              <input id="search" className="col-xs-6" />
+              <div className="col-xs-6 search-text">Search:</div>
+            </form>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-3">
+            <Filters />
+          </div>
+          <div className="auction-listings col-sm-9">
+            {
+              this.state.entrys.map((entry, i) =>(<Listing key={i} item={entry} auth = {this.props.auth} />))
+            }
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
