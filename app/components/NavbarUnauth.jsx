@@ -12,7 +12,7 @@ export default class Navbar1 extends Component {
         <Link className="navbar-brand" id="brand-name" to="/"> Tickr </Link>
         <ul className="nav navbar-nav">
           <li className="nav-item ">
-            <Link className="nav-link" to="/auctions">Auctions </Link>
+            <Link className="nav-link" to="/home">Auctions </Link>
           </li>
           <li className="nav-item">
             <a className="nav-link" href="/auth/facebook">Facebook</a>

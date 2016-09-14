@@ -12,19 +12,16 @@ export default class Navbar2 extends Component {
         <div className="collapse navbar-toggleable-md col-xs-12 col-lg-10" id="nav-content">
           <ul className="nav navbar-nav">
             <li className="nav-item col-md-2 col-sm-12 ">
-              <Link className="nav-link" to="/auctions">Auctions</Link>
+              <Link className="nav-link" to="/home">Home</Link>
             </li>
             <li className="nav-item col-md-2 col-sm-12 ">
-              <Link className="nav-link " to="/dashboard">Dashboard</Link>
+              <Link className="nav-link " to="/mybids">My Bids</Link>
             </li>
             <li className="nav-item col-md-2 col-sm-12 ">
-              <Link className="nav-link " to="/history">History</Link>
+              <Link className="nav-link" to="/postitem">Post Item</Link>
             </li>
             <li className="nav-item col-md-2 col-sm-12 ">
-              <Link className="nav-link" to="/makeauction">Post Item</Link>
-            </li>
-            <li className="nav-item col-md-2 col-sm-12 ">
-              <Link className="nav-link" to="/usersetting">Settings</Link>
+              <Link className="nav-link" to="/account">Account</Link>
             </li>
             <li className="nav-item col-md-2 col-sm-12 ">
               <a className="nav-link" href="/logout">Logout</a>

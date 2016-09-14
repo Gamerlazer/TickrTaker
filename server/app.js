@@ -82,7 +82,7 @@ app.get('/auth/facebook', passport.authenticate('facebook', {
 // authentication has failed.
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', {
-    successRedirect: '/dashboard', 
+    successRedirect: '/home', 
     failureRedirect: '/'
   })
 );
