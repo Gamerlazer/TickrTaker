@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router';
-import BidNow from './BidNow'
+import BidNow from './BidNow.jsx'
 
 // This should be redundant
 import {calcPrice, calcTime} from '../helpers.js';
