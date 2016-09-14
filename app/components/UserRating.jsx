@@ -1,31 +1,28 @@
 import React, {Component} from 'react';
-import ReactStars from 'react-stars'
+import Stars from 'react-stars'
 
 export default class UserRating extends Component {
   constructor(props) {
     super(props);
+
+    // editable = undefined === editable
+    // editable = false === Not editable
+
     this.state = {
-      // Setting testing as 4
-      rating: 4,
-      editable: true
+      rating: 2.0,
+      editable: undefined
     }
-  }
 
-  updateRating (newRating) {
-    console.log('this happens ')
-    this.setState({
-      rating: newRating
-    });
-  }
-
-  ratingChanged (newRating) {
-    console.log(newRating)
-  }
-
-  handleRatingClick (e, data) {
-    console.log(e, 'This is e');
-    console.log(data, 'This is data')
-    alert('You left a ' + data.rating + ' star rating for ' + data.caption);
+    this.starSettings = {
+      size: 40,
+      count: 5,
+      value: this.state.rating,
+      edit: this.state.editable,  
+      onChange: newValue => {
+        this.starSettings.value = newValue;
+        this.setState({ rating: parseFloat(newValue) })
+      }
+    }
   }
 
   render () {
@@ -33,10 +30,11 @@ export default class UserRating extends Component {
       <div>
         <div className="star-rating"></div>
         <div>My current rating: {this.state.rating} </div>
-        <ReactStars count={5} onChange={this.ratingChanged} size={24} color2={'#ffd700'} />
+        <Stars  {...this.starSettings} />
       </div>
     )
   }
 }
+
 
 
