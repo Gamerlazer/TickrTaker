@@ -11,7 +11,6 @@ export default class BidNow extends Component {
     // need to insert value="{this.props.minbid} into input"
     return (
       <div>
-        <p>Bid Now</p>
         <div className="row">
           <input type="number" />
           <Link className='btn btn-primary' to={id}>
