@@ -1,26 +1,26 @@
 import React, {Component} from 'react';       //  Import react and react-router components
 import ReactDOM from 'react-dom';
 import {Router, Route, Link, hashHistory, IndexRoute, browserHistory} from 'react-router';
-import App from './components/app.jsx';
-import Main from './components/main.jsx';
-import Auctions from './components/auctions.jsx';
+import App from './components/App.jsx';
+import Layout from './components/Layout.jsx';
+import Home from './components/Home.jsx';
 import NotFound from './components/notfound.jsx';
-import Dashboard from './components/dashboard.jsx';
-import AddAuctionItem from './components/addauctionitem.jsx';
-import AuctionItem from './components/auctionitem.jsx';
-import UserSetting from './components/usersetting.jsx';
+import MyBids from './components/MyBids.jsx';
+import PostItem from './components/PostItem.jsx';
+import ProductDetail from './components/ProductDetail.jsx';
+import Account from './components/Account.jsx';
 import History from './components/history.jsx';
 
 
 ReactDOM.render((                             //  Set up routes to navigate between different pages
-  <Router history={browserHistory}>     
+  <Router history={browserHistory}>
     <Route path='/' component={App} >
-      <IndexRoute component={Main} />
-      <Route path='/auctions' component={Auctions} />
-      <Route path='/item/:id' component={AuctionItem}/>
-      <Route path='/dashboard' component= {Dashboard} />
-      <Route path='/makeauction' component = {AddAuctionItem}/>
-      <Route path='/usersetting' component={UserSetting} />
+      <IndexRoute component={Layout} />
+      <Route path='/home' component={Home} />
+      <Route path='/item/:id' component={ProductDetail}/>
+      <Route path='/dashboard' component= {MyBids} />
+      <Route path='/postitem' component = {PostItem}/>
+      <Route path='/account' component={Account} />
       <Route path='/history' component={History} />
       <Route path='*' component={NotFound} />
     </Route>
