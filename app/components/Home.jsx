@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import AuctionEntry from './Listing.jsx';
+import Listing from './Listing.jsx';
 
 export default class Auction extends Component {
   constructor(props) {
