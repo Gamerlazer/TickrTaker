@@ -6264,10 +6264,6 @@ body {
   background-color: #E6F3F6;
 }
 
-.auction-listings div {
-  padding-left: 0px;
-  padding-right: 0px;
-}
 .auction-entry-odd {
   background-color: #FEFEFE;
 }
@@ -6435,9 +6431,6 @@ body {
 }
 
 .auction-listings {
-  justify-content: space-around;
-  display: flex;
-  flex-wrap: wrap;
 }
 
 
@@ -6457,7 +6450,7 @@ body {
   background-color: transparent;
 }
 
-video { 
+video {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -6469,14 +6462,14 @@ video {
 }
 
 .video-container {
-  min-width: 100%; 
-  min-height: 100%; 
-  
+  min-width: 100%;
+  min-height: 100%;
+
   /* Setting width & height to auto prevents the browser from stretching or squishing the video */
   width: auto;
   height: auto;
   overflow: hidden;
-  
+
   /* Center the video */
   position: absolute;
   top: 50%;

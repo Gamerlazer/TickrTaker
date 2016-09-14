@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import WinningBid from './winningBid.jsx';
-import LosingBid from './losingBid.jsx';
-import SaleItem from './saleItem.jsx';
+import Listing from './Listing.jsx';
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -33,7 +31,7 @@ export default class Dashboard extends Component {
             console.log(err);
           }
         });
- 
+
         $.ajax({          // Retrieve data to show user's winnig and losingg bid on dashboard page
           method: 'POST',
           url: 'api/bids',
@@ -50,8 +48,8 @@ export default class Dashboard extends Component {
               }
             });
             //console.log('bids are', winningBids, losingBids);
-            context.setState({ 
-              'itemsWinningBidOn': winningBids, 
+            context.setState({
+              'itemsWinningBidOn': winningBids,
               'itemsLosingBidOn': losingBids
             });
             context.render();
