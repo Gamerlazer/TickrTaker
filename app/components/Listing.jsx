@@ -80,7 +80,6 @@ export default class Listing extends Component {
               </div>
             </div>
             <div className="col-md-5">
-            //show bid button if user is authorized.
               { this.props.auth() ? <BidNow item={this.props.item} /> : <div></div> }
             </div>
           </div>
