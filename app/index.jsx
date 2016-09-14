@@ -18,7 +18,7 @@ ReactDOM.render((                             //  Set up routes to navigate betw
       <IndexRoute component={Landing} />
       <Route path='/home' component={Home} />
       <Route path='/item/:id' component={ProductDetail}/>
-      <Route path='/dashboard' component= {MyBids} />
+      <Route path='/mybids' component= {MyBids} />
       <Route path='/postitem' component = {PostItem} />
       <Route path='/account' component={Account} />
       <Route path='*' component={NotFound} />

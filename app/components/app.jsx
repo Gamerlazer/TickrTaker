@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import Navbar1 from './navbar1.jsx';
-import Navbar2 from './navbar2.jsx';
+import Navbar1 from './NavBarUnauth.jsx';
+import Navbar2 from './NavBarAuth.jsx';
 
 
 export default class App extends Component {
