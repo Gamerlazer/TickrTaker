@@ -85,7 +85,7 @@ export default class Listing extends Component {
     // var button;
 
     var itemUrl = '/item/' + this.props.item.id;
-    var sellerProfile = '/profile/' + this.props.item.SellerId;
+    var sellerProfile = '/profile/' + this.props.item.userId;
     return (
       <div className="row">
         <div className="col-sm-3">
