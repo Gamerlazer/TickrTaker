@@ -15,7 +15,7 @@ export default class Navbar1 extends Component {
             <Link className="nav-link" to="/home">Auctions </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/auth/facebook">Facebook</a>
+            <a className="nav-link" href="/auth/facebook">Login with Facebook</a>
           </li>
         </ul>
       </nav>
