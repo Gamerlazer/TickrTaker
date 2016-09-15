@@ -29,12 +29,14 @@ BidController.Bid.belongsTo(UserController.User, {as: 'Bidder'});
 db.sync({force: true})
 .then(function() {
   UserController.User.create({
-    name: 'Alexander Anastasios Pantelides',
+    firstName: 'Alexander',
+    lastName: 'Pantelides',
     id: '10154095627189811',
     email: 'dark_dragoon10@hotmail.com',
   }).then(function(lex) {
     UserController.User.create({
-      name: 'Kunal Rathi',
+      firstName: 'Kunal',
+      lastName: 'Rathi',
       id: '10206128224638462',
       email: 'volcanic.phoenix@gmail.com',
     })
@@ -92,7 +94,7 @@ db.sync({force: true})
       .then(function(item) {
         seller.addItem(item);
         console.log('CREATED ITEM');
-        UserController.User.find({where: {name: 'Kunal Rathi'}})
+        UserController.User.find({where: {id: '10206128224638462'}})
         .then(function(bidder) {
           BidController.Bid.create({
             price: 600.00

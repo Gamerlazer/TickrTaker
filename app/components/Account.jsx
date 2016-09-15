@@ -13,8 +13,35 @@ export default class UserSetting extends Component {
       phone: false,
       email: false,
       user: {}
+
     };
+
   }
+
+  componentWillMount() {
+    $.ajax({             
+      method: 'GET',
+      url: 'api/user_data',
+      success: function(userData) {
+        console.log('Julie', userData);
+        console.log(this, 'this')
+        // this.setState({
+        //   user: userData
+        // })
+      }
+    });
+  }
+
+  showUser () {
+    console.log('user click')
+    $.ajax({                    //  Ajax request to update user info
+      method: 'GET',
+      url: 'api/user_data',
+      success: function(userData) {
+        console.log('user',userData);
+      }
+    });
+  };
 
   handleSubmit(setSomething, e) {
     e.preventDefault();
@@ -82,7 +109,7 @@ export default class UserSetting extends Component {
         method: 'GET',
         url: 'api/user_data',
         success: function(userData) {
-          // console.log('user',userData);
+          console.log('user',userData);
           $.ajax({
             method: 'PUT',
             url: '/users',
@@ -105,6 +132,7 @@ export default class UserSetting extends Component {
       $('#user-password').val('');
     }
   }
+
 
   handleToggle(stateToChange) {    //  Shows and hides input fields
     var s = {};
@@ -137,20 +165,21 @@ export default class UserSetting extends Component {
       
       <div style = {{margin: 50}}>
       <UserRating />
+
+      <div>
+        <button onClick={ () => {this.showUser()} }>Test Button</button>
+      </div>
+
         <div>
-          <Link to='/usersetting' onClick={this.handleToggle.bind(this, 'passWord')}><h3>Change Password</h3></Link>
-          {passCheck}
-        </div>
-        <div>
-          <Link to='/usersetting' onClick={this.handleToggle.bind(this, 'email')}><h3>Change Email</h3></Link>
+          <Link to='/account' onClick={this.handleToggle.bind(this, 'email')}><h3>Change Email</h3></Link>
           {mailCheck}
         </div>
         <div>
-          <Link to='/usersetting' onClick={this.handleToggle.bind(this, 'address')}><h3>Change Address</h3></Link>
+          <Link to='/account' onClick={this.handleToggle.bind(this, 'address')}><h3>Change Address</h3></Link>
           {addressCheck}
         </div>
         <div>
-          <Link to='/usersetting' onClick={this.handleToggle.bind(this, 'phone')}><h3>Change Phone Number</h3></Link>
+          <Link to='/account' onClick={this.handleToggle.bind(this, 'phone')}><h3>Change Phone Number</h3></Link>
           {phoneCheck}
         </div>
       </div>
@@ -158,3 +187,10 @@ export default class UserSetting extends Component {
     );
   }
 }
+
+
+
+// <div>
+//   <Link to='/account' onClick={this.handleToggle.bind(this, 'passWord')}><h3>Change Password</h3></Link>
+//   {passCheck}
+// </div>
