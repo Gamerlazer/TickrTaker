@@ -72,9 +72,10 @@ export default class Listing extends Component {
         var sorted = res.sort(function (a, b) {
           return a.price < b.price;
         });
+        console.log(sorted)
         context.setState({
           bids: sorted,
-          currentBid: sorted[0].price
+          currentBid: sorted[0] ? sorted[0].price : 0
         });
       }
     })
@@ -82,6 +83,7 @@ export default class Listing extends Component {
 
   render () {
     // var button;
+
     var id = '/item/' + this.props.item.id;
     return (
       <div className="row">
@@ -104,10 +106,11 @@ export default class Listing extends Component {
                   {this.state.timeRemaining}
                 </span>
               </div>
+              { this.state.status !== 'forsale' ?
               <div>
                 Seller:
                 <span> {this.state.seller || 'Seller'} </span>
-              </div>
+              </div> : <div></div> }
             </div>
             <div className="col-md-5">
               { this.props.auth() ?

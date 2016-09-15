@@ -74,7 +74,7 @@ export default class Auction extends Component {
                 key={i}
                 item={entry}
                 auth={this.props.auth}
-                status={"homeview"}/>))
+                />))
             }
           </div>
         </div>

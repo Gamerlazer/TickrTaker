@@ -8,7 +8,7 @@ module.exports = (db, Sequelize, User, Item) => {
   //Will return all bids made by a user
   const getBidsForSeller = (req, res, next) => {
     //Find the user in postgres associated with the user sent in req.body
-    if (req.body.user === undefined) { 
+    if (req.body.user === undefined) {
       res.send('user undefined');
       return;
     }
@@ -49,7 +49,7 @@ module.exports = (db, Sequelize, User, Item) => {
   };
 
   const getOldBidsForSeller = (req, res, next) => {
-    if (req.body.user === undefined) { 
+    if (req.body.user === undefined) {
       res.send('user undefined');
       return;
     }
@@ -98,9 +98,12 @@ module.exports = (db, Sequelize, User, Item) => {
     Item.find({where: {id: itemId}})
     .then(function(item) {
       //get the bids of the item
+      // console.log('<<<<< FINDING ITEM!!!', item);
+      // var minBid = item.endPrice
       item.getBids({raw: true})
       .then(function(bids) {
         //send the bids back in array form. {[bid, bid, bid]}.
+
         res.send(bids);
       });
     }).catch(function(err) {
@@ -112,11 +115,11 @@ module.exports = (db, Sequelize, User, Item) => {
   const validateBid = (req, res, bid, itemId, user, cb) => {
 
     valid = true;
-    //invalid if bid is less than one cent.    
+    //invalid if bid is less than one cent.
     if (bid < 0.01) {
       valid = false;
     }
-    
+
     if (itemId === undefined || user === undefined) {
       res.send('not enough information to bid. Sorry');
       return;
@@ -136,7 +139,7 @@ module.exports = (db, Sequelize, User, Item) => {
         valid = false;
       }
       //invalid if less than current value
-      if (((item.dataValues.startPrice - item.dataValues.endPrice) / 
+      if (((item.dataValues.startPrice - item.dataValues.endPrice) /
           ((Date.parse(item.dataValues.endDate)) - Date.parse(item.dataValues.startDate))
         * (Date.parse(item.dataValues.endDate) - Date.now())) + item.dataValues.endPrice < bid) {
         valid = false;
@@ -150,7 +153,7 @@ module.exports = (db, Sequelize, User, Item) => {
             valid = false;
           }
         });
-        //if valid, continue. Else, exit.        
+        //if valid, continue. Else, exit.
         if (valid) {
           cb();
         } else {
@@ -239,7 +242,7 @@ module.exports = (db, Sequelize, User, Item) => {
           console.log(err);
         });
       });
-    }); 
+    });
   };
 
   // NOT USED. Can delete a single bid and remove the bid from user and item.
@@ -254,7 +257,7 @@ module.exports = (db, Sequelize, User, Item) => {
           console.log(bid);
           res.send('deleted item');
         });
-      });      
+      });
     }).catch(function(err) {
       console.log(err);
     });
