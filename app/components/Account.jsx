@@ -7,12 +7,6 @@ export default class UserSetting extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // passWord: false,
-      // address: false,
-      // phone: false,
-      // email: false,
-      // user: {}
-
       id: null,
       firstName: null,
       lastName: null,
@@ -22,9 +16,9 @@ export default class UserSetting extends Component {
       starRating: null,
       editing: false,
       description: ''
-
     };
     this.setUser = this.setUser.bind(this);
+    this.handleChangeAboutMe = this.handleChangeAboutMe.bind(this);
   }
 
  
@@ -42,7 +36,6 @@ export default class UserSetting extends Component {
     })
     console.log(this.state.starRating, 'star RATING')
   }
-
 
   componentWillMount() {
     const context = this;
@@ -62,6 +55,10 @@ export default class UserSetting extends Component {
     this.setState({
       editing: !this.state.editing
     })
+  }
+
+  handleChangeAboutMe (event) {
+    this.setState({description: event.target.value});
   }
 
   saveProfile () {
@@ -188,6 +185,26 @@ export default class UserSetting extends Component {
                                         </div> : '';
     var context = this.state.starRating;
     console.log(this.state.starRating);
+
+
+    var aboutMe = this.state.editing ?
+      <div className="row">
+        <form> 
+          <div className="input-group input-group-lg about-me">
+            <textarea className="form-control" name="description" value={this.state.description} onChange={ this.handleChangeAboutMe }/>
+          </div>
+            <button type="button" className="btn btn-primary btn-sm edit" aria-label="Left Align" onClick={ () => this.editProfile()}>save</button>
+        </form>
+      </div> : 
+      <div className="row">
+        <button type="button" className="btn btn-primary btn-sm edit" aria-label="Left Align" onClick={ () => this.editProfile() } >
+          <span aria-hidden="true">edit about me</span>
+        </button>
+      </div>
+        {/* NOT EDITING */}
+      
+
+
     return (
       <div style = {{margin: 100}} className="container">
         <div className="col-md-4">
@@ -212,11 +229,9 @@ export default class UserSetting extends Component {
         </div>
         <div className="col-md-8">
           <div className="row">
-
             <Link to={'/profile/' + this.state.id}>
               <h4>{this.state.firstName} {this.state.lastName}</h4>
             </Link>
-          
             {this.state.starRating ? (<UserRating editable={'false'} starRating={ context }/>) : <div></div>}  
           </div>
           <div className="row">
@@ -238,17 +253,41 @@ export default class UserSetting extends Component {
             <div className="row">
               <form> 
                 <div className="input-group input-group-lg about-me">
-                  {this.state.editing ? (<textarea className="form-control" name="description" value="This is a description." onChange={ () => this.saveProfile() }/>) : <div></div>}
+                  {this.state.editing ? (<textarea className="form-control" name="description" value={this.state.description} onChange={ this.handleChangeAboutMe }/>) : <div></div>}
                 </div>
                   { this.state.editing ? (<button type="button" className="btn btn-primary btn-sm edit" aria-label="Left Align" onClick={ () => this.editProfile()}>save</button>) : <div></div>}
               </form>
             </div>
+            <div>TEST{aboutMe}</div>
           </div>
         </div>
       </div>
     );
   }
 }
+
+// var Editor = React.createClass({
+//   displayName: 'Editor',
+//   propTypes: {
+//     name: React.PropTypes.string.isRequired
+//   },
+//   getInitialState: function() { 
+//     return {
+//       value: this.props.name
+//     };
+//   },
+//   handleChange: function(event) {
+//     this.setState({value: event.target.value});
+//   },
+//   render: function() {
+//     return (
+//       <form id="noter-save-form" method="POST">
+//         <textarea id="noter-text-area" name="textarea" value={this.state.value} onChange={this.handleChange}></textarea>
+//         <input type="submit" value="Save" />
+//       </form>
+//     );
+//   }
+// });
 
 // <div>{ this.state.user.user  }</div>
       // <div>{ this.state.user }</div>
