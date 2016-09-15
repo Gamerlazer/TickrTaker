@@ -70,8 +70,8 @@ module.exports = (app, db) => {
   });
 
   app.get('/api/user_data', function(req, res) {
+    console.log(req, '=============================================>');
     if (req.user === undefined) {
-      // The user is not logged in
       res.json({});
     } else {
       console.log('THIS IS HAPPENING');
