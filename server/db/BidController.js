@@ -98,13 +98,14 @@ module.exports = (db, Sequelize, User, Item) => {
     Item.find({where: {id: itemId}})
     .then(function(item) {
       //get the bids of the item
-      // console.log('<<<<< FINDING ITEM!!!', item);
-      // var minBid = item.endPrice
       item.getBids({raw: true})
       .then(function(bids) {
         //send the bids back in array form. {[bid, bid, bid]}.
-
-        res.send(bids);
+        var data = {
+          endPrice: item.endPrice,
+          bids: bids
+        };
+        res.send(data);
       });
     }).catch(function(err) {
       console.log(err);
