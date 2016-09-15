@@ -330,6 +330,10 @@ hr {
   text-align: right;
 }*/
 
+.about-me {
+  padding: 20px;
+}
+
 .col-centered{
     float: none;
     margin: 0 auto;
@@ -341,7 +345,6 @@ hr {
   width: 90vw;
   background-color: rgba(102,175,233, .5);
 }
-
 
 .navbar-break {
   height: 60px;
@@ -358,7 +361,6 @@ hr {
 .btn.edit {
   float: right
 }
-
 
 /* PROFILE */
 

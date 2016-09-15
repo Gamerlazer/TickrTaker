@@ -60,15 +60,13 @@ export default class UserSetting extends Component {
 
   editProfile () {
     this.setState({
-      editing: true
+      editing: !this.state.editing
     })
   }
 
   saveProfile () {
     console.log('saving')
   }
-
-
 
   handleSubmit(setSomething, e) {
     e.preventDefault();
@@ -192,9 +190,9 @@ export default class UserSetting extends Component {
     console.log(this.state.starRating);
     return (
       <div style = {{margin: 100}} className="container">
-        <div className="col-sm-4">
+        <div className="col-md-4">
           <div className="row">
-            <img src={this.state.photo} alt="boohoo" className="img-responsive profile-image"/>
+            <img src={this.state.photo} alt="Oops! Can't find your photo" className="img-responsive profile-image"/>
           </div>
           <div className="row">
             <h4 className="setting-container">Settings</h4>
@@ -211,26 +209,39 @@ export default class UserSetting extends Component {
                 {phoneCheck}
               </div>
           </div>
-
         </div>
-        <div className="col-sm-8">
+        <div className="col-md-8">
           <div className="row">
-              <button type="button" className="btn btn-primary edit" aria-label="Left Align" onClick={ () => this.editProfile() } >
-                <span className="glyphicon glyphicon-star" aria-hidden="true">edit</span>
-              </button>
-          </div>
-          <div className="row">
-            <h4>{this.state.firstName} {this.state.lastName}</h4>
+
+            <Link to={'/profile/' + this.state.id}>
+              <h4>{this.state.firstName} {this.state.lastName}</h4>
+            </Link>
+          
             {this.state.starRating ? (<UserRating editable={'false'} starRating={ context }/>) : <div></div>}  
           </div>
           <div className="row">
+
+          <div className="row">
+            <text>About me</text>
+          </div>
+
+            {/* EDIT ABOUT ME */}
             <div className="row">
-              <text>About me</text>
+              { !this.state.editing ? 
+                <button type="button" className="btn btn-primary btn-sm edit" aria-label="Left Align" onClick={ () => this.editProfile() } >
+                  <span aria-hidden="true">edit about me</span>
+                </button>
+                : <div></div>
+              }
             </div>
+
             <div className="row">
-              <div className="input-group input-group-lg">
-                {this.state.editing ? (<textarea className="form-control" name="description" value="This is a description." onChange={ () => this.saveProfile() }/>) : <div></div>}
-              </div>
+              <form> 
+                <div className="input-group input-group-lg about-me">
+                  {this.state.editing ? (<textarea className="form-control" name="description" value="This is a description." onChange={ () => this.saveProfile() }/>) : <div></div>}
+                </div>
+                  { this.state.editing ? (<button type="button" className="btn btn-primary btn-sm edit" aria-label="Left Align" onClick={ () => this.editProfile()}>save</button>) : <div></div>}
+              </form>
             </div>
           </div>
         </div>
