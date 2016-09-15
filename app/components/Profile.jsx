@@ -43,9 +43,15 @@ export default class Profile extends Component {
       return (<div>User not found!</div>)
     }
     return (
+<<<<<<< e6032f269b71de404d5c4bf2e4ddf742fc91b64d
     <div className="user-profile row">
       <div className="col-md-5 profile-left">
         <img className="profile-image" src={this.state.picture} alt=""></img>
+=======
+    <div className="row">
+      <div className="col-md-5 profile-left">
+        <img width="100%" height="50px" src="" alt=""></img>
+>>>>>>> Set up basic profile structure
         <div>{ this.state.name }</div>
         <div>
           { this.state.rating ? this.state.rating : 'Unrated' }
