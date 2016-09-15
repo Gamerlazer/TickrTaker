@@ -69,12 +69,12 @@ export default class Listing extends Component {
       url: '/api/items/bids/' + context.props.item.id,
       headers: {'Content-Type': 'application/json'},
       success: function (res) {
-        var sorted = res.sort(function (a, b) {
+        var sorted = res.bids.sort(function (a, b) {
           return a.price < b.price;
         });
         context.setState({
           bids: sorted,
-          currentBid: sorted[0].price
+          currentBid: sorted[0] ? sorted[0].price : res.endPrice
         });
       }
     })
@@ -82,6 +82,7 @@ export default class Listing extends Component {
 
   render () {
     // var button;
+
     var id = '/item/' + this.props.item.id;
     return (
       <div className="row">
@@ -104,10 +105,11 @@ export default class Listing extends Component {
                   {this.state.timeRemaining}
                 </span>
               </div>
+              { this.state.status !== 'forsale' ?
               <div>
                 Seller:
                 <span> {this.state.seller || 'Seller'} </span>
-              </div>
+              </div> : <div></div> }
             </div>
             <div className="col-md-5">
               { this.props.auth() ?

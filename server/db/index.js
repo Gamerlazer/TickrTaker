@@ -32,17 +32,19 @@ db.sync({force: true})
     firstName: 'Alexander',
     lastName: 'Pantelides',
     id: '10154095627189811',
-    email: 'dark_dragoon10@hotmail.com',
     sumOfRatings: 100,
-    numberOfRatings: 20
+    numberOfRatings: 20,
+    email: 'voracious.scroll@gmail.com',
+    photo: 'https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/11148734_10205233811059304_8200092159283226084_n.jpg?oh=a19a83eef9251ff118ccb61e0b1069df&oe=583F7305'
   }).then(function(lex) {
     UserController.User.create({
       firstName: 'Kunal',
       lastName: 'Rathi',
       id: '10206128224638462',
-      email: 'volcanic.phoenix@gmail.com',
       sumOfRatings: 130,
-      numberOfRatings: 20
+      numberOfRatings: 20,
+      email: 'voracious.scroll@gmail.com',
+
     })
     .then(function(seller) {
       ItemController.Item.create({
@@ -87,7 +89,7 @@ db.sync({force: true})
       });
       ItemController.Item.create({
         title: 'Full bed',
-        description: 'Slip into a luxurious Voracious Scroll bed, custom designed for Voracious Scroll hotels, and have your best sleep every night. The Voracious Scroll Mattress & Box Spring is designed with extra coil support and features a unique internal design that prevents edge breakdown. The innovative, patented quilt design and plush top mattress improves circulation and reduces night time restlessness. Feel even more rested by accompanying your Voracious Scroll bed with Voracious Scroll linens, available in variety of thread counts and fabrications that will complete your bed essentials. Make sleep a priority with the Voracious Scroll Bed.', 
+        description: 'Slip into a luxurious Voracious Scroll bed, custom designed for Voracious Scroll hotels, and have your best sleep every night. The Voracious Scroll Mattress & Box Spring is designed with extra coil support and features a unique internal design that prevents edge breakdown. The innovative, patented quilt design and plush top mattress improves circulation and reduces night time restlessness. Feel even more rested by accompanying your Voracious Scroll bed with Voracious Scroll linens, available in variety of thread counts and fabrications that will complete your bed essentials. Make sleep a priority with the Voracious Scroll Bed.',
         picture: "https://i.ytimg.com/vi/tdY85uOeCa4/maxresdefault.jpg",
         // original low res pic:
         // picture: 'http://res.cloudinary.com/dijpyi6ze/image/upload/v1473717788/item_photos/wqifur3lxghuzoysy8c2.jpg',

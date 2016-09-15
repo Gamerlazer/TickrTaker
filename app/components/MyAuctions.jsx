@@ -15,20 +15,20 @@ export default class MyAuctions extends Component {
       method: 'GET',
       url: 'api/user_data',
       success: function(user) {
-        console.log(user);
+        console.log('MyAuctions username:', user.user.firstName + ' ' + user.user.lastName);
         $.ajax({
           method: 'POST',
           url: 'api/selleritems',
           headers: {'Content-Type': 'application/json'},
           data: JSON.stringify(user),
-          success: function(items) {
-            //console.log('items are', items);
-            context.setState({'itemsForSale': items});
+          success: function(auctionItems) {
+            context.setState({'itemsForSale': auctionItems});
+            console.log('itemsForSale:', auctionItems);
+            context.render();
           },
           error: function(err) {
             console.log(err);
           }
-          context.render();
         });
       }
     });
@@ -37,10 +37,11 @@ export default class MyAuctions extends Component {
   render() {
     return (
       <div>
-        <div className="dashboard-header col-sm-12"> <h2> Items on Auction </h2> </div>
         <div className="col-sm-12 bid-container">
         {this.state.itemsForSale.map((saleItem, index) => {
-          return (<Listing old={true} key={index} parity={index % 2} status='forsale' item={saleItem} />);
+          return (<Listing old={true} key={index} parity={index % 2} status={'forsale'}
+            auctionEnded={new Date() >= auctionItem.auctionEndDateByHighestBid}
+            item={saleItem} />);
         }) }
         </div>
       </div>
