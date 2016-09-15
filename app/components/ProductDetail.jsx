@@ -129,31 +129,51 @@ export default class AuctionItem extends Component {
     });
 
     return (
-      <div className="col-xs-12 auction-item-container">
-        <div className="col-md-6 col-xs-12">
-          <img className="img-fluid" src={thisItem.picture}></img>
+      
+<div className="col-md-12 auction-item-container">
+  {/*title*/}
+  <div className="form-group col-md-12 auction-title">
+    <h2>{thisItem.title}</h2>
+  </div>
+  {/*top three columns*/}
+  <div className='form-group col-md-12'>
+      {/* main auction image: */}
+    <img className="col-md-3 img-fluid" src={thisItem.picture}></img>
+    {/*three item details:*/}
+    <div className="col-md-5 auction-item-details ">
+      <hr className="auction-item-title-hr"/>
+      <div className="col-md-12">Time Remaining: {this.state.timeRemaining}</div>
+      <div className="col-md-12"> Current Price: {this.state.currentPrice}</div>
+      <div className="col-md-12"> Seller: John Doe</div>
+      {/*end item details:*/}
+    </div>
+    {/*bid form and button  */}
+    <div className="col-md-4 auction-bid-form">
+      <form id="bid-form" onSubmit={this.sendItemBid}>
+        <div className="col-md-12"><strong>Bid</strong>
+          <br></br>
+          <input className="col-md-6" id="bid" type="number" step="0.01" placeholder="Min. Price"></input>
+          <button className="col-md-6" type="button" className="btn btn-primary pull-md-right" onClick={this.sendItemBid}>Submit Bid</button>
         </div>
-        <div className="auction-item-details col-md-6 col-xs-12">
-          <br />
-          <h2>{thisItem.title}</h2>
-          <hr className="auction-item-title-hr"/>
-          <div className="col-xs-12">Description: {thisItem.description}</div>
-          <div className="col-xs-12">Start Date: {startDate.toLocaleDateString() + ' ' + startDate.toLocaleTimeString()}</div>
-          <div className="col-xs-12">End Date: {endDate.toLocaleDateString() + ' ' + endDate.toLocaleTimeString()}</div>
-          <div className="col-xs-12">Time Remaining: {this.state.timeRemaining}</div>
-          <div className="col-xs-12"> Current Price: {this.state.currentPrice} </div>
-            <div className="col-xs-12"> Highest Bid: {this.state.bids[0] !== undefined ? '$ ' + this.state.bids[0].price.toFixed(2) : ' No Bids' }</div>
-          <form id="bid-form" onSubmit={this.sendItemBid}>
-            <div className="col-xs-12">Enter Bid <input id="bid" type="number" step = "0.01" placeholder="Enter a bid"></input> </div>
-            <button type="button" className="btn btn-primary pull-xs-right" onClick={this.sendItemBid}> Submit Bid</button>
-
-          </form>
-          <div className="alert alert-danger fade in" role="alert" id="bid-error">
-              <button type="button" className="close">×</button>
-              <strong>Woah! </strong>Please place a valid bid. <small>Tip: Try value higher than the current highest bid!</small>
-          </div>
-        </div>
+      </form>
+      {/* alert below bid button*/}
+      <div className="alert alert-danger fade in" role="alert" id="bid-error">
+        <button type="button" className="close">×</button>
+        <strong>Woah! </strong>Please place a valid bid. <small>Tip: Try value higher than the current highest bid!</small>
       </div>
+    </div>
+  </div>
+  {/* end container */}
+  <div className="form-group col-md-12 bottom-row">
+    <div className="col-md-6 auction-description">Description: {thisItem.description}</div>
+    <div className="col-md-6 img-fluid auction-reel">
+      {/*<img src={thisItem.picture}></img>*/}
+      <img className="img-fluid auction-image" src="http://images.cb2.com/is/image/CB2/DondraBedQueenF12/$web_zoom_furn_colormap$/130830204135/dondra-bed.jpg"></img>
+    </div>
+  </div>
+  {/*end whole container:*/}
+</div>
+
     );
   }
 }
