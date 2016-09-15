@@ -8,7 +8,8 @@ var Controllers = require('../db/index.js');
 describe('Database Method Check', function() {
   beforeEach(function(done) {
     Controllers.UserController.User.findOrCreate({ where: {
-      name: 'Kunal Rathi',
+      firstName: 'Kunal',
+      lastName: 'Rathi',
       id: '10206128224638462',
       email: 'volcanic.phoenix@gmail.com'
     }}).then(function() {
@@ -29,7 +30,7 @@ describe('Database Method Check', function() {
       Controllers.UserController.User.find({where: {id: '10206128224638462'}, raw:true})
       .then(function(user) {
         console.log('2', user);
-        expect(user.name).to.equal('Kunal Rathi');
+        expect(user.firstName).to.equal('Kunal');
         done();
       })
       .catch(function(error) {

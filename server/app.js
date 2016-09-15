@@ -4,6 +4,7 @@ var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
+var morgan = require('morgan');
 var session = require('express-session');
 var Sequelize = require('sequelize');
 var db = new Sequelize('postgres://ubuntu:password@localhost:5432/tickr', {sync: {force: true}});
@@ -14,6 +15,7 @@ var controllers = require('./db/index.js');
 
 var app = express();
 
+app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(session({ 
@@ -28,23 +30,26 @@ passport.use(new FacebookStrategy({
   clientID: apiKeys.Facebook_App_ID,
   clientSecret: apiKeys.Facebook_App_Secret,
   callbackURL: '/auth/facebook/callback',
-  profileFields: ['email', 'displayName', 'gender']
+  profileFields: ['id', 'name', 'picture.type(large)', 'email', 'displayName', 'gender']
 },
   function(accessToken, refreshToken, profile, done) {
-    console.log('accessToken', accessToken);
-    console.log('refreshToken', refreshToken);
-    console.log('profile', profile);
+    // console.log('accessToken', accessToken);
+    // console.log('refreshToken', refreshToken);
+    console.log('profile ===========================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', profile.photos[0].value);
+    console.log('profile ===========================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', profile);
     console.log(profile._json.email, profile._json.name);
     UserController.User.findOrCreate({
       where: {
         id: profile.id,
       }, defaults: {
+        firstName: profile._json.first_name,
+        lastName: profile._json.last_name,
         email: profile._json.email,
-        name: profile._json.name
+        photo: profile.photos[0].value,
       }
     })
     .then(function(user) {
-      // console.log('user created:', user);
+      console.log('USER IS HERE!', user);
       done(null, user);
       // accessToken, refreshToken, profile //TODO: will it es6? yes.
     })
@@ -53,6 +58,46 @@ passport.use(new FacebookStrategy({
     });
   }
 ));
+
+
+
+/*
+{ id: '10105700513297463',
+  username: undefined,
+  displayName: 'Julie Truong',
+  name: 
+   { familyName: 'Truong',
+     givenName: 'Julie',
+     middleName: undefined },
+  gender: 'female',
+  profileUrl: undefined,
+  emails: [ { value: 'julkie17@gmail.com' } ],
+  photos: [ { value: 'https://scontent.xx.fbcdn.net/v/t1.0-1/s200x200/10417550_10103418587420213_3389328959999895776_n.jpg?oh=619920945e4f741f2f31ef321bd5d98b&oe=58720745' } ],
+  provider: 'facebook',
+  _raw: '{"id":"10105700513297463","last_name":"Truong","first_name":"Julie","picture":{"data":{"is_silhouette":false,"url":"https:\\/\\/scontent.xx.fbcdn.net\\/v\\/t1.0-1\\/s200x200\\/10417550_10103418587420213_3389328959999895776_n.jpg?oh=619920945e4f741f2f31ef321bd5d98b&oe=58720745"}},"email":"julkie17\\u0040gmail.com","name":"Julie Truong","gender":"female"}',
+  _json: 
+   { id: '10105700513297463',
+     last_name: 'Truong',
+     first_name: 'Julie',
+     picture: { data: [Object] },
+     email: 'julkie17@gmail.com',
+     name: 'Julie Truong',
+     gender: 'female' } }
+
+*/
+// profileFields: ['id', 'name', 'picture.type(large)', 'email', 'displayName', 'gender']
+
+/*
+
+   { id: '10105700513297463',
+   last_name: 'Truong',
+   first_name: 'Julie',
+   picture: { data: [Object] },
+   email: 'julkie17@gmail.com',
+   name: 'Julie Truong',
+   gender: 'female' } }
+
+*/
 
 passport.serializeUser(function(user, done) {
   console.log('serializeUser:', user);
@@ -99,8 +144,6 @@ app.get('/logout', function(req, res) {
   req.logout();
   res.redirect('/');
 });
-
-// app.use()
 
 
 if (process.env.NODE_ENV === 'production') {

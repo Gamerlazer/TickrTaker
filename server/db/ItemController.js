@@ -102,7 +102,10 @@ module.exports = (db, Sequelize, User) => {
   
   //  interval to check for valid items and send out emails. 
 
-  setInterval(checkValidItems, 10000);
+
+/*****************************************************************************/
+  checkValidItems();
+  // setInterval(checkValidItems, 10000);
 
 
   //  get all valid items by search query.
