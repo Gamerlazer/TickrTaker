@@ -8,7 +8,10 @@ module.exports = (db, Sequelize) => {
     firstName: Sequelize.STRING,
     lastName: Sequelize.STRING,
     email: {type: Sequelize.STRING, unique: true},
-    photo: Sequelize.TEXT
+    photo: Sequelize.TEXT,
+    sumOfRatings: Sequelize.FLOAT,
+    numberOfRatings: Sequelize.INTEGER,
+    aboutMe: Sequelize.TEXT
   });
 
 

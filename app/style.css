@@ -146,6 +146,11 @@ body {
   margin-left: 15px;
 }
 
+.setting-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 .search-form {
   display: flex;
   flex-direction: row-reverse;
@@ -335,4 +340,8 @@ hr {
 
 .navbar-toggler {
   float: right;
+}
+
+.btn.edit {
+  float: right 
 }

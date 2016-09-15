@@ -4,13 +4,13 @@ import Stars from 'react-stars'
 export default class UserRating extends Component {
   constructor(props) {
     super(props);
-
+    console.log(this.props, 'prop')
     // editable = undefined === editable
     // editable = false === Not editable
 
     this.state = {
-      rating: 2.0,
-      editable: undefined
+      rating: this.props.starRating,
+      editable: this.props.editable || undefined
     }
 
     this.starSettings = {
@@ -29,8 +29,8 @@ export default class UserRating extends Component {
     return (
       <div>
         <div className="star-rating"></div>
-        <div>My current rating: {this.state.rating} </div>
         <Stars  {...this.starSettings} />
+        <div>My current rating: {this.state.rating} </div>
       </div>
     )
   }

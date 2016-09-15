@@ -33,12 +33,16 @@ db.sync({force: true})
     lastName: 'Pantelides',
     id: '10154095627189811',
     email: 'dark_dragoon10@hotmail.com',
+    sumOfRatings: 100,
+    numberOfRatings: 20
   }).then(function(lex) {
     UserController.User.create({
       firstName: 'Kunal',
       lastName: 'Rathi',
       id: '10206128224638462',
       email: 'volcanic.phoenix@gmail.com',
+      sumOfRatings: 130,
+      numberOfRatings: 20
     })
     .then(function(seller) {
       ItemController.Item.create({
