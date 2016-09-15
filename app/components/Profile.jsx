@@ -31,7 +31,8 @@ export default class Profile extends Component {
         context.setState({
           name: name,
           rating: rating,
-          description: description
+          description: description,
+          picture: response.user.photo
         })
       }
     })
@@ -42,9 +43,9 @@ export default class Profile extends Component {
       return (<div>User not found!</div>)
     }
     return (
-    <div className="row">
+    <div className="user-profile row">
       <div className="col-md-5 profile-left">
-        <img width="100%" height="50px" src="" alt=""></img>
+        <img className="profile-image" src={this.state.picture} alt=""></img>
         <div>{ this.state.name }</div>
         <div>
           { this.state.rating ? this.state.rating : 'Unrated' }
