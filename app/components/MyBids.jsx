@@ -5,8 +5,7 @@ export default class MyBids extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      itemsWinningBidOn: [],
-      itemsLosingBidOn: []
+      itemsBidOn: [],
     };
   }
 
@@ -16,51 +15,46 @@ export default class MyBids extends Component {
       method: 'GET',
       url: 'api/user_data',
       success: function(user) {
-        console.log(user);
+        console.log('MyBids username:', user.user.firstName + ' ' + user.user.lastName);
         $.ajax({ // Retrieve data to show user's winning and losing bid on dashboard page
           method: 'POST',
           url: 'api/bids',
           headers: {'Content-Type': 'application/json'},
           data: JSON.stringify(user),
-          success: function(items) {
-            var winningBids = [];
-            var losingBids = [];
-            items.forEach(function(item) {
-              if (item.myBid.price === item.highestBid) {
-                winningBids.push(item);
-              } else {
-                losingBids.push(item);
-              }
-            });
-            //console.log('bids are', winningBids, losingBids);
+          success: function(auctionItems) {
             context.setState({
-              'itemsWinningBidOn': winningBids,
-              'itemsLosingBidOn': losingBids
+              'itemsBidOn': auctionItems,
             });
+            console.log('itemsBidOn:', auctionItems);
             context.render();
+          },
+          error: function(err) {
+            console.log(err);
           }
         });
       }
     });
   }
 
+  setWinningLosing(auctionItem){
+    if (auctionItem.myBid.price === auctionItem.highestBid) {
+      return 'winning';
+    } else {
+      return 'losing';
+    }
+  };
+
   render() {
     return (
       <div>
-        <div className="dashboard-header col-sm-12"> <h2>Winning Bids </h2> </div>
         <div className="col-sm-12 bid-container">
-          {this.state.itemsWinningBidOn.map((winningBid, index) => {
-            {console.log(winningBid)}
-            return (<Listing key={index} parity={index % 2} status='winning' item={winningBid} />);
+          {this.state.itemsBidOn.map((auctionItem, index) => {
+            {console.log(auctionItem)}
+            return (<Listing key={index} parity={index % 2}
+              status={this.setWinningLosing(auctionItem)}
+              auctionEnded={new Date() >= auctionItem.auctionEndDateByHighestBid}
+              item={auctionItem} />);
           })}
-        </div>
-        <div className="dashboard-header col-sm-12"> <h2> Losing Bids </h2> </div>
-        <div className="col-sm-12 bid-container" >
-          {
-            this.state.itemsLosingBidOn.map((losingBid, index) => {
-              return (<Listing key={index} parity={index % 2} status='losing' item={losingBid} />);
-            })
-          }
         </div>
       </div>
     );
