@@ -2,14 +2,14 @@ var moment = require('moment');
 var nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport('smtps://automated.tickrtaker%40gmail.com:ticktock@smtp.gmail.com');
 module.exports = (db, Sequelize, User) => {
-  
+
   //  CREATED A DEFAULT ENDING DATE FOR TESTING WITH DUMMY DATA.
   //  Can change end date default for dummy data to test features, follows
   //  moment.js syntax.
 
   endDateDefault = moment().add(600, 'seconds');
   // console.log(endDateDefault);
-  
+
   //  DEFINED ITEM MODEL. Currently, minimum bid increment defaults to $1.00
   //  and we don't have a way to change it from client side. FEATURE TO IMPLEMENT.
 
@@ -23,7 +23,8 @@ module.exports = (db, Sequelize, User) => {
     endPrice: {type: Sequelize.FLOAT, allowNull: false},
     minimumBidIncrement: {type: Sequelize.FLOAT, defaultValue: 1},
     auctionEndDateByHighestBid: {type: Sequelize.DATE, allowNull: false, defaultValue: endDateDefault},
-    valid: {type: Sequelize.BOOLEAN, defaultValue: true}
+    valid: {type: Sequelize.BOOLEAN, defaultValue: true},
+    sellerName: Sequelize.TEXT
   });
 
   //  INTERVAL CHECK. Will flip valid from true to false if item has expired.
@@ -43,9 +44,9 @@ module.exports = (db, Sequelize, User) => {
             //  get the bids on the item, find the highest bid, and get the highest bidder.
             aCurrentItem.getBids({raw: true})
             .then(function(bids) {
-              
+
               var highestBid = {price: 0};
-              
+
               bids.forEach(function(bid) {
                 if (bid.price > highestBid.price) {
                   highestBid = bid;
@@ -54,9 +55,9 @@ module.exports = (db, Sequelize, User) => {
               //  Send emails out.
               User.find({where: {id: highestBid.userId}, raw: true})
               .then(function(highestBidder) {
-              
+
                 var sellerText;
-                
+
                 if (highestBidder === null) {
                   sellerText = 'Sorry, no one bid on your item. Better luck next time.';
                 } else {
@@ -99,8 +100,8 @@ module.exports = (db, Sequelize, User) => {
       console.log(err);
     });
   };
-  
-  //  interval to check for valid items and send out emails. 
+
+  //  interval to check for valid items and send out emails.
 
 
 /*****************************************************************************/
@@ -140,11 +141,11 @@ module.exports = (db, Sequelize, User) => {
       console.log(err);
     });
   };
-  
+
   //  get all items that user has for sale.
 
   const getItemsForSale = (req, res, next) => {
-    if (req.body.user === undefined) { 
+    if (req.body.user === undefined) {
       res.send('user undefined');
       return;
     }
@@ -154,14 +155,14 @@ module.exports = (db, Sequelize, User) => {
       .then(function(items) {
         console.log(items);
         res.send(items);
-      });  
+      });
     }).catch(function(err) {
       console.log(err);
     });
   };
 
   const getOldItemsForSale = (req, res, next) => {
-    if (req.body.user === undefined) { 
+    if (req.body.user === undefined) {
       res.send('user undefined');
       return;
     }
@@ -171,7 +172,7 @@ module.exports = (db, Sequelize, User) => {
       .then(function(items) {
         console.log(items);
         res.send(items);
-      });  
+      });
     }).catch(function(err) {
       console.log(err);
     });
@@ -196,24 +197,25 @@ module.exports = (db, Sequelize, User) => {
   //  Place an item for sale.
 
   const putItemForSale = (req, res, next) => {
-    if (req.body.item === undefined) { 
+    if (req.body.item === undefined) {
       res.send('item undefined');
       return;
     }
 
     //  Check if item is valid
-    
+
     if (validateItem(req.body.item)) {
       console.log('a valid item has been passed');
       //  Grab user from body, then assign autionEndDateByHighestBid to the end date of the item.
       User.findOne({where: {id: req.body.user.id}})
       .then(function(user) {
         req.body.item.auctionEndDateByHighestBid = req.body.item.endDate;
+        req.body.item.sellerName = user.firstName + ' ' + user.lastName;
         Item.create(req.body.item)
           .then(function(item) {
             user.addItem(item);
             res.send('created new item');
-          }); 
+          });
       }).catch(function(err) {
         console.log(err);
       });

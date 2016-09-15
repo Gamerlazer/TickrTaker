@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router';
 import BidNow from './BidNow.jsx'
 
 // This should be redundant
@@ -83,14 +84,17 @@ export default class Listing extends Component {
   render () {
     // var button;
 
-    var id = '/item/' + this.props.item.id;
+    var itemUrl = '/item/' + this.props.item.id;
+    var sellerProfile = '/profile/' + this.props.item.userId;
     return (
       <div className="row">
         <div className="col-sm-3">
           <img className="listing-image" src={this.props.item.picture}></img>
         </div>
         <div className="col-sm-9">
-          <h3>{this.props.item.title || 'Sample Title'}</h3>
+          <Link to={itemUrl}>
+            <h3>{this.props.item.title || 'Sample Title'}</h3>
+          </Link>
           <div className="row">
             <div className="col-md-7">
               <div>
@@ -108,7 +112,11 @@ export default class Listing extends Component {
               { this.state.status !== 'forsale' ?
               <div>
                 Seller:
-                <span> {this.state.seller || 'Seller'} </span>
+                <Link to={sellerProfile}>
+                  <span>
+                    {this.props.item.sellerName || 'Seller'}
+                  </span>
+                </Link>
               </div> : <div></div> }
             </div>
             <div className="col-md-5">

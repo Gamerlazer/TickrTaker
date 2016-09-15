@@ -43,18 +43,20 @@ export default class Profile extends Component {
       return (<div>User not found!</div>)
     }
     return (
-    <div className="user-profile row">
-      <div className="col-md-5 profile-left">
-        <img className="profile-image" src={this.state.picture} alt=""></img>
-        <div>{ this.state.name }</div>
+    <div className="user-profile container">
+      <div className="col-md-4 profile-left">
+        <div className="profile-image">
+          <img src={this.state.picture} alt=""></img>
+        </div>
+        <h4>{ this.state.name }</h4>
         <div>
           { this.state.rating ? this.state.rating : 'Unrated' }
         </div>
-        <div>
+        <p className="user-description">
           { this.state.description ? this.state.description : 'User hasn\'t filled out description yet.'}
-        </div>
+        </p>
       </div>
-      <div className="col-md-7 profile-right">
+      <div className="col-md-8 profile-right">
         <h2>Seller / Buyer History</h2>
         <div className="history-list">
           History list goes here
