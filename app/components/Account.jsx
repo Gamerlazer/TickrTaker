@@ -6,42 +6,49 @@ export default class UserSetting extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
-      passWord: false,
-      address: false,
-      phone: false,
-      email: false,
-      user: {}
+      // passWord: false,
+      // address: false,
+      // phone: false,
+      // email: false,
+      // user: {}
 
+      id: null,
+      firstName: null,
+      lastName: null,
+      email: null,
+      photo: null,
+      phone: null
     };
-
+    this.setUser = this.setUser.bind(this);
   }
 
+ 
+  setUser (user) {
+    this.setState({
+      id: user.user.id,
+      firstName: user.user.firstName,
+      lastName: user.user.lastName,
+      email: user.user.email,
+      photo: user.user.photo,
+    })
+  }
+
+
   componentWillMount() {
+    const context = this;
     $.ajax({             
       method: 'GET',
       url: 'api/user_data',
-      success: function(userData) {
-        console.log('Julie', userData);
-        console.log(this, 'this')
-        // this.setState({
-        //   user: userData
-        // })
+      success: function(user) {
+        // console.log('got here')
+        console.log('User Obj', user)
+        context.setUser(user)
+        console.log('User', context.state)
       }
     });
   }
 
-  showUser () {
-    console.log('user click')
-    $.ajax({                    //  Ajax request to update user info
-      method: 'GET',
-      url: 'api/user_data',
-      success: function(userData) {
-        console.log('user',userData);
-      }
-    });
-  };
 
   handleSubmit(setSomething, e) {
     e.preventDefault();
@@ -164,6 +171,8 @@ export default class UserSetting extends Component {
     return (
       
       <div style = {{margin: 50}}>
+      <img src={'https://scontent.xx.fbcdn.net/v/t1.0-1/s200x200/10417550_10103418587420213_3389328959999895776_n.jpg?oh=619920945e4f741f2f31ef321bd5d98b&oe=58720745'} alt="boohoo" className="img-responsive"/>
+
       <UserRating />
 
       <div>
@@ -182,12 +191,64 @@ export default class UserSetting extends Component {
           <Link to='/account' onClick={this.handleToggle.bind(this, 'phone')}><h3>Change Phone Number</h3></Link>
           {phoneCheck}
         </div>
-      </div>
 
+      </div>
     );
   }
 }
 
+// <div>{ this.state.user.user  }</div>
+      // <div>{ this.state.user }</div>
+// user
+// :
+// Object
+// createdAt
+// :
+// "2016-09-15T02:24:56.270Z"
+// email
+// :
+// "julkie17@gmail.com"
+// firstName
+// :
+// "Julie"
+// id
+// :
+// "10105700513297463"
+// lastName
+// :
+// "Truong"
+// photo
+// :
+// "https://scontent.xx.fbcdn.net/v/t1.0-1/s200x200/10417550_10103418587420213_3389328959999895776_n.jpg?oh=619920945e4f741f2f31ef321bd5d98b&oe=58720745"
+// updatedAt
+// :
+// "2016-09-15T02:24:56.270Z" 
+
+
+ // user
+// :
+// Object
+// createdAt
+// :
+// "2016-09-15T02:24:56.270Z"
+// email
+// :
+// "julkie17@gmail.com"
+// firstName
+// :
+// "Julie"
+// id
+// :
+// "10105700513297463"
+// lastName
+// :
+// "Truong"
+// photo
+// :
+// "https://scontent.xx.fbcdn.net/v/t1.0-1/s200x200/10417550_10103418587420213_3389328959999895776_n.jpg?oh=619920945e4f741f2f31ef321bd5d98b&oe=58720745"
+// updatedAt
+// :
+// "2016-09-15T02:24:56.270Z" 
 
 
 // <div>

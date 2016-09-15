@@ -61,44 +61,6 @@ passport.use(new FacebookStrategy({
 
 
 
-/*
-{ id: '10105700513297463',
-  username: undefined,
-  displayName: 'Julie Truong',
-  name: 
-   { familyName: 'Truong',
-     givenName: 'Julie',
-     middleName: undefined },
-  gender: 'female',
-  profileUrl: undefined,
-  emails: [ { value: 'julkie17@gmail.com' } ],
-  photos: [ { value: 'https://scontent.xx.fbcdn.net/v/t1.0-1/s200x200/10417550_10103418587420213_3389328959999895776_n.jpg?oh=619920945e4f741f2f31ef321bd5d98b&oe=58720745' } ],
-  provider: 'facebook',
-  _raw: '{"id":"10105700513297463","last_name":"Truong","first_name":"Julie","picture":{"data":{"is_silhouette":false,"url":"https:\\/\\/scontent.xx.fbcdn.net\\/v\\/t1.0-1\\/s200x200\\/10417550_10103418587420213_3389328959999895776_n.jpg?oh=619920945e4f741f2f31ef321bd5d98b&oe=58720745"}},"email":"julkie17\\u0040gmail.com","name":"Julie Truong","gender":"female"}',
-  _json: 
-   { id: '10105700513297463',
-     last_name: 'Truong',
-     first_name: 'Julie',
-     picture: { data: [Object] },
-     email: 'julkie17@gmail.com',
-     name: 'Julie Truong',
-     gender: 'female' } }
-
-*/
-// profileFields: ['id', 'name', 'picture.type(large)', 'email', 'displayName', 'gender']
-
-/*
-
-   { id: '10105700513297463',
-   last_name: 'Truong',
-   first_name: 'Julie',
-   picture: { data: [Object] },
-   email: 'julkie17@gmail.com',
-   name: 'Julie Truong',
-   gender: 'female' } }
-
-*/
-
 passport.serializeUser(function(user, done) {
   console.log('serializeUser:', user);
   done(null, user[0].dataValues.id);
