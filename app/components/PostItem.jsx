@@ -20,11 +20,11 @@ export default class AddAuctionItem extends Component {
     $('.alert .close').on('click', function(e) {
       $(this).parent().hide();
     });
-    
+
     $('#upload_widget_opener').cloudinary_upload_widget(
         { cloud_name: 'dijpyi6ze', upload_preset: 'emhtsrjh', theme: 'minimal', folder: 'item_photos', button_class: 'btn btn-primary' },
-        function(error, result) { 
-          console.log(error, result); 
+        function(error, result) {
+          console.log(error, result);
           context.setState({item: {
             picture: result[0].secure_url
           }});
@@ -86,9 +86,9 @@ export default class AddAuctionItem extends Component {
       }});
       //console.log(this.state.item);
       var context = this;
-      $.ajax({           
-        method: 'GET',        
-        url: 'api/user_data', 
+      $.ajax({
+        method: 'GET',
+        url: 'api/user_data',
         success: function(user) {
           console.log(user.user);
           $.ajax({
@@ -98,7 +98,7 @@ export default class AddAuctionItem extends Component {
             data: JSON.stringify({user: user.user, item: context.state.item}),
             success: function(item) {
               console.log('successfully posted item');
-              browserHistory.push('/dashboard');
+              browserHistory.push('/mydashboard');
 
             },
             error: function(error) {
@@ -110,7 +110,7 @@ export default class AddAuctionItem extends Component {
     }
   }
 
-  _onFocus(e) {                             
+  _onFocus(e) {
     e.currentTarget.type = 'date';
   }
 
@@ -118,7 +118,7 @@ export default class AddAuctionItem extends Component {
     browserHistory.push('/dashboard');
   }
 
-  render() { 
+  render() {
     return (
     <div className="flex-items-xs-center">
       <div className="col-xs-3"></div>
