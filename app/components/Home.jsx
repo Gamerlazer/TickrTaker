@@ -22,14 +22,13 @@ export default class Auction extends Component {
     this.setState({
       entrys: entryArray
     });
-    console.log(this.state);
   }
 
-  grabAuctions (e) {         // Ajax request for auction searching by using search-bar
-    e && e.preventDefault();
+  grabAuctions (e) {
+  // Ajax request for auction searching by using search-bar
     var context = this;
     var filter = '';
-    //console.log($('#search').val());
+
     if ($('#search').val() !== '') {
       filter = $('#search').val();
     }
@@ -70,7 +69,12 @@ export default class Auction extends Component {
           </div>
           <div className="auction-listings col-sm-9">
             {
-              this.state.entrys.map((entry, i) =>(<Listing key={i} item={entry} auth = {this.props.auth} />))
+              this.state.entrys.map((entry, i) =>(
+                <Listing
+                key={i}
+                item={entry}
+                auth={this.props.auth}
+                status={"homeview"}/>))
             }
           </div>
         </div>

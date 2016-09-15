@@ -27,13 +27,13 @@ export default class AuctionItem extends Component {
       timeRemaining: this.calcTime()
     });
   }
-  
+
   componentDidMount () {       //  Set state properties with calculated values
-    
+
     $('img').on('error', function(){ //  Replace broken image links with the sample image
         $(this).attr('src', 'http://res.cloudinary.com/dijpyi6ze/image/upload/v1473715896/item_photos/zfaehmp20xculww4krs6.jpg');
     });
-    
+
     this.interval = setInterval(() => this.setState({
       currentPrice: '$  ' + this.calcPrice().toFixed(2),
       timeRemaining: this.calcTime()
@@ -101,7 +101,7 @@ export default class AuctionItem extends Component {
             method: 'POST',
             url: '/api/items/bids/' + context.props.params.id,
             headers: {'Content-Type': 'application/json'},
-            data: JSON.stringify({user: user, 
+            data: JSON.stringify({user: user,
               bid: $('#bid').val()}),
             success: function (res) {
               $('#bid').val('');
@@ -118,7 +118,7 @@ export default class AuctionItem extends Component {
   }
 
   render () {
-    
+
     var thisItem = this.state.item || {};
     var startDate = new Date(Date.parse(thisItem.startDate));
     var startDateFormatted = startDate.getMonth() + '/' + startDate.getDate() + '/' + startDate.getFullYear() + '  ' + startDate.getHours() % 12 + ':' + ((startDate.getMinutes() < 10) ? '0' + startDate.getMinutes() : startDate.getMinutes()) + (startDate.getHours() > 12 ? ' PM' : ' AM');

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router';
 import BidNow from './BidNow.jsx'
 
 // This should be redundant
@@ -10,15 +9,17 @@ export default class Listing extends Component {
     super(props);
     this.state = {
       currentPrice: undefined,
-      status: props.status
+      status: props.status,
+      currentBid: ''
     };
     this.calcPrice = this.calcPrice.bind(this);
   }
 
   componentWillMount() {    // Set state properties with updated values
+    this.getItemBids();
     this.setState({
       currentPrice: '$  ' + this.calcPrice().toFixed(2),
-      timeRemaining: this.calcTime()
+      timeRemaining: this.calcTime(),
     });
   }
 
@@ -49,10 +50,39 @@ export default class Listing extends Component {
     return calcTime(this.props.item.auctionEndDateByHighestBid);
   }
 
+  getItem() {
+    var context = this;
+    $.ajax({
+      method: 'GET',
+      url: '/api/singleitem/' + context.props.item.id,
+      headers: {'Content-Type': 'application/json'},
+      success: function(res) {
+        context.setState({item: res});
+      }
+    })
+  }
+
+  getItemBids () {
+    var context = this;
+    $.ajax({
+      method: 'GET',
+      url: '/api/items/bids/' + context.props.item.id,
+      headers: {'Content-Type': 'application/json'},
+      success: function (res) {
+        var sorted = res.sort(function (a, b) {
+          return a.price < b.price;
+        });
+        context.setState({
+          bids: sorted,
+          currentBid: sorted[0].price
+        });
+      }
+    })
+  }
+
   render () {
     // var button;
     var id = '/item/' + this.props.item.id;
-
     return (
       <div className="row">
         <div className="col-sm-3">
@@ -63,9 +93,9 @@ export default class Listing extends Component {
           <div className="row">
             <div className="col-md-7">
               <div>
-                Current Price:
+                Current highest bid:
                 <span className="current-price">
-                  {this.state.currentPrice}
+                  {' $' + this.state.currentBid}
                 </span>
               </div>
               <div>
@@ -80,12 +110,17 @@ export default class Listing extends Component {
               </div>
             </div>
             <div className="col-md-5">
-              { this.props.auth() ? <BidNow item={this.props.item} /> : <div></div> }
+              { this.props.auth() ?
+                <BidNow
+                getItem={this.getItem.bind(this)}
+                getItemBids={this.getItemBids.bind(this)}
+                currentBid={this.state.currentBid}
+                item={this.props.item} />
+                : <div></div> }
             </div>
           </div>
         </div>
       </div>
     )
-
   }
 }
