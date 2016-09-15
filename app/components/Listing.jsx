@@ -69,13 +69,12 @@ export default class Listing extends Component {
       url: '/api/items/bids/' + context.props.item.id,
       headers: {'Content-Type': 'application/json'},
       success: function (res) {
-        var sorted = res.sort(function (a, b) {
+        var sorted = res.bids.sort(function (a, b) {
           return a.price < b.price;
         });
-        console.log(sorted)
         context.setState({
           bids: sorted,
-          currentBid: sorted[0] ? sorted[0].price : 0
+          currentBid: sorted[0] ? sorted[0].price : res.endPrice
         });
       }
     })
