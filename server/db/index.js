@@ -34,7 +34,7 @@ db.sync({force: true})
     id: '10154095627189811',
     sumOfRatings: 100,
     numberOfRatings: 20,
-    email: 'voracious.scroll@gmail.com',
+    email: 'voraciousscroll@gmail.com',
     photo: 'https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/11148734_10205233811059304_8200092159283226084_n.jpg?oh=a19a83eef9251ff118ccb61e0b1069df&oe=583F7305'
   }).then(function(lex) {
     UserController.User.create({
@@ -43,8 +43,7 @@ db.sync({force: true})
       id: '10206128224638462',
       sumOfRatings: 130,
       numberOfRatings: 20,
-      email: 'voracious.scroll@gmail.com',
-
+      email: 'voracious.scroll@gmail.com'
     })
     .then(function(seller) {
       ItemController.Item.create({
