@@ -81,8 +81,11 @@ db.sync({force: true})
       });
       ItemController.Item.create({
         title: 'Full bed',
-        description: 'A full bed. Comes with matress.',
-        picture: 'http://res.cloudinary.com/dijpyi6ze/image/upload/v1473717788/item_photos/wqifur3lxghuzoysy8c2.jpg',
+        description: 'Slip into a luxurious Voracious Scroll bed, custom designed for Voracious Scroll hotels, and have your best sleep every night. The Voracious Scroll Mattress & Box Spring is designed with extra coil support and features a unique internal design that prevents edge breakdown. The innovative, patented quilt design and plush top mattress improves circulation and reduces night time restlessness. Feel even more rested by accompanying your Voracious Scroll bed with Voracious Scroll linens, available in variety of thread counts and fabrications that will complete your bed essentials. Make sleep a priority with the Voracious Scroll Bed.', 
+        picture: "https://i.ytimg.com/vi/tdY85uOeCa4/maxresdefault.jpg",
+        // original low res pic:
+        // picture: 'http://res.cloudinary.com/dijpyi6ze/image/upload/v1473717788/item_photos/wqifur3lxghuzoysy8c2.jpg',
+        // to add: http://images.cb2.com/is/image/CB2/DondraBedQueenAV1F12/$web_zoom_furn_colormap$/160914115850/DondraBedQueenAV1F12.jpg, http://images.cb2.com/is/image/CB2/DondraBedQueenAV3F12/$web_zoom_furn_colormap$/160914115850/DondraBedQueenAV3F12.jpg, http://images.cb2.com/is/image/CB2/DondraBedQueenF12/$web_zoom_furn_colormap$/130830204135/dondra-bed.jpg
         startPrice: 999.00,
         endPrice: 1.00
       })
