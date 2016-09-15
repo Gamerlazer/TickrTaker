@@ -31,7 +31,7 @@ module.exports = (app, db) => {
   });
 
   app.delete('/api/items/bids/:itemId', (req, res, next) => {
-    db.BidController.removeBidFromItem(req, res, next, req.params.itemId);  
+    db.BidController.removeBidFromItem(req, res, next, req.params.itemId);
     // res.send('DELETE /api/bids');
   });
 
@@ -79,6 +79,11 @@ module.exports = (app, db) => {
         user: req.user
       });
     }
+  });
+
+  app.get('/api/profile/:id', function(req, res) {
+    var authenticated = req.user ? true : false;
+    db.UserController.getProfile(req, res, authenticated);
   });
 
 };

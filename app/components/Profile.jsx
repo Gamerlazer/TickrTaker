@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 export default class Profile extends Component {
   constructor (props) {
     super (props);
+    console.log(props);
     this.state = {
       name: 'loading..',
       rating: 'loading..',
@@ -16,7 +17,12 @@ export default class Profile extends Component {
 
   getProfileInfo(){
     $.ajax({
-
+      url: '/api/user_data',
+      method: 'GET',
+      success: function(response){
+        console.log(response.user);
+        response.user.name
+      }
     })
   }
 
