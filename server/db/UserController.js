@@ -16,11 +16,11 @@ module.exports = (db, Sequelize) => {
   //  Only email at the moment. Feel free to add/remove fields and change facebook information.
 
   var updateUser = (req, res, userObject) => {
-    if (req.user === undefined) { 
+    if (req.user === undefined) {
       res.send('user undefined');
       return;
     }
-    
+
     User.find({ where: { id: req.user.dataValues.id }})
     .then(function(user) {
       if (!user) {
@@ -39,8 +39,22 @@ module.exports = (db, Sequelize) => {
     });
   };
 
+  var getProfile = (req, res, auth) => {
+    var id = req.params.id;
+    User.find({where: { id: id }})
+    .then(function(user) {
+      if (!user) {
+        console.log('cannot find user');
+        res.json({ notfound: true });
+      } else {
+        res.json({user: user, auth: auth});
+      }
+    });
+  };
+
   return {
     User: User,
+    getProfile: getProfile,
     updateUser: updateUser
   };
 };
