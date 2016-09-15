@@ -12,8 +12,8 @@ export default class App extends Component {
     this.checkAuthState = this.checkAuthState.bind(this);
   }
 
-  componentWillMount() {   //  Retrieve the data, check if user logged in 
-    
+  componentWillMount() {   //  Retrieve the data, check if user logged in
+
     var context = this;
     $.get('/checkLogin').then(function(data) {
       context.setState({
@@ -41,7 +41,6 @@ export default class App extends Component {
     return (
       <div>
         {navbar}
-        <div className="col-xs-12 navbar-break"></div>
         {children}
       </div>
     );

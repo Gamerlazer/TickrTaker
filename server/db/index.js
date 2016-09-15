@@ -33,6 +33,7 @@ db.sync({force: true})
     lastName: 'Pantelides',
     id: '10154095627189811',
     email: 'voracious.scroll@gmail.com',
+    photo: 'https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/11148734_10205233811059304_8200092159283226084_n.jpg?oh=a19a83eef9251ff118ccb61e0b1069df&oe=583F7305'
   }).then(function(lex) {
     UserController.User.create({
       firstName: 'Kunal',

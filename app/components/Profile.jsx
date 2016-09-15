@@ -5,6 +5,7 @@ export default class Profile extends Component {
     super (props);
     console.log(props);
     this.state = {
+      notfound: false,
       name: 'loading..',
       rating: 'loading..',
       description: 'loading..'
@@ -16,29 +17,47 @@ export default class Profile extends Component {
   }
 
   getProfileInfo(){
+    var context = this;
     $.ajax({
-      url: '/api/user_data',
+      url: '/api/profile/' + this.props.params.id,
       method: 'GET',
       success: function(response){
-        console.log(response.user);
-        response.user.name
+        if (response.notfound) {
+          context.setState({notFound: true});
+        }
+        var name = response.user.firstName + ' ' + response.user.lastName;
+        var rating = response.user.rating;
+        var description = response.user.description;
+        context.setState({
+          name: name,
+          rating: rating,
+          description: description,
+          picture: response.user.photo
+        })
       }
     })
   }
 
   render(){
+    if (this.state.notfound) {
+      return (<div>User not found!</div>)
+    }
     return (
-    <div class="row">
-      <div class="col-md-5 profile-left">
-        <img width="100%" src="" alt=""></img>
-        <div>{}</div>
-        <div>Rating...</div>
-        <div>About me...</div>
+    <div className="user-profile row">
+      <div className="col-md-5 profile-left">
+        <img className="profile-image" src={this.state.picture} alt=""></img>
+        <div>{ this.state.name }</div>
+        <div>
+          { this.state.rating ? this.state.rating : 'Unrated' }
+        </div>
+        <div>
+          { this.state.description ? this.state.description : 'User hasn\'t filled out description yet.'}
+        </div>
       </div>
-      <div class="col-md-7 profile-right">
+      <div className="col-md-7 profile-right">
         <h2>Seller / Buyer History</h2>
-        <div class="history-list">
-
+        <div className="history-list">
+          History list goes here
         </div>
       </div>
     </div>
