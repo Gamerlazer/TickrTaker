@@ -356,22 +356,51 @@ hr {
 }
 
 .btn.edit {
-  float: right 
+  float: right
 }
 
 
 /* PROFILE */
 
-.user-profile.row {
+.user-profile {
   padding-top: 15px;
-  margin-top: 100px;
+}
+
+.profile-left {
+  text-align: center;
+}
+
+/*** User Name ***/
+.profile-left > h4 {
+  margin-top: 8px;
 }
 
 .profile-image {
-  max-width: 200px;
+  width: 100%;
+  background: black;
+  border-radius: 10px;
+  border: 4px silver solid;
+}
+
+.profile-image > img {
+  width: 80%;
+  border-radius: 8px;
+  margin: 9% auto;
 }
 
 .profile-right > h2 {
   text-align: center;
+}
+
+/*** User Description ***/
+
+.user-description {
+  padding: 8px;
+  border: 1px solid silver;
+  border-radius: 6px;
+  margin-top: 15px;
+  font-size: 13px;
+  background: white;
+  text-align: left;
 }
 
