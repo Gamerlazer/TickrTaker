@@ -70,11 +70,9 @@ module.exports = (app, db) => {
   });
 
   app.get('/api/user_data', function(req, res) {
-    console.log(req, '=============================================>');
     if (req.user === undefined) {
       res.json({});
     } else {
-      console.log('THIS IS HAPPENING');
       res.json({
         user: req.user
       });
