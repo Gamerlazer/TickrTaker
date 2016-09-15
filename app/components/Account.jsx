@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router'; 
+import UserRating from './UserRating.jsx';
 
 export default class UserSetting extends Component {
 
@@ -135,6 +136,7 @@ export default class UserSetting extends Component {
     return (
       
       <div style = {{margin: 50}}>
+      <UserRating />
         <div>
           <Link to='/usersetting' onClick={this.handleToggle.bind(this, 'passWord')}><h3>Change Password</h3></Link>
           {passCheck}
