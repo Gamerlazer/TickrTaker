@@ -9,7 +9,7 @@ import MyBids from './components/MyBids.jsx';
 import PostItem from './components/PostItem.jsx';
 import ProductDetail from './components/ProductDetail.jsx';
 import Account from './components/Account.jsx';
-
+import Profile from './components/Profile.jsx'
 
 
 ReactDOM.render((                             //  Set up routes to navigate between different pages
@@ -21,6 +21,7 @@ ReactDOM.render((                             //  Set up routes to navigate betw
       <Route path='/mybids' component= {MyBids} />
       <Route path='/postitem' component = {PostItem} />
       <Route path='/account' component={Account} />
+      <Route path='/profile/:id' component={Profile} />
       <Route path='*' component={NotFound} />
     </Route>
   </Router>
