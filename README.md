@@ -32,7 +32,7 @@ Run `npm install` in the `/server` folder.
 
 - Install Postgres on your computer. 
   - Enter Postgres terminal and run the following commands:
-    - `CREATE USER ubuntu WTIH PASSWORD 'password';`
+    - `CREATE USER ubuntu WITH PASSWORD 'password';`
     - `ALTER USER ubuntu WITH SUPERUSER;`
     - `CREATE DATABASE tickr;`
 
