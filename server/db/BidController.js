@@ -8,11 +8,13 @@ module.exports = (db, Sequelize, User, Item) => {
   //Will return all bids made by a user
   const getBidsForSeller = (req, res, next) => {
     //Find the user in postgres associated with the user sent in req.body
+
     // if (req.params.id === undefined) {
     //   res.send('user undefined');
     //   return;
     // }
-    User.findOne({where: {id: req.params.id}})
+
+    User.findOne({where: {id: req.user.dataValues.id}})
     .then(function(user) {
       //Get the individual bids made by that user
       user.getBids({raw: true})
