@@ -25,10 +25,10 @@ export default class MyDashboard extends Component {
       success: function(items) {
         console.log('getting sales items')
         var activeItems = items.filter(function(e) {
-          return e.valid === true;
+          return e.item.valid === true;
         })
         var expiredItems = items.filter(function(e) {
-          return e.valid === false;
+          return e.item.valid === false;
         })
         context.setState({activeItems: activeItems, expiredItems: expiredItems})
       }
@@ -42,7 +42,13 @@ export default class MyDashboard extends Component {
       url: '/api/bids',
       success: function(bids) {
         console.log('getting bid items')
-        context.setState({items: items})
+        var activeItems = bids.filter(function(bid) {
+          return bid.item.valid === true;
+        })
+        var expiredItems = bids.filter(function(bid) {
+          return bid.item.valid === false;
+        })
+        context.setState({activeItems: activeItems, expiredItems: expiredItems})
       }
     })
   }
@@ -99,6 +105,34 @@ export default class MyDashboard extends Component {
       view = (
         <div>
           This is the bids page
+          <div className="auction-listings">
+            <h4>Active Bids</h4>
+            {
+              this.state.activeItems.map((item, i)=>(
+                <Listing
+                key={i}
+                auth={this.props.auth}
+                item={item.item}
+                bidNowActive={true}
+                activeBid={true}
+                />
+              ))
+            }
+          </div>
+          <div className="auction-listings">
+            <h4>Expired Bids</h4>
+            {
+              this.state.expiredItems.map((item, i)=>(
+                <Listing
+                key={i}
+                auth={this.props.auth}
+                item={item.item}
+                bidNowActive={false}
+                activeBid={false}
+                />
+              ))
+            }
+          </div>
         </div>
       )
     }
