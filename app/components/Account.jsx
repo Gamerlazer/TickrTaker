@@ -22,8 +22,6 @@ export default class UserSetting extends Component {
   }
 
   setUser (user) {
-    user.user.sumOfRatings = 100;
-    user.user.numberOfRatings = 20;
     let userStarRating = user.user.numberOfRatings === 0 ? 0 : user.user.sumOfRatings / user.user.numberOfRatings;
     this.setState({
       id: user.user.id,
@@ -34,7 +32,6 @@ export default class UserSetting extends Component {
       aboutMe: user.user.aboutMe,
       starRating: userStarRating
     })
-    console.log(this.state.starRating, 'star RATING')
   }
 
   componentWillMount() {
@@ -43,10 +40,7 @@ export default class UserSetting extends Component {
       method: 'GET',
       url: 'api/user_data',
       success: function(user) {
-        // console.log('got here')
-        console.log('User Obj', user)
-        context.setUser(user)
-        console.log('User', context.state)
+        context.setUser(user);
       }
     });
   }
@@ -71,7 +65,6 @@ export default class UserSetting extends Component {
       headers: {'Content-Type': 'application/json'},
       data: JSON.stringify({aboutMe: context.state.aboutMe}),
       success: function(response) {
-        console.log('Saved profile');
       }, error: function(error) {
         console.error('Error: ', error);
       }
@@ -137,15 +130,13 @@ export default class UserSetting extends Component {
         method: 'GET',
         url: 'api/user_data',
         success: function(userData) {
-          console.log('user',userData);
           $.ajax({
             method: 'PUT',
             url: '/users',
             headers: {'Content-Type': 'application/json'},
             data: JSON.stringify({userData: context.state.user}),
             success: function(newUserInformation) {
-              console.log(newUserInformation);
-              console.log('User ingo updated !!');
+              console.log('Updated user info: ', newUserInformation);
             },
             error: function(error) {
               console.log('error');

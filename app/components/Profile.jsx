@@ -12,14 +12,15 @@ export default class Profile extends Component {
       rating: 'loading..',
       aboutMe: 'loading..',
       starRating: null,
-      activeItems: {},
-      oldItems: {}
+      activeItems: [],
+      oldItems: []
     }
   }
 
   componentWillMount() {
     this.getProfileInfo();
     this.getActiveItems();
+    this.getOldItems();
 
     console.log(this.state.activeItems, 'get active item');
   }
@@ -60,10 +61,9 @@ export default class Profile extends Component {
   getActiveItems () {
     var context = this;
     $.ajax({
-      url: '/api/selleritems/' + this.props.params.id,
+      url: '/api/selleritems',
       method: 'GET',
-      success: function(response){
-        console.log(response, 'ALL ACTIVE')
+      success: function(response) {
         context.setState({
           activeItems: response
         });
@@ -71,19 +71,19 @@ export default class Profile extends Component {
     })
   }
 
-  // getOldItems () {
-  //   var context = this;
-  //   $.ajax({
-  //     url: '/api/oldselleritems/',
-  //     method: 'GET',
-  //     success: function(response){
-  //       console.log(response, 'ALL OLD ')
-  //       context.setState({
-  //         oldItems: response
-  //       });
-  //     }
-  //   })
-  // }
+  getOldItems () {
+    var context = this;
+    $.ajax({
+      url: '/api/oldselleritems',
+      method: 'GET',
+      success: function(response){
+        console.log(response, 'ALL OLD ')
+        context.setState({
+          oldItems: response
+        });
+      }
+    })
+  }
 
   render(){
 
@@ -109,15 +109,49 @@ export default class Profile extends Component {
       </div>
       <div className="col-md-8 profile-right">
         <h2>Seller / Buyer History</h2>
-        <div className="history-list">
-          History list goes here
-
-          <Listing/>
+        <div className="history-list auction-listings">
+         <h4>Active Items</h4>
+          { this.state.activeItems.map((item, i) => ( 
+            <Listing 
+              key={i}
+              item={item}
+              auth={this.props.auth}
+              refreshPage = {this.getActiveItems}
+              bidNowActive = {false}
+              activeBid={true}/>
+            ))}
         </div>
+        <div className="history-list auction-listings">
+         <h4>Past Items</h4>
+          { this.state.oldItems.map((item, i) => ( 
+            <Listing 
+              key={i}
+              item={item}
+              auth={this.props.auth}
+              refreshPage = {this.getActiveItems}
+              bidNowActive = {false}
+              activeBid={false}/>
+            ))}
+        </div>
+
       </div>
     </div>
     )
   }
-
-
 }
+
+
+//           {this.state.activeItems.map((item) => (<div>{item.title}</div>))}
+//           {this.state.activeItems.map((item) => (<div>{item.title}</div>))}
+// .map((item) => (<div>hi</div>))
+
+// {
+//   this.state.activeItems.map((entry, i) =>(<div>entry.title</div>))
+// }
+
+// <Listing
+// key={i}
+// item={entry}
+// auth={this.props.auth}
+// refreshPage = {this.props.grabAuctions}
+// />))
