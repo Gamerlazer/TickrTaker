@@ -10,70 +10,86 @@ export default class MyDashboard extends Component {
     // view will be buying or selling
     this.state = {
       view: this.props.params.view,
-      items: []
+      activeItems: []
     };
   }
 
-  // getSalesItems () {
+
+
+  // getActiveItems () {
   //   var context = this;
   //   $.ajax({
+  //     url: '/api/selleritems',
   //     method: 'GET',
-  //     url: '/api/selleritems/',
-  //     success: function(items) {
-  //       context.setState({items: items})
+  //     success: function(response) {
+  //       console.log('working on it')
+  //       context.setState({
+  //         activeItems: response
+  //       });
   //     }
   //   })
   // }
+  getSalesItems () {
+    var context = this;
+    $.ajax({
+      method: 'GET',
+      url: '/api/selleritems/',
+      success: function(items) {
+        context.setState({items: items})
+      }
+    })
+  }
 
-  // getBidItems () {
-  //   var context = this;
-  //   $.ajax({
-  //     method: 'GET',
-  //     url: '/api/bids',
-  //     success: function(bids) {
-  //       context.setState({items: items})
-  //     }
-  //   })
-  // }
+  getBidItems () {
+    var context = this;
+    $.ajax({
+      method: 'GET',
+      url: '/api/bids',
+      success: function(bids) {
+        context.setState({items: items})
+      }
+    })
+  }
 
-  // componentWillMount() {
-  //   var unauthorizedView = (
-  //     !this.props.auth() ||
-  //     this.props.params.view!=='sales' ||
-  //     this.props.params.view!=='bids'
-  //   );
+  componentWillMount() {
+    var unauthorizedView = (
+      !this.props.auth() ||
+      this.props.params.view!=='sales' ||
+      this.props.params.view!=='bids'
+    );
 
-  //   if (unauthorizedView) {
-  //     this.setState({view: 'unauthorized'})
-  //   } else if (this.state.view === 'sales') {
-  //     this.getSalesItems()
-  //   } else if (this.state.view === 'bids') {
-  //     this.getBidItems()
-  //   }
-  // }
+    if (unauthorizedView) {
+      this.setState({view: 'unauthorized'})
+    } else if (this.state.view === 'sales') {
+      this.getSalesItems()
+    } else if (this.state.view === 'bids') {
+      this.getBidItems()
+    }
+
+  }
 
   render() {
-    <div></div>
-    // if (this.state.view = 'unauthorized') {
-    //   return (
-    //     <div>
-    //       Sorry, page was not found!
-    //     </div>
-    //   );
-    // }
-    // if (this.state.view = 'sales') {
-    //   return (
-    //     <div>
-    //       This is the sales page
-    //     </div>
-    //   )
-    // }
-    // if (this.state.view = 'bids') {
-    //   return (
-    //     <div>
-    //       This is the bids page
-    //     </div>
-    //   )
-    // }
+
+    if (this.state.view = 'unauthorized') {
+      return (
+        <div>
+          Sorry, page was not found!
+        </div>
+      );
+    }
+    if (this.state.view = 'sales') {
+      return (
+        <div>
+          This is the sales page
+        </div>
+      )
+    }
+    if (this.state.view = 'bids') {
+      return (
+        <div>
+          This is the bids page
+        </div>
+      )
+    }
   }
 }

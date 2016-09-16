@@ -4,7 +4,7 @@ import Stars from 'react-stars'
 export default class UserRating extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props, 'prop')
+    
     // editable = undefined === editable
     // editable = false === Not editable
 

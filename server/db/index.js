@@ -70,8 +70,22 @@ db.sync({force: true})
         endDate: '2016-09-13T00:00Z',
         auctionEndDateByHighestBid: '2016-09-13T00:00Z'
       }).then(function (item) {
-        lex.addItem(item);
+        seller.addItem(item);
       });
+
+      ItemController.Item.create({
+        title: 'Pikachu',
+        description: 'Pika Pika',
+        picture: 'http://vignette4.wikia.nocookie.net/pokemon/images/5/5f/025Pikachu_OS_anime_11.png/revision/latest?cb=20150717063951',
+        startPrice: 10000.00,
+        endPrice: 100.00,
+        endDate: '2016-09-13T00:00Z',
+        auctionEndDateByHighestBid: '2016-09-13T00:00Z',
+        valid: false
+      }).then(function (item) {
+        seller.addItem(item);
+      });
+
       ItemController.Item.create({
         title: 'Fluorescent',
         description: 'Some glow sticks!',

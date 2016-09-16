@@ -8,10 +8,12 @@ import {calcTime} from '../helpers.js';
 export default class Listing extends Component {
   constructor (props) {
     super(props);
+
     this.state = {
       status: props.status,
       currentBid: '',
-      endDate: ''
+      endDate: '',
+      activeBid: this.props.activeBid !== undefined ? this.props.activeBid : true 
     };
   }
 
@@ -99,18 +101,30 @@ export default class Listing extends Component {
           </Link>
           <div className="row">
             <div className="col-md-7">
-              <div>
-                Current highest bid:
-                <span className="current-price">
-                  {' $' + this.state.currentBid}
-                </span>
-              </div>
-              <div>
-                Time remaining:
-                <span className="time-remaining">
-                  {' ' + this.state.timeRemaining}
-                </span>
-              </div>
+              {this.state.activeBid ? 
+                <div>
+                  Current highest bid:
+                  <span className="current-price">
+                    {' $' + this.state.currentBid}
+                  </span>
+                </div>
+                : 
+                <div>
+                  Price sold:
+                  <span className="current-price">
+                    {' $' + this.state.currentBid}
+                  </span>
+                </div>
+              }
+              {this.state.activeBid ? 
+                <div>
+                  Time remaining:
+                  <span className="time-remaining">
+                    {' ' + this.state.timeRemaining}
+                  </span> 
+                </div>
+                : <span></span>
+              }
               { (this.state.status !== 'forsale' && this.props.auth() ) ?
               <div>
                 Seller:
