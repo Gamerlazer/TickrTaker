@@ -145,15 +145,16 @@ module.exports = (db, Sequelize, User) => {
   //  get all items that user has for sale.
 
   const getItemsForSale = (req, res, next) => {
-    if (req.body.user === undefined) {
+    if (req.params.id === undefined) {
       res.send('user undefined');
       return;
     }
-    User.findOne({where: {id: req.body.user.id}})
+
+    User.findOne({where: {id: req.params.id }})
     .then(function(user) {
       user.getItems({where: {valid: true}, raw: true})
       .then(function(items) {
-        console.log(items);
+        console.log('GET ITEM ======================= USER HAS BEEN FOUND!!!! ================####', items);
         res.send(items);
       });
     }).catch(function(err) {
@@ -162,11 +163,11 @@ module.exports = (db, Sequelize, User) => {
   };
 
   const getOldItemsForSale = (req, res, next) => {
-    if (req.body.user === undefined) {
+    if (req.params.id === undefined) {
       res.send('user undefined');
       return;
     }
-    User.findOne({where: {id: req.body.user.id}})
+    User.findOne({where: {id: req.params.id}})
     .then(function(user) {
       user.getItems({where: {valid: false}, raw: true})
       .then(function(items) {
