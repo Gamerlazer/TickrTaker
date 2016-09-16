@@ -61,7 +61,7 @@ export default class Profile extends Component {
   getActiveItems () {
     var context = this;
     $.ajax({
-      url: '/api/selleritems',
+      url: '/api/selleritems' + this.props.params.id,
       method: 'GET',
       success: function(response) {
         context.setState({

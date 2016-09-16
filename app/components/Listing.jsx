@@ -36,7 +36,9 @@ export default class Listing extends Component {
       timeRemaining: this.calcTime(this.state.endDate)
     }), 1000);
     this.calcTime = this.calcTime.bind(this);
-    setInterval(this.checkActive.bind(this), 10000);
+    setInterval(this.checkActive.bind(this), 1000);
+
+    // console.log('endDate: ', new Date(this.state.endDate), 'now: ', new Date(), 'Difference in enddate and now', new Date() > new Date(this.state.endDate));
   }
 
   componentWillUnmount () {    // Clears up DOM elements that were created in ComponentDidMount method
@@ -54,14 +56,17 @@ export default class Listing extends Component {
 
   checkActive () {
     // console.log('this timmer is working', this.state.timeRemaining, this.state.id);
-    if (this.state.timeRemaining === '00 days  00:00:00 hours') {
+    if ( new Date() > new Date(this.state.endDate) && this.state.valid) {
+      // console.log('Items end date is less than now')
+
       // return;
       // this.props.refreshPage();
+
       $.ajax({
-        method: 'GET',
+        method: 'PUT',
         url: '/api/singleItem/' + this.state.id,
         success: (response) => {
-          console.log(response.valid);
+          console.log(response.valid, 'Response Vaild');
         }
       })
     }
@@ -99,10 +104,8 @@ export default class Listing extends Component {
       success: function(res) {
         context.setState({
           endDate: res.auctionEndDateByHighestBid,
-          valid: res.valid,
-          id: context.props.item.id
+          valid: res.valid
         });
-        console.log(context.state.id, 'This states id')
       }
     })
   }

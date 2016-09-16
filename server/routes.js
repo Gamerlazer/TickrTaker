@@ -17,13 +17,13 @@ module.exports = (app, db) => {
 
   //ITEMS ENDPOINT
   app.get('/api/singleItem/:itemId', (req, res, next) => {
-    // console.log(req.params.itemId, 'REQUETSSSSSS         ************************ ENDPOINT' );
     db.ItemController.getOneItem(req, res, next, req.params.itemId);
   });
 
-  // app.put('/api/singleItem/:itemId', (req, res, next) => {
-  //   db.ItemController.expiredItem(req, res, next, req.params.itemId);
-  // });
+  app.put('/api/singleItem/:itemId', (req, res, next) => {
+    console.log(req.params.itemId, 'REQUETSSSSSS         ************************ ENDPOINT' );
+    db.ItemController.expiredItem(req, res, next);
+  });
 
   app.get('/api/items/bids/:itemId', (req, res, next) => {
     db.BidController.getBidsForItem(req, res, next, req.params.itemId);

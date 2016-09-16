@@ -247,8 +247,8 @@ module.exports = (db, Sequelize, User) => {
     });
   };
 
-  const expiredItem = () => {
-
+  const expiredItem = (req, res, next) => {
+    console.log('EXPIRED ITEM  ')
   };
 
   return {

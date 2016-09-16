@@ -12,6 +12,7 @@ export default class MyDashboard extends Component {
       view: this.props.params.view,
       activeItems: []
     };
+
   }
 
   getSalesItems () {
@@ -45,8 +46,14 @@ export default class MyDashboard extends Component {
     } else if (this.state.view === 'bids') {
       this.getBidItems()
     }
+
+
   }
 
+  componentDidMount() {
+    console.log('THIS.STATE.VIEW!', this.props.route.viewType)
+  }
+  
   render() {
     console.log(this.state.view)
     if (this.state.view === 'unauthorized') {
