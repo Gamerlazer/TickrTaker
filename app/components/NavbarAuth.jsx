@@ -14,8 +14,11 @@ export default class Navbar2 extends Component {
             <li className="nav-item col-md-2 col-sm-12 ">
               <Link className="nav-link" to="/home">Home</Link>
             </li>
-            <li className="nav-item col-md-2 col-sm-12 ">
-              <Link className="nav-link " to="/mydashboard">My Dashboard</Link>
+            <li className="dropdown nav-item col-md-2 col-sm-12 ">
+              <Link className="nav-link " to="/mydashboard/bids">Bidding</Link>
+            </li>
+            <li className="dropdown nav-item col-md-2 col-sm-12 ">
+              <Link className="nav-link " to="/mydashboard/sales">Selling</Link>
             </li>
             <li className="nav-item col-md-2 col-sm-12 ">
               <Link className="nav-link" to="/postitem">Post Item</Link>

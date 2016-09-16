@@ -1,7 +1,6 @@
 // var db = require('./db/index.js');
 
 module.exports = (app, db) => {
-
   //USERS ENDPOINT
 
   // app.post('/signup', (req, res) => {
@@ -18,8 +17,13 @@ module.exports = (app, db) => {
 
   //ITEMS ENDPOINT
   app.get('/api/singleItem/:itemId', (req, res, next) => {
+    // console.log(req.params.itemId, 'REQUETSSSSSS         ************************ ENDPOINT' );
     db.ItemController.getOneItem(req, res, next, req.params.itemId);
   });
+
+  // app.put('/api/singleItem/:itemId', (req, res, next) => {
+  //   db.ItemController.expiredItem(req, res, next, req.params.itemId);
+  // });
 
   app.get('/api/items/bids/:itemId', (req, res, next) => {
     db.BidController.getBidsForItem(req, res, next, req.params.itemId);
@@ -60,8 +64,8 @@ module.exports = (app, db) => {
 
   //BIDS ENDPOINT
 
-  app.get('/api/bids/:id', (req, res, next) => {
-    // console.log('***************', req.body);
+  app.get('/api/bids', (req, res, next) => {
+    console.log('***************', req.user.dataValues.id);
     db.BidController.getBidsForSeller(req, res, next);
   });
 
