@@ -24,7 +24,7 @@ export default class Auction extends Component {
     });
   }
 
-  grabAuctions (e) {
+  grabAuctions () {
   // Ajax request for auction searching by using search-bar
     var context = this;
     var filter = '';
@@ -74,6 +74,7 @@ export default class Auction extends Component {
                 key={i}
                 item={entry}
                 auth={this.props.auth}
+                refreshPage = {this.props.grabAuctions}
                 />))
             }
           </div>

@@ -39,13 +39,13 @@ module.exports = (app, db) => {
     db.ItemController.getAllItems(req, res, next);
   });
 
-  app.post('/api/selleritems', (req, res, next) => {
-    console.log('request body******', req.body);
+  app.get('/api/selleritems', (req, res, next) => {
+    console.log('SELLER ID @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
     db.ItemController.getItemsForSale(req, res, next);
     // res.send('GET /api/items');
   });
 
-  app.post('/api/oldselleritems', (req, res, next) => {
+  app.get('/api/oldselleritems', (req, res, next) => {
     db.ItemController.getOldItemsForSale(req, res, next);
   });
 
@@ -60,7 +60,7 @@ module.exports = (app, db) => {
 
   //BIDS ENDPOINT
 
-  app.post('/api/bids', (req, res, next) => {
+  app.get('/api/bids/:id', (req, res, next) => {
     // console.log('***************', req.body);
     db.BidController.getBidsForSeller(req, res, next);
   });

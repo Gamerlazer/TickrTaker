@@ -1,25 +1,31 @@
 import React, {Component} from 'react';
 import UserRating from './UserRating.jsx';
+import Listing from './Listing.jsx';
 
 export default class Profile extends Component {
   constructor (props) {
     super (props);
-    console.log(props);
+    console.log(this.props.auth(), 'AUTH');
     this.state = {
       notfound: false,
       name: 'loading..',
       rating: 'loading..',
       aboutMe: 'loading..',
-      starRating: null
+      starRating: null,
+      activeItems: [],
+      oldItems: {}
     }
   }
 
-  componentWillMount(){
+  componentWillMount() {
     this.getProfileInfo();
+    this.getActiveItems();
+
+    console.log(this.state.activeItems, 'get active item');
   }
 
 
-  getProfileInfo(){
+  getProfileInfo() {
     var context = this;
     $.ajax({
       url: '/api/profile/' + this.props.params.id,
@@ -31,6 +37,7 @@ export default class Profile extends Component {
         console.log('response',response.user)
 
         var name = response.user.firstName + ' ' + response.user.lastName;
+        var id = response.user.id;
         var rating = response.user.rating;
         var aboutMe = response.user.aboutMe;
         var numberOfRatings = response.user.numberOfRatings;
@@ -38,6 +45,7 @@ export default class Profile extends Component {
         var starRating = numberOfRatings === 0 ? null : sumOfRatings / numberOfRatings;
 
         context.setState({
+          id: id,
           name: name,
           rating: rating,
           aboutMe: aboutMe,
@@ -47,6 +55,35 @@ export default class Profile extends Component {
       }
     })
   }
+
+
+  getActiveItems () {
+    var context = this;
+    $.ajax({
+      url: '/api/selleritems/' + this.props.params.id,
+      method: 'GET',
+      success: function(response){
+        console.log(response, 'ALL ACTIVE')
+        context.setState({
+          activeItems: response
+        });
+      }
+    })
+  }
+
+  // getOldItems () {
+  //   var context = this;
+  //   $.ajax({
+  //     url: '/api/oldselleritems/',
+  //     method: 'GET',
+  //     success: function(response){
+  //       console.log(response, 'ALL OLD ')
+  //       context.setState({
+  //         oldItems: response
+  //       });
+  //     }
+  //   })
+  // }
 
   render(){
 
@@ -62,7 +99,7 @@ export default class Profile extends Component {
         </div>
         <h4>{ this.state.name }</h4>
         <div>
-          {this.state.starRating ? (<UserRating editable={'false'} starRating={ starRating }/>) : 'Unrated'} 
+          {this.state.starRating ? (<UserRating editable={'false'} starRating={ starRating }/>) : 'Unrated'}
         </div>
 
 
@@ -74,11 +111,24 @@ export default class Profile extends Component {
         <h2>Seller / Buyer History</h2>
         <div className="history-list">
           History list goes here
+          {this.state.activeItems}
         </div>
       </div>
     </div>
     )
   }
-
-
 }
+
+
+// .map((item) => (<div>hi</div>))
+
+// {
+//   this.state.activeItems.map((entry, i) =>(<div>entry.title</div>))
+// }
+
+// <Listing
+// key={i}
+// item={entry}
+// auth={this.props.auth}
+// refreshPage = {this.props.grabAuctions}
+// />))

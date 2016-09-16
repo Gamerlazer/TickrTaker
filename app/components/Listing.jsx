@@ -3,67 +3,19 @@ import {Link} from 'react-router';
 import BidNow from './BidNow.jsx'
 
 // This should be redundant
-import {calcPrice, calcTime} from '../helpers.js';
+import {calcTime} from '../helpers.js';
 
 export default class Listing extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      currentPrice: undefined,
       status: props.status,
-      currentBid: ''
+      currentBid: '',
+      endDate: ''
     };
-    this.calcPrice = this.calcPrice.bind(this);
   }
 
-  componentWillMount() {    // Set state properties with updated values
-    this.getItemBids();
-    this.setState({
-      currentPrice: '$  ' + this.calcPrice().toFixed(2),
-      timeRemaining: this.calcTime(),
-    });
-  }
-
-  componentDidMount () {    //  Set state properties with calculated values
-    $('img').on('error', function(){ //  Replace broken image links with the sample image
-        $(this).attr('src', 'http://res.cloudinary.com/dijpyi6ze/image/upload/v1473715896/item_photos/zfaehmp20xculww4krs6.jpg');
-    });
-
-    this.interval = setInterval(() => this.setState({
-      currentPrice: '$  ' + this.calcPrice().toFixed(2),
-      timeRemaining: this.calcTime()
-    }), 1000);
-    this.calcPrice = this.calcPrice.bind(this);
-    this.calcTime = this.calcTime.bind(this);
-
-  }
-  componentWillUnmount () {    // Clears up DOM elements that were created in ComponentDidMount method
-    this.interval && clearInterval(this.interval);
-    this.interval = false;
-  }
-
-  calcPrice () {     // Price calculation check helper.js
-    var thisItem = this.props.item;
-    return calcPrice(thisItem.startPrice, thisItem.endPrice, thisItem.startDate, thisItem.endDate);
-  }
-
-  calcTime () {      //  Time calculation check helper.js
-    return calcTime(this.props.item.auctionEndDateByHighestBid);
-  }
-
-  getItem() {
-    var context = this;
-    $.ajax({
-      method: 'GET',
-      url: '/api/singleitem/' + context.props.item.id,
-      headers: {'Content-Type': 'application/json'},
-      success: function(res) {
-        context.setState({item: res});
-      }
-    })
-  }
-
-  getItemBids () {
+  getBids () {
     var context = this;
     $.ajax({
       method: 'GET',
@@ -75,7 +27,56 @@ export default class Listing extends Component {
         });
         context.setState({
           bids: sorted,
-          currentBid: sorted[0] ? sorted[0].price : res.endPrice
+          currentBid: sorted[0] ? sorted[0].price : res.endPrice,
+        });
+      }
+    })
+  }
+
+  componentWillMount() {    // Set state properties with updated values
+    this.getBids();
+    this.setState({
+      endDate: this.props.item.auctionEndDateByHighestBid,
+      timeRemaining: this.calcTime(this.props.item.auctionEndDateByHighestBid)
+    });
+  }
+
+  componentDidMount () {    //  Set state properties with calculated values
+    $('img').on('error', function(){ //  Replace broken image links with the sample image
+        $(this).attr('src', 'http://res.cloudinary.com/dijpyi6ze/image/upload/v1473715896/item_photos/zfaehmp20xculww4krs6.jpg');
+    });
+
+    this.interval = setInterval(() => this.setState({
+      timeRemaining: this.calcTime(this.state.endDate)
+    }), 1000);
+    this.calcTime = this.calcTime.bind(this);
+  }
+
+  componentWillUnmount () {    // Clears up DOM elements that were created in ComponentDidMount method
+    this.interval && clearInterval(this.interval);
+    this.interval = false;
+  }
+
+  checkActive () {
+    if (this.state.timeRemaining <= 0) {
+      this.props.refreshPage();
+    }
+  }
+
+  // This calculates the time remaining through a helper
+  calcTime (endDate) {
+    return calcTime(endDate);
+  }
+
+  getItem() {
+    var context = this;
+    $.ajax({
+      method: 'GET',
+      url: '/api/singleitem/' + context.props.item.id,
+      headers: {'Content-Type': 'application/json'},
+      success: function(res) {
+        context.setState({
+          endDate: res.auctionEndDateByHighestBid
         });
       }
     })
@@ -86,6 +87,7 @@ export default class Listing extends Component {
 
     var itemUrl = '/item/' + this.props.item.id;
     var sellerProfile = '/profile/' + this.props.item.userId;
+    var seller = this.props.item.sellerName ? ' '+this.props.item.sellerName : ' Seller'
     return (
       <div className="row">
         <div className="col-sm-3">
@@ -106,15 +108,15 @@ export default class Listing extends Component {
               <div>
                 Time remaining:
                 <span className="time-remaining">
-                  {this.state.timeRemaining}
+                  {' ' + this.state.timeRemaining}
                 </span>
               </div>
-              { this.state.status !== 'forsale' ?
+              { (this.state.status !== 'forsale' && this.props.auth() ) ?
               <div>
                 Seller:
                 <Link to={sellerProfile}>
                   <span>
-                    {this.props.item.sellerName || 'Seller'}
+                    { seller }
                   </span>
                 </Link>
               </div> : <div></div> }
@@ -123,7 +125,7 @@ export default class Listing extends Component {
               { this.props.auth() ?
                 <BidNow
                 getItem={this.getItem.bind(this)}
-                getItemBids={this.getItemBids.bind(this)}
+                getBids={this.getBids.bind(this)}
                 currentBid={this.state.currentBid}
                 item={this.props.item} />
                 : <div></div> }
