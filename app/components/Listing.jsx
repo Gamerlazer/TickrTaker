@@ -122,7 +122,7 @@ export default class Listing extends Component {
               </div> : <div></div> }
             </div>
             <div className="col-md-5">
-              { this.props.auth() ?
+              { this.props.auth() && this.props.bidNowActive ?
                 <BidNow
                 getItem={this.getItem.bind(this)}
                 getBids={this.getBids.bind(this)}

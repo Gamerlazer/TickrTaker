@@ -121,7 +121,8 @@ export default class Profile extends Component {
               key={i}
               item={item}
               auth={this.props.auth}
-              refreshPage = {this.getActiveItems}/>
+              refreshPage = {this.getActiveItems}
+              bidNowActive = {false}/>
             ))}
         </div>
       </div>
