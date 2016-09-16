@@ -57,11 +57,11 @@ export default class Listing extends Component {
     this.interval = false;
   }
 
-  // checkActive () {
-  //   if (this.state.timeRemaining <= 0) {
-  //     this.props.refreshPage();
-  //   }
-  // }
+  checkActive () {
+    if (this.state.timeRemaining <= 0) {
+      this.props.refreshPage();
+    }
+  }
 
   // This calculates the time remaining through a helper
   calcTime (endDate) {
