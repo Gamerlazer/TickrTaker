@@ -61,14 +61,16 @@ db.sync({force: true})
       aboutMe: 'im awesome'
     })
     .then(function(seller) {
+      var rightNow = new Date();
+      rightNow.setSeconds(rightNow.getSeconds() + 10);
       ItemController.Item.create({
         title: 'Monkey',
         description: 'A monkey!',
         picture: 'http://res.cloudinary.com/dijpyi6ze/image/upload/v1473717678/item_photos/ddvlpupgnrur0l7nm3ng.jpg',
         startPrice: 10000.00,
         endPrice: 100.00,
-        endDate: '2016-09-13T00:00Z',
-        auctionEndDateByHighestBid: '2016-09-13T00:00Z'
+        endDate: rightNow.toISOString(),
+        auctionEndDateByHighestBid: rightNow.toISOString()
       }).then(function (item) {
         seller.addItem(item);
       });

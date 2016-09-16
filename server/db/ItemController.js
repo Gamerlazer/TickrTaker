@@ -247,6 +247,10 @@ module.exports = (db, Sequelize, User) => {
     });
   };
 
+  const expiredItem = () => {
+
+  };
+
   return {
     Item: Item,
     getItemsForSale: getItemsForSale,
@@ -254,6 +258,7 @@ module.exports = (db, Sequelize, User) => {
     getAllItems: getAllItems,
     putItemForSale: putItemForSale,
     removeItemFromSale: removeItemFromSale,
-    getOneItem: getOneItem
+    getOneItem: getOneItem,
+    expiredItem: expiredItem
   };
 };

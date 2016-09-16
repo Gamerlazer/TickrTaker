@@ -13,8 +13,63 @@ export default class Listing extends Component {
       status: props.status,
       currentBid: '',
       endDate: '',
-      activeBid: this.props.activeBid !== undefined ? this.props.activeBid : true 
+      valid: true,
+      activeBid: this.props.activeBid !== undefined ? this.props.activeBid : true,
+      id: this.props.item.id
     };
+  }
+
+  componentWillMount() {    // Set state properties with updated values
+    this.getBids();
+    this.setState({
+      endDate: this.props.item.auctionEndDateByHighestBid,
+      timeRemaining: this.calcTime(this.props.item.auctionEndDateByHighestBid)
+    });
+  }
+
+  componentDidMount () {    //  Set state properties with calculated values
+    $('img').on('error', function(){ //  Replace broken image links with the sample image
+        $(this).attr('src', 'http://res.cloudinary.com/dijpyi6ze/image/upload/v1473715896/item_photos/zfaehmp20xculww4krs6.jpg');
+    });
+
+    this.interval = setInterval(() => this.setState({
+      timeRemaining: this.calcTime(this.state.endDate)
+    }), 1000);
+    this.calcTime = this.calcTime.bind(this);
+    setInterval(this.checkActive.bind(this), 10000);
+  }
+
+  componentWillUnmount () {    // Clears up DOM elements that were created in ComponentDidMount method
+    this.interval && clearInterval(this.interval);
+    this.interval = false;
+  }
+
+  // checkValid () {
+  //   if (this.state.timeRemaining <= 0) {
+  //     this.setState({
+  //       valid: false
+  //     })
+  //   }
+  // }
+
+  checkActive () {
+    // console.log('this timmer is working', this.state.timeRemaining, this.state.id);
+    if (this.state.timeRemaining === '00 days  00:00:00 hours') {
+      // return;
+      // this.props.refreshPage();
+      $.ajax({
+        method: 'GET',
+        url: '/api/singleItem/' + this.state.id,
+        success: (response) => {
+          console.log(response.valid);
+        }
+      })
+    }
+  }
+
+  // This calculates the time remaining through a helper
+  calcTime (endDate) {
+    return calcTime(endDate);
   }
 
   getBids () {
@@ -35,41 +90,6 @@ export default class Listing extends Component {
     })
   }
 
-  componentWillMount() {    // Set state properties with updated values
-    this.getBids();
-    this.setState({
-      endDate: this.props.item.auctionEndDateByHighestBid,
-      timeRemaining: this.calcTime(this.props.item.auctionEndDateByHighestBid)
-    });
-  }
-
-  componentDidMount () {    //  Set state properties with calculated values
-    $('img').on('error', function(){ //  Replace broken image links with the sample image
-        $(this).attr('src', 'http://res.cloudinary.com/dijpyi6ze/image/upload/v1473715896/item_photos/zfaehmp20xculww4krs6.jpg');
-    });
-
-    this.interval = setInterval(() => this.setState({
-      timeRemaining: this.calcTime(this.state.endDate)
-    }), 1000);
-    this.calcTime = this.calcTime.bind(this);
-  }
-
-  componentWillUnmount () {    // Clears up DOM elements that were created in ComponentDidMount method
-    this.interval && clearInterval(this.interval);
-    this.interval = false;
-  }
-
-  checkActive () {
-    if (this.state.timeRemaining <= 0) {
-      this.props.refreshPage();
-    }
-  }
-
-  // This calculates the time remaining through a helper
-  calcTime (endDate) {
-    return calcTime(endDate);
-  }
-
   getItem() {
     var context = this;
     $.ajax({
@@ -78,8 +98,11 @@ export default class Listing extends Component {
       headers: {'Content-Type': 'application/json'},
       success: function(res) {
         context.setState({
-          endDate: res.auctionEndDateByHighestBid
+          endDate: res.auctionEndDateByHighestBid,
+          valid: res.valid,
+          id: context.props.item.id
         });
+        console.log(context.state.id, 'This states id')
       }
     })
   }
@@ -96,19 +119,22 @@ export default class Listing extends Component {
           <img className="listing-image" src={this.props.item.picture}></img>
         </div>
         <div className="col-sm-9">
+          <div>
+            {this.state.valid ? <div>True</div> : <div>False</div>}
+          </div>
           <Link to={itemUrl}>
             <h3>{this.props.item.title || 'Sample Title'}</h3>
           </Link>
           <div className="row">
             <div className="col-md-7">
-              {this.state.activeBid ? 
+              {this.state.activeBid ?
                 <div>
                   Current highest bid:
                   <span className="current-price">
                     {' $' + this.state.currentBid}
                   </span>
                 </div>
-                : 
+                :
                 <div>
                   Price sold:
                   <span className="current-price">
@@ -116,12 +142,12 @@ export default class Listing extends Component {
                   </span>
                 </div>
               }
-              {this.state.activeBid ? 
+              {this.state.activeBid ?
                 <div>
                   Time remaining:
                   <span className="time-remaining">
                     {' ' + this.state.timeRemaining}
-                  </span> 
+                  </span>
                 </div>
                 : <span></span>
               }
