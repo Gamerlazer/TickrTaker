@@ -11,7 +11,9 @@ module.exports = (db, Sequelize) => {
     photo: Sequelize.TEXT,
     sumOfRatings: Sequelize.FLOAT,
     numberOfRatings: Sequelize.INTEGER,
-    aboutMe: Sequelize.TEXT
+    aboutMe: Sequelize.TEXT,
+    address: Sequelize.TEXT,
+    phone: Sequelize.INTEGER
   });
 
 
@@ -47,7 +49,7 @@ module.exports = (db, Sequelize) => {
     User.find({where: { id: id }})
     .then(function(user) {
       if (!user) {
-        console.log('cannot find user');
+        console.log('Can not find user === getProfile');
         res.json({ notfound: true });
       } else {
         res.json({user: user, auth: auth});
@@ -55,9 +57,38 @@ module.exports = (db, Sequelize) => {
     });
   };
 
+  var saveAboutMe = (req, res, userObject) => {
+    if (req.user === undefined) {
+      res.send('user undefined');
+      return;
+    }
+    User.find({ where: { id: req.user.dataValues.id }})
+    .then(function(user) {
+      if (!user) {
+        console.log('cannot edit nonexistent user');
+        res.redirect('/signin');
+      } else {
+        console.log('Updating User with ', req.body.aboutMe);
+
+        user.updateAttributes({
+          aboutMe: req.body.aboutMe
+        })
+        .then(function(newUserInfo) {
+          console.log(newUserInfo.dataValues);
+          res.send(newUserInfo.dataValues);
+        });
+      }
+    }).catch(function(err) {
+      console.log(err);
+    });
+  };
+
+
+
   return {
     User: User,
     getProfile: getProfile,
-    updateUser: updateUser
+    updateUser: updateUser,
+    saveAboutMe: saveAboutMe
   };
 };
