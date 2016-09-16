@@ -11,7 +11,8 @@ export default class MyDashboard extends Component {
     console.log(this.props)
     this.state = {
       view: null,
-      activeItems: []
+      activeItems: [],
+      expiredItems: []
     };
 
   }
@@ -23,7 +24,13 @@ export default class MyDashboard extends Component {
       url: '/api/mysales',
       success: function(items) {
         console.log('getting sales items')
-        context.setState({items: items})
+        var activeItems = items.filter(function(e) {
+          return e.valid === true;
+        })
+        var expiredItems = items.filter(function(e) {
+          return e.valid === false;
+        })
+        context.setState({activeItems: activeItems, expiredItems: expiredItems})
       }
     })
   }
@@ -54,6 +61,36 @@ export default class MyDashboard extends Component {
       view = (
         <div>
           This is the sales page
+          <div className="auction-listings">
+            <h4>Active Sales</h4>
+            {
+              this.state.activeItems.map((item, i)=>(
+                <Listing
+                key={i}
+                auth={this.props.auth}
+                item={item}
+                status={'forsale'}
+                bidNowActive={false}
+                activeBid={true}
+                />
+              ))
+            }
+          </div>
+          <div className="auction-listings">
+            <h4>Expired Sales</h4>
+            {
+              this.state.expiredItems.map((item, i)=>(
+                <Listing
+                key={i}
+                auth={this.props.auth}
+                item={item}
+                status={'forsale'}
+                bidNowActive={false}
+                activeBid={false}
+                />
+              ))
+            }
+          </div>
         </div>
       )
     }

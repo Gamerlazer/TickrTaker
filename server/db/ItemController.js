@@ -172,10 +172,9 @@ module.exports = (db, Sequelize, User) => {
 
     User.findOne({where: {id: id }})
     .then(function(user) {
-      user.getItems({where: {valid: true}, raw: true})
+      user.getItems({raw: true})
       .then(function(items) {
-        console.log('found my freakin items', items);
-        res.send(items);
+        res.status(200).json(items);
       });
     }).catch(function(err) {
       console.log(err);
@@ -309,6 +308,7 @@ module.exports = (db, Sequelize, User) => {
     putItemForSale: putItemForSale,
     removeItemFromSale: removeItemFromSale,
     getOneItem: getOneItem,
-    expiredItem: expiredItem
+    expiredItem: expiredItem,
+    getMyItemsForSale: getMyItemsForSale
   };
 };
