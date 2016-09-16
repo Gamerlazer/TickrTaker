@@ -57,7 +57,11 @@ export default class Listing extends Component {
   checkActive () {
     // console.log('this timmer is working', this.state.timeRemaining, this.state.id);
     if ( new Date() > new Date(this.state.endDate) && this.state.valid) {
+<<<<<<< HEAD
       // console.log('Items end date is less than now')
+=======
+      console.log('Items end date is less than now')
+>>>>>>> df47c4ea8e33794b90ce2891777bbff072426839
 
       // return;
       // this.props.refreshPage();

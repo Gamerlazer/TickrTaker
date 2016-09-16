@@ -43,8 +43,14 @@ module.exports = (app, db) => {
     db.ItemController.getAllItems(req, res, next);
   });
 
-  app.get('/api/selleritems', (req, res, next) => {
+  app.get('/api/selleritems/:id', (req, res, next) => {
+    // for profile page
     db.ItemController.getItemsForSale(req, res, next);
+    // res.send('GET /api/items');
+  });
+
+  app.get('/api/mysales', (req, res, next) => {
+    db.ItemController.getMyItemsForSale(req, res, next);
     // res.send('GET /api/items');
   });
 
