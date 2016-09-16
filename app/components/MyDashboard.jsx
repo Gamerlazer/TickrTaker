@@ -13,6 +13,7 @@ export default class MyDashboard extends Component {
       view: null,
       activeItems: []
     };
+
   }
 
   getSalesItems () {

@@ -17,6 +17,8 @@ export default class Listing extends Component {
       activeBid: this.props.activeBid !== undefined ? this.props.activeBid : true,
       id: this.props.item.id
     };
+
+    console.log(this.props.item.id, 'My item id')
   }
 
   componentWillMount() {    // Set state properties with updated values
@@ -46,26 +48,22 @@ export default class Listing extends Component {
     this.interval = false;
   }
 
-  // checkValid () {
-  //   if (this.state.timeRemaining <= 0) {
-  //     this.setState({
-  //       valid: false
-  //     })
-  //   }
-  // }
-
   checkActive () {
     // console.log('this timmer is working', this.state.timeRemaining, this.state.id);
+      console.log('running check active function')
+    var context = this;
     if ( new Date() > new Date(this.state.endDate) && this.state.valid) {
-      console.log('Items end date is less than now')
-
-      // return;
-      // this.props.refreshPage();
+      
+      console.log('Setting' + this.props.item.title + 'to not valid', context.props.item.id)
       $.ajax({
-        method: 'GET',
-        url: '/api/singleItem/' + this.state.id,
+        method: 'PUT',
+        url: '/api/expiredItem/' + context.props.item.id,
         success: (response) => {
-          console.log(response.valid);
+          console.log(response, 'Response Vaild');
+          context.setState({
+            valid: response.valid
+          })
+          console.log(context.state.valid)
         }
       })
     }
@@ -114,16 +112,14 @@ export default class Listing extends Component {
 
     var itemUrl = '/item/' + this.props.item.id;
     var sellerProfile = '/profile/' + this.props.item.userId;
-    var seller = this.props.item.sellerName ? ' '+this.props.item.sellerName : ' Seller'
+    var seller = this.props.item.sellerName ? ' '+this.props.item.sellerName : ' Seller';
+
     return (
       <div className="row">
         <div className="col-sm-3">
           <img className="listing-image" src={this.props.item.picture}></img>
         </div>
         <div className="col-sm-9">
-          <div>
-            {this.state.valid ? <div>True</div> : <div>False</div>}
-          </div>
           <Link to={itemUrl}>
             <h3>{this.props.item.title || 'Sample Title'}</h3>
           </Link>
@@ -178,3 +174,6 @@ export default class Listing extends Component {
     )
   }
 }
+
+
+//             {this.state.valid ? <div>True</div> : <div>False</div>}
