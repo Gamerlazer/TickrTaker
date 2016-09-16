@@ -35,8 +35,6 @@ passport.use(new FacebookStrategy({
   function(accessToken, refreshToken, profile, done) {
     // console.log('accessToken', accessToken);
     // console.log('refreshToken', refreshToken);
-    console.log('profile ===========================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', profile.photos[0].value);
-    console.log('profile ===========================>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', profile);
     console.log(profile._json.email, profile._json.name);
     UserController.User.findOrCreate({
       where: {

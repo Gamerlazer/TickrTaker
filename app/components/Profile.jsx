@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import UserRating from './UserRating.jsx';
 
 export default class Profile extends Component {
   constructor (props) {
@@ -8,13 +9,15 @@ export default class Profile extends Component {
       notfound: false,
       name: 'loading..',
       rating: 'loading..',
-      description: 'loading..'
+      aboutMe: 'loading..',
+      starRating: null
     }
   }
 
   componentWillMount(){
     this.getProfileInfo();
   }
+
 
   getProfileInfo(){
     var context = this;
@@ -25,20 +28,29 @@ export default class Profile extends Component {
         if (response.notfound) {
           context.setState({notFound: true});
         }
+        console.log('response',response.user)
+
         var name = response.user.firstName + ' ' + response.user.lastName;
         var rating = response.user.rating;
-        var description = response.user.description;
+        var aboutMe = response.user.aboutMe;
+        var numberOfRatings = response.user.numberOfRatings;
+        var sumOfRatings = response.user.sumOfRatings;
+        var starRating = numberOfRatings === 0 ? null : sumOfRatings / numberOfRatings;
+
         context.setState({
           name: name,
           rating: rating,
-          description: description,
-          picture: response.user.photo
+          aboutMe: aboutMe,
+          picture: response.user.photo,
+          starRating: starRating
         })
       }
     })
   }
 
   render(){
+
+    var starRating = this.state.starRating;
     if (this.state.notfound) {
       return (<div>User not found!</div>)
     }
@@ -50,10 +62,12 @@ export default class Profile extends Component {
         </div>
         <h4>{ this.state.name }</h4>
         <div>
-          { this.state.rating ? this.state.rating : 'Unrated' }
+          {this.state.starRating ? (<UserRating editable={'false'} starRating={ starRating }/>) : 'Unrated'} 
         </div>
+
+
         <p className="user-description">
-          { this.state.description ? this.state.description : 'User hasn\'t filled out description yet.'}
+          { this.state.aboutMe ? this.state.aboutMe : 'User hasn\'t filled out description yet.'}
         </p>
       </div>
       <div className="col-md-8 profile-right">

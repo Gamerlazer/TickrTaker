@@ -29,6 +29,19 @@ BidController.Bid.belongsTo(UserController.User, {as: 'Bidder'});
 db.sync({force: true})
 .then(function() {
   UserController.User.create({
+    firstName: 'Julie',
+    lastName: 'Truong',
+    id: '10105700513297463',
+    sumOfRatings: 40,
+    numberOfRatings: 20,
+    email: 'julkie17@gmail.com',
+    aboutMe: 'This my aboutMe!!!',
+    photo: 'https://scontent.xx.fbcdn.net/v/t1.0-1/s200x200/10417550_10103418587420213_3389328959999895776_n.jpg?oh=619920945e4f741f2f31ef321bd5d98b&oe=58720745'
+  }).then(function(julie) {
+    console.log('great');
+  });
+
+  UserController.User.create({
     firstName: 'Alexander',
     lastName: 'Pantelides',
     id: '10154095627189811',
@@ -43,7 +56,8 @@ db.sync({force: true})
       id: '10206128224638462',
       sumOfRatings: 130,
       numberOfRatings: 20,
-      email: 'voracious.scroll@gmail.com'
+      email: 'voracious.scroll@gmail.com',
+      aboutMe: 'im awesome'
     })
     .then(function(seller) {
       ItemController.Item.create({

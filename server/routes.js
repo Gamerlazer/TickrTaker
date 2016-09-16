@@ -40,7 +40,7 @@ module.exports = (app, db) => {
   });
 
   app.post('/api/selleritems', (req, res, next) => {
-    // console.log('request body******', req.body);
+    console.log('request body******', req.body);
     db.ItemController.getItemsForSale(req, res, next);
     // res.send('GET /api/items');
   });
@@ -61,7 +61,7 @@ module.exports = (app, db) => {
   //BIDS ENDPOINT
 
   app.post('/api/bids', (req, res, next) => {
-    console.log('***************', req.body);
+    // console.log('***************', req.body);
     db.BidController.getBidsForSeller(req, res, next);
   });
 
@@ -82,6 +82,11 @@ module.exports = (app, db) => {
   app.get('/api/profile/:id', function(req, res) {
     var authenticated = req.user ? true : false;
     db.UserController.getProfile(req, res, authenticated);
+  });
+
+  app.post('/api/account/aboutMe/', function(req, res) {
+    var authenticated = req.user ? true : false;
+    db.UserController.saveAboutMe(req, res, authenticated);
   });
 
 };
