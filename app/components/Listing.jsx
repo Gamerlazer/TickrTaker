@@ -3,7 +3,7 @@ import {Link} from 'react-router';
 import BidNow from './BidNow.jsx'
 
 // This should be redundant
-import {calcPrice, calcTime} from '../helpers.js';
+import {calcTime} from '../helpers.js';
 
 export default class Listing extends Component {
   constructor (props) {
@@ -13,7 +13,6 @@ export default class Listing extends Component {
       currentBid: '',
       endDate: ''
     };
-    this.calcPrice = this.calcPrice.bind(this);
   }
 
   getBids () {
@@ -38,7 +37,7 @@ export default class Listing extends Component {
     this.getBids();
     this.setState({
       endDate: this.props.item.auctionEndDateByHighestBid,
-      timeRemaining: this.calcTime(this.props.item.auctionEndDateByHighestBid),
+      timeRemaining: this.calcTime(this.props.item.auctionEndDateByHighestBid)
     });
   }
 
@@ -50,24 +49,19 @@ export default class Listing extends Component {
     this.interval = setInterval(() => this.setState({
       timeRemaining: this.calcTime(this.state.endDate)
     }), 1000);
-    this.calcPrice = this.calcPrice.bind(this);
     this.calcTime = this.calcTime.bind(this);
-
   }
+
   componentWillUnmount () {    // Clears up DOM elements that were created in ComponentDidMount method
     this.interval && clearInterval(this.interval);
     this.interval = false;
   }
+
   // checkActive () {
   //   if (this.state.timeRemaining <= 0) {
   //     this.props.refreshPage();
   //   }
   // }
-
-  calcPrice () {     // Price calculation check helper.js
-    var thisItem = this.props.item;
-    return calcPrice(thisItem.startPrice, thisItem.endPrice, thisItem.startDate, thisItem.endDate);
-  }
 
   // This calculates the time remaining through a helper
   calcTime (endDate) {
@@ -93,6 +87,7 @@ export default class Listing extends Component {
 
     var itemUrl = '/item/' + this.props.item.id;
     var sellerProfile = '/profile/' + this.props.item.userId;
+    var seller = this.props.item.sellerName ? ' '+this.props.item.sellerName : ' Seller'
     return (
       <div className="row">
         <div className="col-sm-3">
@@ -113,15 +108,15 @@ export default class Listing extends Component {
               <div>
                 Time remaining:
                 <span className="time-remaining">
-                  {this.state.timeRemaining}
+                  {' ' + this.state.timeRemaining}
                 </span>
               </div>
-              { this.state.status !== 'forsale' ?
+              { (this.state.status !== 'forsale' && this.props.auth() ) ?
               <div>
                 Seller:
                 <Link to={sellerProfile}>
                   <span>
-                    {this.props.item.sellerName || 'Seller'}
+                    { seller }
                   </span>
                 </Link>
               </div> : <div></div> }
