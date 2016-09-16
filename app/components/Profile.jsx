@@ -109,7 +109,7 @@ export default class Profile extends Component {
       </div>
       <div className="col-md-8 profile-right">
         <h2>Seller / Buyer History</h2>
-        <div className="history-list">
+        <div className="history-list auction-listings">
          <h4>Active Items</h4>
           { this.state.activeItems.map((item, i) => ( 
             <Listing 
@@ -121,7 +121,7 @@ export default class Profile extends Component {
               activeBid={true}/>
             ))}
         </div>
-        <div className="history-list">
+        <div className="history-list auction-listings">
          <h4>Past Items</h4>
           { this.state.oldItems.map((item, i) => ( 
             <Listing 
