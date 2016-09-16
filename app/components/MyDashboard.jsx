@@ -10,17 +10,16 @@ export default class MyDashboard extends Component {
     // view will be 'sales' or 'bids'
     console.log(this.props)
     this.state = {
-      view: this.props.route.type,
+      view: null,
       activeItems: []
     };
-    console.log('THIS.STATE.VIEW!', this.state.view)
   }
 
   getSalesItems () {
     var context = this;
     $.ajax({
       method: 'GET',
-      url: '/api/selleritems/',
+      url: '/api/mysales',
       success: function(items) {
         console.log('getting sales items')
         context.setState({items: items})
@@ -40,37 +39,31 @@ export default class MyDashboard extends Component {
     })
   }
 
-  componentWillMount() {
-    console.log('view!', this.state.view)
-    if (this.state.view === 'sales') {
-      this.getSalesItems()
-    } else if (this.state.view === 'bids') {
-      this.getBidItems()
-    }
-  }
-
   render() {
-    console.log(this.props.params.view)
+    var view;
     if (this.props.params.view === 'unauthorized') {
-      return (
+      view = (
         <div>
           Sorry dude, page was not found!
         </div>
       );
     }
     if (this.props.params.view === 'sales') {
-      return (
+      this.getSalesItems();
+      view = (
         <div>
           This is the sales page
         </div>
       )
     }
     if (this.props.params.view === 'bids') {
-      return (
+      this.getBidItems();
+      view = (
         <div>
           This is the bids page
         </div>
       )
     }
+    return view;
   }
 }
