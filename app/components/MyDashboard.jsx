@@ -25,10 +25,10 @@ export default class MyDashboard extends Component {
       success: function(items) {
         console.log('getting sales items')
         var activeItems = items.filter(function(e) {
-          return e.item.valid === true;
+          return e.valid === true;
         })
         var expiredItems = items.filter(function(e) {
-          return e.item.valid === false;
+          return e.valid === false;
         })
         context.setState({activeItems: activeItems, expiredItems: expiredItems})
       }
