@@ -21,7 +21,7 @@ export default class BidNow extends Component {
       }),
       success: function (res) {
         context.props.getItem();
-        context.props.getItemBids();
+        context.props.getBids();
       }
     })
   }

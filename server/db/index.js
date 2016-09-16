@@ -28,18 +28,18 @@ BidController.Bid.belongsTo(UserController.User, {as: 'Bidder'});
 
 db.sync({force: true})
 .then(function() {
-  UserController.User.create({
-    firstName: 'Julie',
-    lastName: 'Truong',
-    id: '10105700513297463',
-    sumOfRatings: 40,
-    numberOfRatings: 20,
-    email: 'julkie17@gmail.com',
-    aboutMe: 'This my aboutMe!!!',
-    photo: 'https://scontent.xx.fbcdn.net/v/t1.0-1/s200x200/10417550_10103418587420213_3389328959999895776_n.jpg?oh=619920945e4f741f2f31ef321bd5d98b&oe=58720745'
-  }).then(function(julie) {
-    console.log('great');
-  });
+  // UserController.User.create({
+  //   firstName: 'Julie',
+  //   lastName: 'Truong',
+    // id: '10105700513297463',
+  //   sumOfRatings: 40,
+  //   numberOfRatings: 20,
+    // email: 'julkie17@gmail.com',
+  //   aboutMe: 'This my aboutMe!!!',
+  //   photo: 'https://scontent.xx.fbcdn.net/v/t1.0-1/s200x200/10417550_10103418587420213_3389328959999895776_n.jpg?oh=619920945e4f741f2f31ef321bd5d98b&oe=58720745'
+  // }).then(function(julie) {
+  //   console.log('great');
+  // });
 
   UserController.User.create({
     firstName: 'Alexander',
@@ -51,12 +51,13 @@ db.sync({force: true})
     photo: 'https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/11148734_10205233811059304_8200092159283226084_n.jpg?oh=a19a83eef9251ff118ccb61e0b1069df&oe=583F7305'
   }).then(function(lex) {
     UserController.User.create({
-      firstName: 'Kunal',
-      lastName: 'Rathi',
-      id: '10206128224638462',
+      firstName: 'Julie',
+      lastName: 'Truong',
+      id: '10105700513297463',
       sumOfRatings: 130,
+      photo: 'https://scontent.xx.fbcdn.net/v/t1.0-1/s200x200/10417550_10103418587420213_3389328959999895776_n.jpg?oh=619920945e4f741f2f31ef321bd5d98b&oe=58720745',
       numberOfRatings: 20,
-      email: 'voracious.scroll@gmail.com',
+      email: 'julkie17@gmail.com',
       aboutMe: 'im awesome'
     })
     .then(function(seller) {
@@ -69,8 +70,22 @@ db.sync({force: true})
         endDate: '2016-09-13T00:00Z',
         auctionEndDateByHighestBid: '2016-09-13T00:00Z'
       }).then(function (item) {
-        lex.addItem(item);
+        seller.addItem(item);
       });
+
+      ItemController.Item.create({
+        title: 'Pikachu',
+        description: 'Pika Pika',
+        picture: 'http://vignette4.wikia.nocookie.net/pokemon/images/5/5f/025Pikachu_OS_anime_11.png/revision/latest?cb=20150717063951',
+        startPrice: 10000.00,
+        endPrice: 100.00,
+        endDate: '2016-09-13T00:00Z',
+        auctionEndDateByHighestBid: '2016-09-13T00:00Z',
+        valid: false
+      }).then(function (item) {
+        seller.addItem(item);
+      });
+
       ItemController.Item.create({
         title: 'Fluorescent',
         description: 'Some glow sticks!',
@@ -113,7 +128,7 @@ db.sync({force: true})
       .then(function(item) {
         seller.addItem(item);
         console.log('CREATED ITEM');
-        UserController.User.find({where: {id: '10206128224638462'}})
+        UserController.User.find({where: {id: '10105700513297463'}})
         .then(function(bidder) {
           BidController.Bid.create({
             price: 600.00

@@ -47,7 +47,6 @@ passport.use(new FacebookStrategy({
       }
     })
     .then(function(user) {
-      console.log('USER IS HERE!', user);
       done(null, user);
       // accessToken, refreshToken, profile //TODO: will it es6? yes.
     })
