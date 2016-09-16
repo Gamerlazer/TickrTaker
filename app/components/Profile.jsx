@@ -60,12 +60,17 @@ export default class Profile extends Component {
   getActiveItems () {
     var context = this;
     $.ajax({
-      url: '/api/selleritems/' + this.props.params.id,
+      url: '/api/selleritems',
       method: 'GET',
       success: function(response){
         console.log(response, 'ALL ACTIVE')
+        var activeItems = [];
+        response.forEach(function(item) {
+          activeItems.push(item);
+        })
+        console.log(activeItems, 'ALL ACTIVE STUFF')
         context.setState({
-          activeItems: response
+          activeItems: activeItems
         });
       }
     })
@@ -111,7 +116,13 @@ export default class Profile extends Component {
         <h2>Seller / Buyer History</h2>
         <div className="history-list">
           History list goes here
-          {this.state.activeItems}
+          { this.state.activeItems.map((item, i) => ( 
+            <Listing 
+              key={i}
+              item={item}
+              auth={this.props.auth}
+              refreshPage = {this.getActiveItems}/>
+            ))}
         </div>
       </div>
     </div>
@@ -120,6 +131,8 @@ export default class Profile extends Component {
 }
 
 
+//           {this.state.activeItems.map((item) => (<div>{item.title}</div>))}
+//           {this.state.activeItems.map((item) => (<div>{item.title}</div>))}
 // .map((item) => (<div>hi</div>))
 
 // {

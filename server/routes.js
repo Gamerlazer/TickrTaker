@@ -40,7 +40,7 @@ module.exports = (app, db) => {
   });
 
   app.get('/api/selleritems', (req, res, next) => {
-    console.log('SELLER ID @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+    console.log('SELLER ID @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@', req.user.dataValues.id);
     db.ItemController.getItemsForSale(req, res, next);
     // res.send('GET /api/items');
   });

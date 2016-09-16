@@ -145,13 +145,14 @@ module.exports = (db, Sequelize, User) => {
   //  get all items that user has for sale.
 
   const getItemsForSale = (req, res, next) => {
-    console.log('THIS FUNCTION ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
-    if (req.params.id === undefined) {
+    var id = req.user.dataValues.id;
+    console.log('THIS FUNCTION ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~', id);
+    if (id === undefined) {
       res.send('user undefined');
       return;
     }
 
-    User.findOne({where: {id: req.params.id }})
+    User.findOne({where: {id: id }})
     .then(function(user) {
       user.getItems({where: {valid: true}, raw: true})
       .then(function(items) {
