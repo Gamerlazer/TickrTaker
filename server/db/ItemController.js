@@ -296,7 +296,7 @@ module.exports = (db, Sequelize, User) => {
     }).catch(function(err) {
       console.log(err);
     });
-    // res.send('whoa');
+    // res.send('whoa'  );
   };
 
   return {

@@ -48,14 +48,6 @@ export default class Listing extends Component {
     this.interval = false;
   }
 
-  // checkValid () {
-  //   if (this.state.timeRemaining <= 0) {
-  //     this.setState({
-  //       valid: false
-  //     })
-  //   }
-  // }
-
   checkActive () {
     // console.log('this timmer is working', this.state.timeRemaining, this.state.id);
       console.log('running check active function')
@@ -120,16 +112,14 @@ export default class Listing extends Component {
 
     var itemUrl = '/item/' + this.props.item.id;
     var sellerProfile = '/profile/' + this.props.item.userId;
-    var seller = this.props.item.sellerName ? ' '+this.props.item.sellerName : ' Seller'
+    var seller = this.props.item.sellerName ? ' '+this.props.item.sellerName : ' Seller';
+
     return (
       <div className="row">
         <div className="col-sm-3">
           <img className="listing-image" src={this.props.item.picture}></img>
         </div>
         <div className="col-sm-9">
-          <div>
-            {this.state.valid ? <div>True</div> : <div>False</div>}
-          </div>
           <Link to={itemUrl}>
             <h3>{this.props.item.title || 'Sample Title'}</h3>
           </Link>
@@ -184,3 +174,6 @@ export default class Listing extends Component {
     )
   }
 }
+
+
+//             {this.state.valid ? <div>True</div> : <div>False</div>}

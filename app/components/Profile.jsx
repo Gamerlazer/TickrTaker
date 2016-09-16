@@ -5,7 +5,7 @@ import Listing from './Listing.jsx';
 export default class Profile extends Component {
   constructor (props) {
     super (props);
-    console.log(this.props.auth(), 'AUTH');
+
     this.state = {
       notfound: false,
       name: 'loading..',
@@ -13,7 +13,8 @@ export default class Profile extends Component {
       aboutMe: 'loading..',
       starRating: null,
       activeItems: [],
-      oldItems: []
+      oldItems: [],
+      currentUserId: null
     }
   }
 
@@ -21,17 +22,29 @@ export default class Profile extends Component {
     this.getProfileInfo();
     this.getActiveItems();
     this.getOldItems();
-
-    console.log(this.state.activeItems, 'get active item');
+    this.getCurrentUser();
   }
 
+  getCurrentUser () {
+    var context = this;
+    $.ajax({
+      method: 'GET',
+      url: '/api/user_data',
+      success: function (user) {
+        context.setState({
+          currentUserId: user.id
+        })
+        console.log(context.currentUserId, 'Current User ID', user)
+      } 
+    })
+  }
 
   getProfileInfo() {
     var context = this;
     $.ajax({
       url: '/api/profile/' + this.props.params.id,
       method: 'GET',
-      success: function(response){
+      success: function(response) {
         if (response.notfound) {
           context.setState({notFound: true});
         }
@@ -56,7 +69,6 @@ export default class Profile extends Component {
       }
     })
   }
-
 
   getActiveItems () {
     var context = this;
