@@ -61,9 +61,10 @@ export default class Profile extends Component {
   getActiveItems () {
     var context = this;
     $.ajax({
-      url: '/api/selleritems' + this.props.params.id,
+      url: '/api/selleritems/' + this.props.params.id,
       method: 'GET',
       success: function(response) {
+        console.log(response, 'THIS is my response')
         context.setState({
           activeItems: response
         });
@@ -74,7 +75,7 @@ export default class Profile extends Component {
   getOldItems () {
     var context = this;
     $.ajax({
-      url: '/api/oldselleritems',
+      url: '/api/oldselleritems/' + this.props.params.id,
       method: 'GET',
       success: function(response){
         console.log(response, 'ALL OLD ')

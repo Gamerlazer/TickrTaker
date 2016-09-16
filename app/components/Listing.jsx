@@ -17,6 +17,8 @@ export default class Listing extends Component {
       activeBid: this.props.activeBid !== undefined ? this.props.activeBid : true,
       id: this.props.item.id
     };
+
+    console.log(this.props.item.id, 'My item id')
   }
 
   componentWillMount() {    // Set state properties with updated values
@@ -56,21 +58,20 @@ export default class Listing extends Component {
 
   checkActive () {
     // console.log('this timmer is working', this.state.timeRemaining, this.state.id);
+      console.log('running check active function')
+    var context = this;
     if ( new Date() > new Date(this.state.endDate) && this.state.valid) {
-<<<<<<< HEAD
-      // console.log('Items end date is less than now')
-=======
-      console.log('Items end date is less than now')
->>>>>>> df47c4ea8e33794b90ce2891777bbff072426839
-
-      // return;
-      // this.props.refreshPage();
-
+      
+      console.log('Setting' + this.props.item.title + 'to not valid', context.props.item.id)
       $.ajax({
         method: 'PUT',
-        url: '/api/singleItem/' + this.state.id,
+        url: '/api/expiredItem/' + context.props.item.id,
         success: (response) => {
-          console.log(response.valid, 'Response Vaild');
+          console.log(response, 'Response Vaild');
+          context.setState({
+            valid: response.valid
+          })
+          console.log(context.state.valid)
         }
       })
     }

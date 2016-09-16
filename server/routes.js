@@ -20,8 +20,8 @@ module.exports = (app, db) => {
     db.ItemController.getOneItem(req, res, next, req.params.itemId);
   });
 
-  app.put('/api/singleItem/:itemId', (req, res, next) => {
-    console.log(req.params.itemId, 'REQUETSSSSSS         ************************ ENDPOINT' );
+  app.put('/api/expiredItem/:itemId', (req, res, next) => {
+    console.log('SELLER ID @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@', req.params);
     db.ItemController.expiredItem(req, res, next);
   });
 
@@ -55,8 +55,13 @@ module.exports = (app, db) => {
   });
 
   app.get('/api/oldselleritems', (req, res, next) => {
-    console.log('SELLER ID @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@', req.user.dataValues.id);
+    // console.log('SELLER ID @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@', req.user.dataValues.id);
     db.ItemController.getOldItemsForSale(req, res, next);
+  });  
+
+  app.get('/api/oldselleritems/:id', (req, res, next) => {
+    // console.log('SELLER ID @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@', req.user.dataValues.id);
+    db.ItemController.getMyOldItemsForSale(req, res, next);
   });
 
   app.post('/api/items', (req, res) => {

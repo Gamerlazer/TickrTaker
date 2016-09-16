@@ -40,24 +40,6 @@ export default class MyDashboard extends Component {
     })
   }
 
-<<<<<<< HEAD
-  componentWillMount() {
-    console.log('view!', this.state.view)
-    if (this.state.view === 'sales') {
-      this.getSalesItems()
-    } else if (this.state.view === 'bids') {
-      this.getBidItems()
-    }
-
-
-  }
-
-  componentDidMount() {
-    console.log('THIS.STATE.VIEW!', this.props.route.viewType)
-  }
-  
-=======
->>>>>>> df47c4ea8e33794b90ce2891777bbff072426839
   render() {
     var view;
     if (this.props.params.view === 'unauthorized') {

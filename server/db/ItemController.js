@@ -191,7 +191,23 @@ module.exports = (db, Sequelize, User) => {
     .then(function(user) {
       user.getItems({where: {valid: false}, raw: true})
       .then(function(items) {
-        console.log(items, 'ITEMS FOUND !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+        res.send(items);
+      });
+    }).catch(function(err) {
+      console.log(err);
+    });
+  };
+
+  const getMyOldItemsForSale = (req, res, next) => {
+    var id = req.params.id;
+    if (id === undefined) {
+      res.send('user undefined');
+      return;
+    }
+    User.findOne({where: {id: id}})
+    .then(function(user) {
+      user.getItems({where: {valid: false}, raw: true})
+      .then(function(items) {
         res.send(items);
       });
     }).catch(function(err) {
@@ -267,13 +283,27 @@ module.exports = (db, Sequelize, User) => {
   };
 
   const expiredItem = (req, res, next) => {
-    console.log('EXPIRED ITEM  ')
+    var id = req.params.itemId;
+    console.log('EXPIRED ITEM  &**(&(*&(*&(*&(&(*&(*&(*&*(&*(&(*&(&(*&(&(*&', id);
+
+    Item.findOne({where: {id: id} })
+    .then(function(item) {
+      console.log('FOUND EXPIRED ITEM  &**(&(*&(*&(*&(&(*&(*&(*&*(&*(&(*&(&(*&(&(*&', item);
+      item.updateAttributes({
+        valid: false
+      });
+      res.send(item);
+    }).catch(function(err) {
+      console.log(err);
+    });
+    // res.send('whoa');
   };
 
   return {
     Item: Item,
     getItemsForSale: getItemsForSale,
     getOldItemsForSale: getOldItemsForSale,
+    getMyOldItemsForSale: getMyOldItemsForSale,
     getAllItems: getAllItems,
     putItemForSale: putItemForSale,
     removeItemFromSale: removeItemFromSale,
