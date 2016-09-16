@@ -15,13 +15,12 @@ export default class UserSetting extends Component {
       phone: null,
       starRating: null,
       editing: false,
-      description: ''
+      aboutMe: ''
     };
     this.setUser = this.setUser.bind(this);
     this.handleChangeAboutMe = this.handleChangeAboutMe.bind(this);
   }
 
- 
   setUser (user) {
     user.user.sumOfRatings = 100;
     user.user.numberOfRatings = 20;
@@ -32,6 +31,7 @@ export default class UserSetting extends Component {
       lastName: user.user.lastName,
       email: user.user.email,
       photo: user.user.photo,
+      aboutMe: user.user.aboutMe,
       starRating: userStarRating
     })
     console.log(this.state.starRating, 'star RATING')
@@ -58,11 +58,24 @@ export default class UserSetting extends Component {
   }
 
   handleChangeAboutMe (event) {
-    this.setState({description: event.target.value});
+    this.setState({aboutMe: event.target.value});
   }
 
   saveProfile () {
-    console.log('saving')
+    this.editProfile();
+    const context = this;
+
+    $.ajax({
+      method: 'POST',
+      url: '/api/account/aboutMe',
+      headers: {'Content-Type': 'application/json'},
+      data: JSON.stringify({aboutMe: context.state.aboutMe}),
+      success: function(response) {
+        console.log('Saved profile');
+      }, error: function(error) {
+        console.error('Error: ', error);
+      }
+    })
   }
 
   handleSubmit(setSomething, e) {
@@ -72,14 +85,7 @@ export default class UserSetting extends Component {
       var emailregex = /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/;
       return emailregex.test(textval);
     };
-    //  Handle error messages for each clicked button seperately
-    if ($('#user-password').val() === '' && setSomething === 'passWord') {  
-      $('.passwordError').show();
-      $('.emailError').hide();
-      $('.addressError').hide();
-      $('.phoneError').hide();
-      valid = false;
-    }
+
     if ($('#user-email').val() === '' && setSomething === 'email') {    
       $('.emailError').show();      
       $('.addressError').hide();
@@ -148,7 +154,7 @@ export default class UserSetting extends Component {
         }
       });
 
-      $('#user-password').val('');   //  Clean up input field after submit button is clicked
+      //  Clean up input field after submit button is clicked
       $('#user-email').val('');
       $('#user-address').val('');
       $('#user-password').val('');
@@ -164,46 +170,56 @@ export default class UserSetting extends Component {
   
   render() {  //  On click, shows input field 
     var passCheck = this.state.passWord ? <div><form onSubmit={this.handleSubmit.bind(this, 'passWord')}><input id='user-password' type='password' placeholder='Type new password' className="input-xlarge"></input>
-                                            <button type='submit' className="setting-btn passwordBtn btn btn-primary">Submit</button></form>
+                                            <button type='submit' className="setting-btn passwordBtn btn btn-primary btn-sm">Submit</button></form>
                                             <div className="passwordError alert alert-danger fade in" role="alert">
                                             <strong>Woah! Invalid Password </strong><small>Please enter a valid password</small></div>
                                           </div> : '';
     var mailCheck = this.state.email ? <div><form onSubmit={this.handleSubmit.bind(this, 'email')}><input id='user-email' type="email" placeholder='Type new email' className="input-xlarge"></input>
-                                          <button type='submit' className="setting-btn emailBtn btn btn-primary">Submit</button></form>
+                                          <button type='submit' className="setting-btn emailBtn btn btn-primary btn-sm">Submit</button></form>
                                           <div className="emailError alert alert-danger fade in" role="alert">
                                           <strong>Woah! Invalied email </strong><small>Please enter a valid email address</small></div>
                                        </div> : '';
     var addressCheck = this.state.address ? <div><form onSubmit={this.handleSubmit.bind(this, 'address')}><input id='user-address' type='text' placeholder='Type new address' className="input-xlarge"></input>
-                                              <button type='submit' className="setting-btn addressBtn btn btn-primary">Submit</button></form>
+                                              <button type='submit' className="setting-btn addressBtn btn btn-primary btn-sm">Submit</button></form>
                                               <div className="addressError alert alert-danger fade in" role="alert">
                                               <strong>Woah! Invalid address </strong><small>Please enter a valid address</small></div>
                                             </div> : '';
-    var phoneCheck = this.state.phone ? <div><form onSubmit={this.handleSubmit.bind(this, 'phone')}><input id='user-phone' type='number' placeholder='Type new phone number' className="input-xlarge"></input>
-                                          <button type='submit' className="setting-btn phoneBtn btn btn-primary">Submit</button></form>
+    var phoneCheck = this.state.phone ? <div><form onSubmit={this.handleSubmit.bind(this, 'phone')}><input id='user-phone' type='tel' placeholder='Type new phone number' className="input-xlarge"></input>
+                                          <button type='submit' className="setting-btn phoneBtn btn btn-primary btn-sm">Submit</button></form>
                                           <div className="phoneError alert alert-danger fade in" role="alert">
                                           <strong>Woah! Invalid Phone number </strong><small>Please enter a valid phone number</small></div>
                                         </div> : '';
-    var context = this.state.starRating;
-    console.log(this.state.starRating);
 
-
+    var starRating = this.state.starRating;
+    
     var aboutMe = this.state.editing ?
+    /* EDITING */
       <div className="row">
-        <form> 
-          <div className="input-group input-group-lg about-me">
-            <textarea className="form-control" name="description" value={this.state.description} onChange={ this.handleChangeAboutMe }/>
+          <div className="input-group input-group-lg">
+            <textarea className="form-control" name="aboutMe" value={this.state.aboutMe} onChange={ this.handleChangeAboutMe }/>
           </div>
-            <button type="button" className="btn btn-primary btn-sm edit" aria-label="Left Align" onClick={ () => this.editProfile()}>save</button>
-        </form>
+        <div className="row">
+          <button type="button" className="btn btn-primary btn-sm edit" aria-label="Left Align" onClick={ () => this.saveProfile()}>
+            <span>save</span>
+          </button>
+        </div>
       </div> : 
+      /* NOT EDITING */
       <div className="row">
-        <button type="button" className="btn btn-primary btn-sm edit" aria-label="Left Align" onClick={ () => this.editProfile() } >
-          <span aria-hidden="true">edit about me</span>
-        </button>
-      </div>
-        {/* NOT EDITING */}
-      
 
+        <div className="row">
+          <button type="button" className="btn btn-primary btn-sm edit" aria-label="Left Align" onClick={ () => this.editProfile() } >
+            <span aria-hidden="true">edit about me</span>
+          </button>
+        </div>
+
+        <div className="row container">
+          <div className="col-md-12">
+            <p className="about-me">{this.state.aboutMe}</p>
+          </div>
+        </div>
+
+      </div>
 
     return (
       <div style = {{margin: 100}} className="container">
@@ -211,8 +227,23 @@ export default class UserSetting extends Component {
           <div className="row">
             <img src={this.state.photo} alt="Oops! Can't find your photo" className="img-responsive profile-image"/>
           </div>
-          <div className="row">
-            <h4 className="setting-container">Settings</h4>
+        </div>
+
+        <div className="container">
+          <div className="col-md-8">
+            <div className="row star-rating">
+              <Link to={'/profile/' + this.state.id}>
+                <h4>{this.state.firstName} {this.state.lastName}</h4>
+              </Link>
+              {this.state.starRating ? (<UserRating editable={'false'} starRating={ starRating }/>) : <div></div>}  
+            </div>
+          </div>
+        </div>
+
+        <div className="container setting-container">
+
+          <div className="col-md-4">
+            <h4 className="">Settings</h4>
               <div>
                 <Link to='/account' onClick={this.handleToggle.bind(this, 'email')}><h5>Change Email</h5></Link>
                 {mailCheck}
@@ -226,71 +257,27 @@ export default class UserSetting extends Component {
                 {phoneCheck}
               </div>
           </div>
-        </div>
-        <div className="col-md-8">
-          <div className="row">
-            <Link to={'/profile/' + this.state.id}>
-              <h4>{this.state.firstName} {this.state.lastName}</h4>
-            </Link>
-            {this.state.starRating ? (<UserRating editable={'false'} starRating={ context }/>) : <div></div>}  
-          </div>
-          <div className="row">
 
-          <div className="row">
-            <text>About me</text>
-          </div>
-
-            {/* EDIT ABOUT ME */}
-            <div className="row">
-              { !this.state.editing ? 
-                <button type="button" className="btn btn-primary btn-sm edit" aria-label="Left Align" onClick={ () => this.editProfile() } >
-                  <span aria-hidden="true">edit about me</span>
-                </button>
-                : <div></div>
-              }
+          <div className="col-md-8 state setting-container">
+            <h4>About me</h4>
+            <div className="">
+              {aboutMe}
             </div>
-
-            <div className="row">
-              <form> 
-                <div className="input-group input-group-lg about-me">
-                  {this.state.editing ? (<textarea className="form-control" name="description" value={this.state.description} onChange={ this.handleChangeAboutMe }/>) : <div></div>}
-                </div>
-                  { this.state.editing ? (<button type="button" className="btn btn-primary btn-sm edit" aria-label="Left Align" onClick={ () => this.editProfile()}>save</button>) : <div></div>}
-              </form>
-            </div>
-            <div>TEST{aboutMe}</div>
           </div>
+
         </div>
+
+
+
+
+
+
       </div>
     );
   }
 }
 
-// var Editor = React.createClass({
-//   displayName: 'Editor',
-//   propTypes: {
-//     name: React.PropTypes.string.isRequired
-//   },
-//   getInitialState: function() { 
-//     return {
-//       value: this.props.name
-//     };
-//   },
-//   handleChange: function(event) {
-//     this.setState({value: event.target.value});
-//   },
-//   render: function() {
-//     return (
-//       <form id="noter-save-form" method="POST">
-//         <textarea id="noter-text-area" name="textarea" value={this.state.value} onChange={this.handleChange}></textarea>
-//         <input type="submit" value="Save" />
-//       </form>
-//     );
-//   }
-// });
 
-// <div>{ this.state.user.user  }</div>
-      // <div>{ this.state.user }</div>
 // user
 // :
 // Object
@@ -317,33 +304,3 @@ export default class UserSetting extends Component {
 // "2016-09-15T02:24:56.270Z" 
 
 
- // user
-// :
-// Object
-// createdAt
-// :
-// "2016-09-15T02:24:56.270Z"
-// email
-// :
-// "julkie17@gmail.com"
-// firstName
-// :
-// "Julie"
-// id
-// :
-// "10105700513297463"
-// lastName
-// :
-// "Truong"
-// photo
-// :
-// "https://scontent.xx.fbcdn.net/v/t1.0-1/s200x200/10417550_10103418587420213_3389328959999895776_n.jpg?oh=619920945e4f741f2f31ef321bd5d98b&oe=58720745"
-// updatedAt
-// :
-// "2016-09-15T02:24:56.270Z" 
-
-
-// <div>
-//   <Link to='/account' onClick={this.handleToggle.bind(this, 'passWord')}><h3>Change Password</h3></Link>
-//   {passCheck}
-// </div>
