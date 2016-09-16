@@ -330,10 +330,6 @@ hr {
   text-align: right;
 }*/
 
-.about-me {
-  padding: 20px;
-}
-
 .col-centered{
     float: none;
     margin: 0 auto;
@@ -406,3 +402,20 @@ hr {
   text-align: left;
 }
 
+.star-rating {
+  padding-top: 10px;
+  padding-left: 40px;
+}
+
+textarea {
+  font-size: 13px;
+}
+
+.about-me {
+  padding: 20px;
+  border: 1px solid silver;
+  border-radius: 6px;
+  margin-top: 15px;
+  font-size: 13px;
+  background: white;
+}
