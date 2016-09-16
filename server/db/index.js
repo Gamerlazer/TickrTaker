@@ -42,8 +42,8 @@ db.sync({force: true})
   // });
 
   UserController.User.create({
-    firstName: 'Alexander',
-    lastName: 'Pantelides',
+    firstName: 'Sean',
+    lastName: 'Ng',
     id: '10154095627189811',
     sumOfRatings: 100,
     numberOfRatings: 20,

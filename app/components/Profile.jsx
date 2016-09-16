@@ -14,7 +14,8 @@ export default class Profile extends Component {
       starRating: null,
       activeItems: [],
       oldItems: [],
-      currentUserId: null
+      currentUserId: '',
+      isVistor: undefined,
     }
   }
 
@@ -31,10 +32,18 @@ export default class Profile extends Component {
       method: 'GET',
       url: '/api/user_data',
       success: function (user) {
+        console.log(user.user.id, 'response from get request')
+        var currentUserId = user.user.id;
         context.setState({
-          currentUserId: user.id
+          currentUserId: currentUserId
         })
-        console.log(context.currentUserId, 'Current User ID', user)
+        if (context.props.params.id === currentUserId) {
+          context.setState({
+            isVistor: false
+          })
+          console.log('Enter if statement')
+        }
+        console.log(context.state.isVistor, 'Current User ID', currentUserId)
       } 
     })
   }
@@ -48,6 +57,7 @@ export default class Profile extends Component {
         if (response.notfound) {
           context.setState({notFound: true});
         }
+
         console.log('response',response.user)
 
         var name = response.user.firstName + ' ' + response.user.lastName;
@@ -64,6 +74,8 @@ export default class Profile extends Component {
           rating: rating,
           aboutMe: aboutMe,
           picture: response.user.photo,
+          numberOfRatings: numberOfRatings, 
+          sumOfRatings: sumOfRatings,
           starRating: starRating
         })
       }
@@ -76,7 +88,6 @@ export default class Profile extends Component {
       url: '/api/selleritems/' + this.props.params.id,
       method: 'GET',
       success: function(response) {
-        console.log(response, 'THIS is my response')
         context.setState({
           activeItems: response
         });
@@ -90,7 +101,6 @@ export default class Profile extends Component {
       url: '/api/oldselleritems/' + this.props.params.id,
       method: 'GET',
       success: function(response){
-        console.log(response, 'ALL OLD ')
         context.setState({
           oldItems: response
         });
@@ -112,9 +122,14 @@ export default class Profile extends Component {
         </div>
         <h4>{ this.state.name }</h4>
         <div>
-          {this.state.starRating ? (<UserRating editable={'false'} starRating={ starRating }/>) : 'Unrated'}
+          {this.state.starRating ? (<UserRating 
+                                        userId={this.state.id} 
+                                        editable={this.state.isVistor}
+                                        numberOfRatings={this.state.numberOfRatings} 
+                                        sumOfRatings={this.state.sumOfRatings} 
+                                        starRating={ starRating }/>) 
+                                  : 'Unrated'}
         </div>
-
 
         <p className="user-description">
           { this.state.aboutMe ? this.state.aboutMe : 'User hasn\'t filled out description yet.'}
@@ -153,18 +168,3 @@ export default class Profile extends Component {
   }
 }
 
-
-//           {this.state.activeItems.map((item) => (<div>{item.title}</div>))}
-//           {this.state.activeItems.map((item) => (<div>{item.title}</div>))}
-// .map((item) => (<div>hi</div>))
-
-// {
-//   this.state.activeItems.map((entry, i) =>(<div>entry.title</div>))
-// }
-
-// <Listing
-// key={i}
-// item={entry}
-// auth={this.props.auth}
-// refreshPage = {this.props.grabAuctions}
-// />))

@@ -99,6 +99,12 @@ module.exports = (app, db) => {
     db.UserController.getProfile(req, res, authenticated);
   });
 
+
+  app.post('/api/profile/:id', function(req, res) {
+    var authenticated = req.user ? true : false;
+    db.UserController.rateSeller(req, res, authenticated);
+  });
+
   app.post('/api/account/aboutMe/', function(req, res) {
     var authenticated = req.user ? true : false;
     db.UserController.saveAboutMe(req, res, authenticated);

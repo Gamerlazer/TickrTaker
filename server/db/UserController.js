@@ -57,6 +57,19 @@ module.exports = (db, Sequelize) => {
     });
   };
 
+  var rateSeller = (req, res, auth) => {
+    var id = req.params.id;
+    User.find({where: { id: id }})
+    .then(function(user) {
+      if (!user) {
+        console.log('Can not find user === getProfile');
+        res.json({ notfound: true });
+      } else {
+        res.json({user: user, auth: auth});
+      }
+    });
+  };
+
   var saveAboutMe = (req, res, userObject) => {
     if (req.user === undefined) {
       res.send('user undefined');
@@ -88,6 +101,7 @@ module.exports = (db, Sequelize) => {
   return {
     User: User,
     getProfile: getProfile,
+    rateSeller: rateSeller,
     updateUser: updateUser,
     saveAboutMe: saveAboutMe
   };

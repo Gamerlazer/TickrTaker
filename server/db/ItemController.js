@@ -284,11 +284,8 @@ module.exports = (db, Sequelize, User) => {
 
   const expiredItem = (req, res, next) => {
     var id = req.params.itemId;
-    console.log('EXPIRED ITEM  &**(&(*&(*&(*&(&(*&(*&(*&*(&*(&(*&(&(*&(&(*&', id);
-
     Item.findOne({where: {id: id} })
     .then(function(item) {
-      console.log('FOUND EXPIRED ITEM  &**(&(*&(*&(*&(&(*&(*&(*&*(&*(&(*&(&(*&(&(*&', item);
       item.updateAttributes({
         valid: false
       });
