@@ -16,6 +16,7 @@ export default class App extends Component {
 
     var context = this;
     $.get('/checkLogin').then(function(data) {
+      console.log('checked log in')
       context.setState({
         isAuth: data === 'authenticated'
       });
@@ -27,6 +28,7 @@ export default class App extends Component {
   }
 
   checkAuthState () {
+    console.log('checking.')
     return this.state.isAuth;
   }
 

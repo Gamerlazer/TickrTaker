@@ -145,16 +145,16 @@ module.exports = (db, Sequelize, User) => {
   //  get all items that user has for sale.
 
   const getItemsForSale = (req, res, next) => {
-    if (req.params.id === undefined) {
+    var id = req.user.dataValues.id;
+    if (id === undefined) {
       res.send('user undefined');
       return;
     }
 
-    User.findOne({where: {id: req.params.id }})
+    User.findOne({where: {id: id }})
     .then(function(user) {
       user.getItems({where: {valid: true}, raw: true})
       .then(function(items) {
-        console.log('GET ITEM ======================= USER HAS BEEN FOUND!!!! ================####', items);
         res.send(items);
       });
     }).catch(function(err) {
@@ -163,15 +163,16 @@ module.exports = (db, Sequelize, User) => {
   };
 
   const getOldItemsForSale = (req, res, next) => {
-    if (req.params.id === undefined) {
+    var id = req.user.dataValues.id;
+    if (id === undefined) {
       res.send('user undefined');
       return;
     }
-    User.findOne({where: {id: req.params.id}})
+    User.findOne({where: {id: id}})
     .then(function(user) {
       user.getItems({where: {valid: false}, raw: true})
       .then(function(items) {
-        console.log(items);
+        console.log(items, 'ITEMS FOUND !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
         res.send(items);
       });
     }).catch(function(err) {
@@ -246,6 +247,10 @@ module.exports = (db, Sequelize, User) => {
     });
   };
 
+  const expiredItem = () => {
+
+  };
+
   return {
     Item: Item,
     getItemsForSale: getItemsForSale,
@@ -253,6 +258,7 @@ module.exports = (db, Sequelize, User) => {
     getAllItems: getAllItems,
     putItemForSale: putItemForSale,
     removeItemFromSale: removeItemFromSale,
-    getOneItem: getOneItem
+    getOneItem: getOneItem,
+    expiredItem: expiredItem
   };
 };
