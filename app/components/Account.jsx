@@ -22,8 +22,6 @@ export default class UserSetting extends Component {
   }
 
   setUser (user) {
-    user.user.sumOfRatings = 100;
-    user.user.numberOfRatings = 20;
     let userStarRating = user.user.numberOfRatings === 0 ? 0 : user.user.sumOfRatings / user.user.numberOfRatings;
     this.setState({
       id: user.user.id,
