@@ -174,6 +174,7 @@ module.exports = (db, Sequelize, User) => {
     .then(function(user) {
       user.getItems({where: {valid: true}, raw: true})
       .then(function(items) {
+        console.log('found my freakin items', items);
         res.send(items);
       });
     }).catch(function(err) {
