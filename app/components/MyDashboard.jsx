@@ -53,6 +53,8 @@ export default class MyDashboard extends Component {
     })
   }
 
+  // <UserRating editable={'undefined'} starRating={ starRating }/>
+
   render() {
     var view;
     if (this.props.params.view === 'unauthorized') {
@@ -65,8 +67,8 @@ export default class MyDashboard extends Component {
     if (this.props.params.view === 'sales') {
       this.getSalesItems();
       view = (
-        <div>
-          This is the sales page
+        <div className="dashboard container">
+          <h1>My Sales</h1>
           <div className="auction-listings">
             <h4>Active Sales</h4>
             {
@@ -103,8 +105,8 @@ export default class MyDashboard extends Component {
     if (this.props.params.view === 'bids') {
       this.getBidItems();
       view = (
-        <div>
-          This is the bids page
+        <div className="dashboard container">
+          <h1>My Bids</h1>
           <div className="auction-listings">
             <h4>Active Bids</h4>
             {

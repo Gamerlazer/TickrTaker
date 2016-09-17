@@ -34,7 +34,6 @@ export default class AuctionItem extends Component {
     this.interval = setInterval(() => this.setState({
       timeRemaining: this.calcTime(this.state.endDate)
     }), 1000);
-    this.calcTime = this.calcTime.bind(this);
   }
 
   componentWillUnmount () {    // Clears up DOM elements that were created in ComponentDidMount method
@@ -65,7 +64,8 @@ export default class AuctionItem extends Component {
         context.setState({
           endDate: res.auctionEndDateByHighestBid,
           valid: res.valid,
-          timeRemaining: this.calcTime(res.auctionEndDateByHighestBid)
+          timeRemaining: context.calcTime(res.auctionEndDateByHighestBid),
+          item: res
         });
       }
     })
@@ -118,7 +118,7 @@ export default class AuctionItem extends Component {
   }
 
   render () {
-
+    console.log(this.state.item);
     var thisItem = this.state.item || {};
     var startDate = new Date(Date.parse(thisItem.startDate));
     var startDateFormatted = startDate.getMonth() + '/' + startDate.getDate() + '/' + startDate.getFullYear() + '  ' + startDate.getHours() % 12 + ':' + ((startDate.getMinutes() < 10) ? '0' + startDate.getMinutes() : startDate.getMinutes()) + (startDate.getHours() > 12 ? ' PM' : ' AM');
