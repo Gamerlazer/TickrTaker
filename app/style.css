@@ -403,13 +403,30 @@ hr {
 }
 
 .star-rating {
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+.account-star {
+  max-width: 200px;
+  text-align: center;
+}
+
+.user-rating {
   padding-top: 10px;
   padding-left: 40px;
-  text-align: center;
+}
+
+.user-name-account {
+  padding-left: 15px;
 }
 
 textarea {
   font-size: 13px;
+}
+
+.edit-profile {
+  padding: 20px;
 }
 
 .about-me {
@@ -417,6 +434,6 @@ textarea {
   border: 1px solid silver;
   border-radius: 6px;
   margin-top: 15px;
-  font-size: 13px;
+  font-size: 15px;
   background: white;
 }

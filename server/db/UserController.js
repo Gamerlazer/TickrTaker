@@ -63,9 +63,11 @@ module.exports = (db, Sequelize) => {
     .then(function(user) {
       if (!user) {
         console.log('Can not find user === getProfile');
-        res.json({ notfound: true });
+        res.send('user not found');
       } else {
-        res.json({user: user, auth: auth});
+        // user.updateAttributes({
+
+        // });
       }
     });
   };

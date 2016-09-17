@@ -100,8 +100,9 @@ module.exports = (app, db) => {
   });
 
 
-  app.post('/api/profile/:id', function(req, res) {
+  app.post('/api/profile/rateUser/:id', function(req, res) {
     var authenticated = req.user ? true : false;
+    res.send(req.body);
     db.UserController.rateSeller(req, res, authenticated);
   });
 

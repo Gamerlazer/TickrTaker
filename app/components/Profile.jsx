@@ -15,7 +15,8 @@ export default class Profile extends Component {
       activeItems: [],
       oldItems: [],
       currentUserId: '',
-      isVistor: undefined,
+      rateUser: false,
+      isVistor: true,
     }
   }
 
@@ -26,6 +27,7 @@ export default class Profile extends Component {
     this.getCurrentUser();
   }
 
+  // Check if profile is current user's profile
   getCurrentUser () {
     var context = this;
     $.ajax({
@@ -41,7 +43,6 @@ export default class Profile extends Component {
           context.setState({
             isVistor: false
           })
-          console.log('Enter if statement')
         }
         console.log(context.state.isVistor, 'Current User ID', currentUserId)
       } 
@@ -108,6 +109,13 @@ export default class Profile extends Component {
     })
   }
 
+  rateUser () {
+    console.log('clicking', this.state.rateUser)
+    this.setState({
+      rateUser: undefined
+    })
+  }
+
   render(){
 
     var starRating = this.state.starRating;
@@ -115,6 +123,7 @@ export default class Profile extends Component {
       return (<div>User not found!</div>)
     }
     return (
+
     <div className="user-profile container">
       <div className="col-md-4 profile-left">
         <div className="profile-image">
@@ -124,7 +133,7 @@ export default class Profile extends Component {
         <div>
           {this.state.starRating ? (<UserRating 
                                         userId={this.state.id} 
-                                        editable={this.state.isVistor}
+                                        editable={this.state.rateUser}
                                         numberOfRatings={this.state.numberOfRatings} 
                                         sumOfRatings={this.state.sumOfRatings} 
                                         starRating={ starRating }/>) 

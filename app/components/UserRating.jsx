@@ -13,8 +13,10 @@ export default class UserRating extends Component {
       rating: this.props.starRating,
       numberOfRatings: this.props.numberOfRatings,
       sumOfRatings: this.props.sumOfRatings,
-      editable: this.props.editable || undefined
+      editable: this.props.editable
     }
+
+    console.log('UserRating editable state', this.props.editable)
     console.log('User rating id', this.state.userId)
 
     this.starSettings = {
@@ -24,18 +26,32 @@ export default class UserRating extends Component {
       edit: this.state.editable,  
       onChange: newValue => {
         this.starSettings.value = newValue;
-        this.setState({ rating: parseFloat(newValue) })
+        this.submitRating(newValue);
+        // this.setState({ rating: parseFloat(newValue) })
       }
     }
   }
 
-  submitRating () {
-    $.ajax({})
+  submitRating (newValue) {
+    var context = this;
+    $.ajax({
+      method: 'POST',
+      url: '/api/profile/rateUser/' + this.state.userId,
+      data: JSON.stringify({ 
+        rating : newValue
+      }),
+      success: function(response) {
+        console.log(response, 'my response from rateUser')
+        // context.setState({
+        //   rating: parseFloat(newValue)
+        // })
+      }
+    })
   }
 
   render () {
     return (
-      <div>
+      <div className="star-rating">
         <Stars  {...this.starSettings} />
         <div>Current rating: {this.state.rating} </div>
       </div>

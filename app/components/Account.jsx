@@ -186,8 +186,8 @@ export default class UserSetting extends Component {
     var aboutMe = this.state.editing ?
     /* EDITING */
       <div className="row">
-          <div className="input-group input-group-lg">
-            <textarea className="form-control" name="aboutMe" value={this.state.aboutMe} onChange={ this.handleChangeAboutMe }/>
+          <div className="input-group input-group-lg container edit-profile">
+              <textarea className="form-control" name="aboutMe" value={this.state.aboutMe} onChange={ this.handleChangeAboutMe }/>
           </div>
         <div className="row">
           <button type="button" className="btn btn-primary btn-sm edit" aria-label="Left Align" onClick={ () => this.saveProfile()}>
@@ -200,7 +200,7 @@ export default class UserSetting extends Component {
 
         <div className="row">
           <button type="button" className="btn btn-primary btn-sm edit" aria-label="Left Align" onClick={ () => this.editProfile() } >
-            <span aria-hidden="true">edit about me</span>
+            <span aria-hidden="true">Edit About Me</span>
           </button>
         </div>
 
@@ -222,17 +222,20 @@ export default class UserSetting extends Component {
 
         <div className="container">
           <div className="col-md-8">
-            <div className="row star-rating">
+            <div className="row user-rating">
               <Link to={'/profile/' + this.state.id}>
-                <h4>{this.state.firstName} {this.state.lastName}</h4>
+                <div className="row user-name-account">
+                  <h4>{this.state.firstName} {this.state.lastName}</h4>
+                </div>
               </Link>
-              {this.state.starRating ? (<UserRating editable={'false'} starRating={ starRating }/>) : <div></div>}  
+              <div className="row account-star">
+                {this.state.starRating ? (<UserRating editable={'false'} starRating={ starRating }/>) : <div></div>}  
+              </div>
             </div>
           </div>
         </div>
 
         <div className="container setting-container">
-
           <div className="col-md-4">
             <h4 className="">Settings</h4>
               <div>
@@ -249,7 +252,7 @@ export default class UserSetting extends Component {
               </div>
           </div>
 
-          <div className="col-md-8 state setting-container">
+          <div className="col-md-8">
             <h4>About me</h4>
             <div className="">
               {aboutMe}

@@ -54,7 +54,7 @@ db.sync({force: true})
       firstName: 'Julie',
       lastName: 'Truong',
       id: '10105700513297463',
-      sumOfRatings: 130,
+      sumOfRatings: 100,
       photo: 'https://scontent.xx.fbcdn.net/v/t1.0-1/s200x200/10417550_10103418587420213_3389328959999895776_n.jpg?oh=619920945e4f741f2f31ef321bd5d98b&oe=58720745',
       numberOfRatings: 20,
       email: 'julkie17@gmail.com',
