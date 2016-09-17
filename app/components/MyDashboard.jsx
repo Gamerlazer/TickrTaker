@@ -41,7 +41,7 @@ export default class MyDashboard extends Component {
       method: 'GET',
       url: '/api/bids',
       success: function(bids) {
-        console.log('getting bid items')
+        console.log('getting bid items', bids)
         var activeItems = bids.filter(function(bid) {
           return bid.item.valid === true;
         })
