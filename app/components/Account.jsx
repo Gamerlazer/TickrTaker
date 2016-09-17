@@ -15,6 +15,7 @@ export default class UserSetting extends Component {
       phone: null,
       starRating: null,
       editing: false,
+      userEmail: null,
       aboutMe: ''
     };
     this.setUser = this.setUser.bind(this);
@@ -22,12 +23,13 @@ export default class UserSetting extends Component {
   }
 
   setUser (user) {
-    let userStarRating = user.user.numberOfRatings === 0 ? 0 : user.user.sumOfRatings / user.user.numberOfRatings;
+    var userStarRating = user.user.numberOfRatings === 0 ? 0 : user.user.sumOfRatings / user.user.numberOfRatings;
+    var userEmail = user.user.email || 'please provide email';
     this.setState({
       id: user.user.id,
       firstName: user.user.firstName,
       lastName: user.user.lastName,
-      email: user.user.email,
+      userEmail: userEmail,
       photo: user.user.photo,
       aboutMe: user.user.aboutMe,
       starRating: userStarRating
@@ -165,7 +167,7 @@ export default class UserSetting extends Component {
                                             <div className="passwordError alert alert-danger fade in" role="alert">
                                             <strong>Woah! Invalid Password </strong><small>Please enter a valid password</small></div>
                                           </div> : '';
-    var mailCheck = this.state.email ? <div><form onSubmit={this.handleSubmit.bind(this, 'email')}><input id='user-email' type="email" placeholder='Type new email' className="input-xlarge"></input>
+    var mailCheck = this.state.email ? <div><form onSubmit={this.handleSubmit.bind(this, 'email')}><input id='user-email' type="email" placeholder={this.state.userEmail} className="input-xlarge"></input>
                                           <button type='submit' className="setting-btn emailBtn btn btn-primary btn-sm">Submit</button></form>
                                           <div className="emailError alert alert-danger fade in" role="alert">
                                           <strong>Woah! Invalied email </strong><small>Please enter a valid email address</small></div>
@@ -186,9 +188,11 @@ export default class UserSetting extends Component {
     var aboutMe = this.state.editing ?
     /* EDITING */
       <div className="row">
-          <div className="input-group input-group-lg container edit-profile">
-              <textarea className="form-control" name="aboutMe" value={this.state.aboutMe} onChange={ this.handleChangeAboutMe }/>
+        <div className="row">
+          <div className="input-group input-group-md edit-about-me">
+            <textarea className="form-control about-me" name="aboutMe" value={this.state.aboutMe} onChange={ this.handleChangeAboutMe }/>
           </div>
+        </div>
         <div className="row">
           <button type="button" className="btn btn-primary btn-sm edit" aria-label="Left Align" onClick={ () => this.saveProfile()}>
             <span>save</span>
@@ -197,68 +201,56 @@ export default class UserSetting extends Component {
       </div> : 
       /* NOT EDITING */
       <div className="row">
-
         <div className="row">
           <button type="button" className="btn btn-primary btn-sm edit" aria-label="Left Align" onClick={ () => this.editProfile() } >
-            <span aria-hidden="true">Edit About Me</span>
+            <span aria-hidden="true">edit about me</span>
           </button>
         </div>
 
-        <div className="row container">
-          <div className="col-md-12">
+        <div className="row">
             <p className="about-me">{this.state.aboutMe}</p>
-          </div>
         </div>
 
       </div>
 
     return (
       <div style = {{margin: 100}} className="container">
-        <div className="col-md-4">
-          <div className="row">
-            <img src={this.state.photo} alt="Oops! Can't find your photo" className="img-responsive profile-image"/>
+        <div className="row"> 
+          <div className="col-md-4">
+              <img src={this.state.photo} alt="Oops! Can't find your photo" className="img-responsive profile-image"/>
           </div>
-        </div>
-
-        <div className="container">
-          <div className="col-md-8">
-            <div className="row user-rating">
+          <div className="col-md-4">
+            <div className="row star-rating">
               <Link to={'/profile/' + this.state.id}>
-                <div className="row user-name-account">
-                  <h4>{this.state.firstName} {this.state.lastName}</h4>
-                </div>
+                <h4 className="account-name">{this.state.firstName} {this.state.lastName}</h4>
               </Link>
-              <div className="row account-star">
-                {this.state.starRating ? (<UserRating editable={'false'} starRating={ starRating }/>) : <div></div>}  
-              </div>
+              {this.state.starRating ? (<UserRating editable={'false'} starRating={ starRating }/>) : <div></div>}  
             </div>
           </div>
-        </div>
+        </div>  
 
-        <div className="container setting-container">
+        <div className="row settings">
           <div className="col-md-4">
             <h4 className="">Settings</h4>
               <div>
-                <Link to='/account' onClick={this.handleToggle.bind(this, 'email')}><h5>Change Email</h5></Link>
+                <Link to='/account' onClick={this.handleToggle.bind(this, 'email')}><h6>Change Email</h6></Link>
                 {mailCheck}
               </div>
               <div>
-                <Link to='/account' onClick={this.handleToggle.bind(this, 'address')}><h5>Change Address</h5></Link>
+                <Link to='/account' onClick={this.handleToggle.bind(this, 'address')}><h6>Change Address</h6></Link>
                 {addressCheck}
               </div>
               <div>
-                <Link to='/account' onClick={this.handleToggle.bind(this, 'phone')}><h5>Change Phone Number</h5></Link>
+                <Link to='/account' onClick={this.handleToggle.bind(this, 'phone')}><h6>Change Phone Number</h6></Link>
                 {phoneCheck}
               </div>
           </div>
 
           <div className="col-md-8">
             <h4>About me</h4>
-            <div className="">
-              {aboutMe}
-            </div>
-          </div>
 
+              {aboutMe}
+          </div>
         </div>
 
 
