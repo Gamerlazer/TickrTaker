@@ -50,7 +50,7 @@ export default class Listing extends Component {
     console.log('running check active function')
     var context = this;
     if ( new Date() > new Date(this.state.endDate) && this.state.valid) {
-      
+
       console.log('Setting' + this.props.item.title + 'to not valid', context.props.item.id)
       $.ajax({
         method: 'PUT',
@@ -119,7 +119,7 @@ export default class Listing extends Component {
             <h3>{this.props.item.title || 'Sample Title'}</h3>
           </Link>
           <div className="row">
-            <div className="col-md-7">
+            <div className={ this.props.auth() && this.props.bidNowActive ? "col-md-7" : "col-md-12"}>
               {this.state.activeBid ?
                 <div>
                   Current highest bid:
@@ -154,21 +154,18 @@ export default class Listing extends Component {
                 </Link>
               </div> : <div></div> }
             </div>
+          { this.props.auth() && this.props.bidNowActive ?
             <div className="col-md-5">
-              { this.props.auth() && this.props.bidNowActive ?
-                <BidNow
-                getItem={this.getItem.bind(this)}
-                getBids={this.getBids.bind(this)}
-                currentBid={this.state.currentBid}
-                item={this.props.item} />
-                : <div></div> }
+              <BidNow
+              getItem={this.getItem.bind(this)}
+              getBids={this.getBids.bind(this)}
+              currentBid={this.state.currentBid}
+              item={this.props.item} />
             </div>
+              : <div></div> }
           </div>
         </div>
       </div>
     )
   }
 }
-
-
-//             {this.state.valid ? <div>True</div> : <div>False</div>}

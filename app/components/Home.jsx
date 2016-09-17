@@ -74,7 +74,6 @@ export default class Auction extends Component {
                 key={i}
                 item={entry}
                 auth={this.props.auth}
-                refreshPage = {this.props.grabAuctions}
                 bidNowActive =  {true}
                 />))
             }

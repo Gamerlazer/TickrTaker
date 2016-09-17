@@ -299,6 +299,10 @@ hr {
   font-size: 1.5rem;
 }
 
+#bid-form {
+  padding: 15px;
+}
+
 #bid-form button {
   margin-top: 10px;
 }
