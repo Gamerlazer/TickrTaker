@@ -34,7 +34,6 @@ export default class AuctionItem extends Component {
     this.interval = setInterval(() => this.setState({
       timeRemaining: this.calcTime(this.state.endDate)
     }), 1000);
-    this.calcTime = this.calcTime.bind(this);
   }
 
   componentWillUnmount () {    // Clears up DOM elements that were created in ComponentDidMount method
@@ -65,7 +64,8 @@ export default class AuctionItem extends Component {
         context.setState({
           endDate: res.auctionEndDateByHighestBid,
           valid: res.valid,
-          timeRemaining: this.calcTime(res.auctionEndDateByHighestBid)
+          timeRemaining: context.calcTime(res.auctionEndDateByHighestBid),
+          item: res
         });
       }
     })
@@ -118,7 +118,7 @@ export default class AuctionItem extends Component {
   }
 
   render () {
-
+    console.log(this.state.item);
     var thisItem = this.state.item || {};
     var startDate = new Date(Date.parse(thisItem.startDate));
     var startDateFormatted = startDate.getMonth() + '/' + startDate.getDate() + '/' + startDate.getFullYear() + '  ' + startDate.getHours() % 12 + ':' + ((startDate.getMinutes() < 10) ? '0' + startDate.getMinutes() : startDate.getMinutes()) + (startDate.getHours() > 12 ? ' PM' : ' AM');
@@ -129,8 +129,8 @@ export default class AuctionItem extends Component {
     });
 
     return (
-      <div className="container">
-        <h2>{thisItem.title}</h2>
+      <div className="product-detail container">
+        <h2 className="item-title">{thisItem.title}</h2>
         <div className="row">
           <div className="col-md-3 col-sm-5 product-profile-image">
             <img src={thisItem.picture} />
@@ -189,47 +189,3 @@ export default class AuctionItem extends Component {
     );
   }
 }
-
-// <div className="col-md-12 auction-item-container">
-//   {/*title*/}
-//   <div className="form-group col-md-12 auction-title">
-//     <h2>{thisItem.title}</h2>
-//   </div>
-//   {/*top three columns*/}
-//   <div className='form-group col-md-12'>
-//       {/* main auction image: */}
-//     <img className="col-md-3 img-fluid" src={thisItem.picture}></img>
-//     {/*three item details:*/}
-//     <div className="col-md-5 auction-item-details ">
-//       <hr className="auction-item-title-hr"/>
-//       <div className="col-md-12">Time Remaining: {this.state.timeRemaining}</div>
-//       <div className="col-md-12"> Current Price: {this.state.currentPrice}</div>
-//       <div className="col-md-12"> Seller: John Doe</div>
-//       {/*end item details:*/}
-//     </div>
-//     {/*bid form and button  */}
-//     <div className="col-md-4 auction-bid-form">
-//       <form id="bid-form" onSubmit={this.sendItemBid}>
-//         <div className="col-md-12"><strong>Bid</strong>
-//           <br></br>
-//           <input className="col-md-6" id="bid" type="number" step="0.01" placeholder="Min. Price"></input>
-//           <button className="col-md-6" type="button" className="btn btn-primary pull-md-right" onClick={this.sendItemBid}>Submit Bid</button>
-//         </div>
-//       </form>
-//       {/* alert below bid button*/}
-//       <div className="alert alert-danger fade in" role="alert" id="bid-error">
-//         <button type="button" className="close">×</button>
-//         <strong>Woah! </strong>Please place a valid bid. <small>Tip: Try value higher than the current highest bid!</small>
-//       </div>
-//     </div>
-//   </div>
-//   {/* end container */}
-//   <div className="form-group col-md-12 bottom-row">
-//     <div className="col-md-6 auction-description">Description: {thisItem.description}</div>
-//     <div className="col-md-6 img-fluid auction-reel">
-//       {/*<img src={thisItem.picture}></img>*/}
-//       <img className="img-fluid auction-image" src="http://images.cb2.com/is/image/CB2/DondraBedQueenF12/$web_zoom_furn_colormap$/130830204135/dondra-bed.jpg"></img>
-//     </div>
-//   </div>
-//   {/*end whole container:*/}
-// </div>

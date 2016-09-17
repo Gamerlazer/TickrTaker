@@ -16,7 +16,7 @@ export default class Main extends Component {
           </video>
         </div>
           <div className="landing-video-text">
-          <div className="landing-video-title">Tickr</div>
+          <div className="landing-video-title">tickr</div>
           <div className="landing-video-description">time-sensitive auctions</div>
           </div>
         </div>

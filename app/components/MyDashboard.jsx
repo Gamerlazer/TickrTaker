@@ -41,7 +41,7 @@ export default class MyDashboard extends Component {
       method: 'GET',
       url: '/api/bids',
       success: function(bids) {
-        console.log('getting bid items')
+        console.log('getting bid items', bids)
         var activeItems = bids.filter(function(bid) {
           return bid.item.valid === true;
         })
@@ -52,6 +52,8 @@ export default class MyDashboard extends Component {
       }
     })
   }
+
+  // <UserRating editable={'undefined'} starRating={ starRating }/>
 
   render() {
     var view;
@@ -65,9 +67,9 @@ export default class MyDashboard extends Component {
     if (this.props.params.view === 'sales') {
       this.getSalesItems();
       view = (
-        <div>
-          This is the sales page
-          <div className="auction-listings">
+        <div className="dashboard container-fluid">
+          <h1>My Sales</h1>
+          <div className="auction-listings col-md-8">
             <h4>Active Sales</h4>
             {
               this.state.activeItems.map((item, i)=>(
@@ -82,7 +84,7 @@ export default class MyDashboard extends Component {
               ))
             }
           </div>
-          <div className="auction-listings">
+          <div className="auction-listings col-md-4">
             <h4>Expired Sales</h4>
             {
               this.state.expiredItems.map((item, i)=>(
@@ -103,9 +105,9 @@ export default class MyDashboard extends Component {
     if (this.props.params.view === 'bids') {
       this.getBidItems();
       view = (
-        <div>
-          This is the bids page
-          <div className="auction-listings">
+        <div className="dashboard container-fluid">
+          <h1>My Bids</h1>
+          <div className="auction-listings col-md-8">
             <h4>Active Bids</h4>
             {
               this.state.activeItems.map((item, i)=>(
@@ -119,7 +121,7 @@ export default class MyDashboard extends Component {
               ))
             }
           </div>
-          <div className="auction-listings">
+          <div className="auction-listings col-md-4">
             <h4>Expired Bids</h4>
             {
               this.state.expiredItems.map((item, i)=>(

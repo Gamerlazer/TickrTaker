@@ -34,11 +34,13 @@ export default class Listing extends Component {
         $(this).attr('src', 'http://res.cloudinary.com/dijpyi6ze/image/upload/v1473715896/item_photos/zfaehmp20xculww4krs6.jpg');
     });
 
-    this.interval = setInterval(() => this.setState({
-      timeRemaining: this.calcTime(this.state.endDate)
-    }), 1000);
+    this.interval = setInterval(() => {
+      this.checkActive();
+      this.setState({
+        timeRemaining: this.calcTime(this.state.endDate)
+      });
+    }, 1000)
     this.calcTime = this.calcTime.bind(this);
-    setInterval(this.checkActive.bind(this), 1000);
 
     // console.log('endDate: ', new Date(this.state.endDate), 'now: ', new Date(), 'Difference in enddate and now', new Date() > new Date(this.state.endDate));
   }
@@ -50,7 +52,6 @@ export default class Listing extends Component {
 
   checkActive () {
     // console.log('this timmer is working', this.state.timeRemaining, this.state.id);
-      console.log('running check active function')
     var context = this;
     if ( new Date() > new Date(this.state.endDate) && this.state.valid) {
 
@@ -59,11 +60,12 @@ export default class Listing extends Component {
         method: 'PUT',
         url: '/api/expiredItem/' + context.props.item.id,
         success: (response) => {
-          console.log(response, 'Response Vaild');
+
+          console.log(response.valid, 'Response Vaild');
           context.setState({
             valid: response.valid
           })
-          console.log(context.state.valid)
+          console.log('is this valid?', context.state.valid)
         }
       })
     }
@@ -121,10 +123,10 @@ export default class Listing extends Component {
         </div>
         <div className="col-sm-9">
           <Link to={itemUrl}>
-            <h3>{this.props.item.title || 'Sample Title'}</h3>
+            <h3 className="item-title">{this.props.item.title || 'Sample Title'}</h3>
           </Link>
           <div className="row">
-            <div className={ this.props.auth() && this.props.bidNowActive ? "col-md-7" : "col-md-12"}>
+            <div className={ this.props.auth() && this.props.bidNowActive ? "col-md-7 listing-content" : "col-md-12 listing-content"}>
               {this.state.activeBid ?
                 <div>
                   Current highest bid:

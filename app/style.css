@@ -1,13 +1,44 @@
+@import 'https://fonts.googleapis.com/css?family=Righteous|Copse';
+
 body {
-  background-color: #E6F3F6;
+  background-color: #E2F7FD;
+}
+
+h1 {
+  margin-top: 10px;
+  font-family: 'Righteous', cursive;
+  text-align: center;
+  font-size: 4rem;
+  color: #001f3f;
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-size: ;
 }
 
 .home.container {
   padding-top: 15px;
 }
 
+.home > .auction-listing {
+  margin-bottom: 20px;
+}
+
+.home > .row > div {
+  padding-right: 0px;
+  padding-left: 0px;
+}
+
+.row {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
 .search-text {
   text-align: right;
+  margin-right: 10px;
+  font-size: 18px;
 }
 
 .current-highest-bid {
@@ -48,23 +79,27 @@ body {
   padding: 5px 5px 5px 5px;
 }
 
-.auction-header {
-  padding: 5px 5px 5px 5px;
-  border-bottom: 1px solid;
-  display: flex;
-  align-items: center;
-}
-
-.auction-header h3 {
-  margin-bottom: 0px;
-}
-
 #nav-content {
   padding-right: 0px;
 }
 
+#navbar1 {
+  background-color: #001f3f;
+}
+
+.item-title {
+  font-family: 'Copse', serif;
+  color: black;
+}
+
+h2.item-title {
+  padding-left: 15px;
+  font-size: 2.5rem;
+}
+
 #navbar2 {
   border-radius: 0px;
+  background-color: #001f3f;
 }
 
 #navbar2 .nav-item {
@@ -81,17 +116,17 @@ body {
 #brand-name {
   padding-right: 50px;
   font-size: 1.8rem;
-  font-weight: bold;
+  font-family: 'Righteous', cursive;
   padding-top: 0px;
   padding-bottom: 0px
 }
 
-#item-title {
+#item-desc {
   width: 90%;
 }
 
-#item-desc {
-  width: 90%;
+.product-detail {
+  margin-top: 20px;
 }
 
 #end-date {
@@ -129,11 +164,6 @@ body {
   border-radius: 10px;
 }
 
-.dashboard-header {
-  text-align: center;
-  padding: 15px;
-}
-
 /*#navbar2 ul {
   display: flex;
   justify-content: space-around;
@@ -146,6 +176,10 @@ body {
   align-items: center;
 }*/
 
+div.dashboard {
+  margin-top: 20px;
+}
+
 .setting-btn {
   margin-left: 15px;
 }
@@ -156,9 +190,11 @@ body {
 }
 
 .search-form {
-  display: flex;
+  display: inline-flex;
   flex-direction: row-reverse;
   align-items: center;
+  float: right;
+  font-size: 22px;
 }
 
 .search-form input {
@@ -166,16 +202,20 @@ body {
 }
 
 .auction-listings {
-  border-radius: 5px;
 }
 
 .auction-listings > .row {
-  padding-top: 15px;
-  margin-top: 8px;
-  margin-bottom: 8px;
+  border-radius: 5px;
   border: 1px grey solid;
   padding-bottom: 15px;
-  border-radius: 6px;
+  padding-top: 15px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background: white;
+}
+
+.listing-content {
+  padding-left: 0px;
 }
 
 .landing-video {
@@ -236,7 +276,7 @@ video {
 }
 
 .landing-video-title {
-  font-family: "Helvetica";
+  font-family: "Righteous", cursive;
   color: white;
   font-weight: bold;
   font-size: 9rem;
@@ -300,11 +340,12 @@ hr {
 }
 
 #bid-form {
-  padding: 15px;
+  padding-top: 15px;
 }
 
-#bid-form button {
-  margin-top: 10px;
+#bid-form > input {
+  margin-right: 10px;
+  width: 50%;
 }
 
 .auction-price span {
