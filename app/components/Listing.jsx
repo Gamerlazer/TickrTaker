@@ -123,7 +123,7 @@ export default class Listing extends Component {
         </div>
         <div className="col-sm-9">
           <Link to={itemUrl}>
-            <h3>{this.props.item.title || 'Sample Title'}</h3>
+            <h3 className="item-title">{this.props.item.title || 'Sample Title'}</h3>
           </Link>
           <div className="row">
             <div className={ this.props.auth() && this.props.bidNowActive ? "col-md-7 listing-content" : "col-md-12 listing-content"}>
