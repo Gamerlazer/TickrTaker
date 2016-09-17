@@ -31,22 +31,35 @@ export default class AuctionItem extends Component {
         $(this).attr('src', 'http://res.cloudinary.com/dijpyi6ze/image/upload/v1473715896/item_photos/zfaehmp20xculww4krs6.jpg');
     });
 
-    this.interval = setInterval(() => this.setState({
-      timeRemaining: this.calcTime(this.state.endDate)
-    }), 1000);
+    this.interval = setInterval(() => {
+      this.checkActive();
+      this.setState({
+        timeRemaining: this.calcTime(this.state.endDate)
+      });
+    }, 1000)
   }
 
   componentWillUnmount () {    // Clears up DOM elements that were created in ComponentDidMount method
-    clearInterval(this.interval);
+    this.interval && clearInterval(this.interval);
+    this.interval = false;
   }
 
-  calcPrice () {
-    var thisItem = this.state.item;
-    if (thisItem) {
-      //only run calculations when item is loaded
-      return calcPrice(thisItem.startPrice, thisItem.endPrice, thisItem.startDate, thisItem.endDate);
-    } else {
-      return 0;
+  checkActive () {
+    // console.log('this timmer is working', this.state.timeRemaining, this.state.id);
+    var context = this;
+    if ( new Date() > new Date(this.state.endDate) && this.state.valid) {
+
+      console.log('Setting' + this.state.item.title + 'to not valid', context.props.params.id)
+      $.ajax({
+        method: 'PUT',
+        url: '/api/expiredItem/' + context.props.params.id,
+        success: (response) => {
+          context.setState({
+            valid: response.valid
+          })
+          console.log('is this valid?', context.state.valid)
+        }
+      })
     }
   }
 
@@ -118,12 +131,16 @@ export default class AuctionItem extends Component {
   }
 
   render () {
-    console.log(this.state.item);
     var thisItem = this.state.item || {};
+
     var startDate = new Date(Date.parse(thisItem.startDate));
+
     var startDateFormatted = startDate.getMonth() + '/' + startDate.getDate() + '/' + startDate.getFullYear() + '  ' + startDate.getHours() % 12 + ':' + ((startDate.getMinutes() < 10) ? '0' + startDate.getMinutes() : startDate.getMinutes()) + (startDate.getHours() > 12 ? ' PM' : ' AM');
+
     var endDate = new Date(Date.parse(thisItem.auctionEndDateByHighestBid));
+
     var endDateFormatted = endDate.getMonth() + '/' + endDate.getDate() + '/' + endDate.getFullYear() + '  ' + endDate.getHours() % 12 + ':' + ((endDate.getMinutes() < 10) ? '0' + endDate.getMinutes() : endDate.getMinutes()) + (endDate.getHours() >= 12 ? ' PM' : ' AM');
+
     $('.alert .close').on('click', function(e) {
       $(this).parent().hide();
     });
@@ -135,7 +152,7 @@ export default class AuctionItem extends Component {
           <div className="col-md-3 col-sm-5 product-profile-image">
             <img src={thisItem.picture} />
           </div>
-          <div className={ this.props.auth() && this.state.valid ? "col-md-4 col-sm-7" : "col-md-12"}>
+          <div className={ this.props.auth() && this.state.valid ? "col-md-4 col-sm-7 item-info" : "col-md-12 item-info"}>
           {this.state.valid ?
             <div>
               Current highest bid:
@@ -162,7 +179,7 @@ export default class AuctionItem extends Component {
           }
           </div>
           <div className="col-md-5">
-          { this.props.auth() && this.props.valid ?
+          { this.props.auth() && this.state.valid ?
             <div className="col-md-5">
               <BidNow
               getItem={this.getItem.bind(this)}
@@ -175,8 +192,8 @@ export default class AuctionItem extends Component {
         </div>
         <div className="row">
           <div className="col-md-6">
-            Description
-            <p>
+            Item Description
+            <p className="card">
               {thisItem.description}
             </p>
           </div>

@@ -74,11 +74,6 @@ h3 {
   vertical-align: middle;
 }
 
-.item-description {
-  word-wrap: break-word;
-  padding: 5px 5px 5px 5px;
-}
-
 #nav-content {
   padding-right: 0px;
 }
@@ -121,13 +116,41 @@ h2.item-title {
   padding-bottom: 0px
 }
 
-#item-desc {
-  width: 90%;
-}
 
 .product-detail {
   margin-top: 20px;
 }
+
+h2.item-title {
+  margin-bottom: 10px;
+}
+.product-detail > div.row {
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+
+.product-profile-image > img {
+  border-radius: 6px;
+  border: 1px black solid;
+  max-width: 250px;
+  max-height: 200px;
+}
+
+.item-info > div {
+  margin-bottom: 5px;
+}
+
+.card {
+  background: white;
+  padding: 5px;
+  border: 1px #DDDDDD solid;
+  border-radius: 6px;
+}
+
+
+
+
+
 
 #end-date {
   width: 50%;
@@ -203,7 +226,7 @@ div.dashboard {
 
 .auction-listings > .row {
   border-radius: 5px;
-  border: 1px grey solid;
+  border: 1px #DDDDDD solid;
   padding-bottom: 15px;
   padding-top: 15px;
   margin-top: 20px;
@@ -358,19 +381,6 @@ hr {
   font-size: 2rem;
 }
 
-/*.current-price {
-  margin-top: 10px;
-  font-size: 1.5rem;
-}
-
-.time-remaining {
-  margin-top: 10px;
-  font-size: 1.5rem;
-}
-
-#nav-content ul li .col-xs-12 {
-  text-align: right;
-}*/
 
 .col-centered{
     float: none;
@@ -400,6 +410,8 @@ hr {
   float: right
 }
 
+
+
 /* PROFILE */
 
 .user-profile {
@@ -411,6 +423,7 @@ hr {
 }
 
 /*** User Name ***/
+
 .profile-left > h4 {
   margin-top: 8px;
 }
