@@ -52,7 +52,9 @@ export default class UserRating extends Component {
   render () {
     return (
       <div className="star-rating">
-        <Stars  {...this.starSettings} />
+        <div className="stars">
+          <Stars {...this.starSettings} />
+        </div>
         <div>Current rating: {this.state.rating} </div>
       </div>
     )

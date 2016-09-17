@@ -228,7 +228,7 @@ export default class UserSetting extends Component {
           <div className="col-md-4">
             <div className="row">
               <Link to={'/profile/' + this.state.id}>
-                <h4 className="account-name">{this.state.firstName} {this.state.lastName}</h4>
+                <h3 className="account-name">{this.state.firstName} {this.state.lastName}</h3>
               </Link>
               {this.state.starRating ? (<UserRating editable={'false'} starRating={ starRating }/>) : <div></div>}  
             </div>
