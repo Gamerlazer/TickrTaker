@@ -470,6 +470,10 @@ textarea.about-me {
   max-width: 100%;
 }
 
+.account-input {
+  font-size: 13px;
+}
+
 .about-me {
   padding: 20px;
   border: 1px solid silver;
