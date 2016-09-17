@@ -71,7 +71,8 @@ export default class Auction extends Component {
           key={i}
           item={entry}
           auth={this.props.auth}
-          bidNowActive =  {true} />
+          bidNowActive =  {true}
+          rerender = {this.grabAuctions.bind(this)}/>
           ))
         }
         </div>

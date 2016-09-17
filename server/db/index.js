@@ -44,12 +44,12 @@ db.sync({force: true})
   UserController.User.create({
     firstName: 'Sean',
     lastName: 'Ng',
-    id: '10154095627189811',
+    id: '10208958456613115',
     sumOfRatings: 100,
     numberOfRatings: 20,
     email: 'voraciousscroll@gmail.com',
     photo: 'https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/11148734_10205233811059304_8200092159283226084_n.jpg?oh=a19a83eef9251ff118ccb61e0b1069df&oe=583F7305'
-  }).then(function(lex) {
+  }).then(function(sean) {
     UserController.User.create({
       firstName: 'Julie',
       lastName: 'Truong',
@@ -58,9 +58,9 @@ db.sync({force: true})
       photo: 'https://scontent.xx.fbcdn.net/v/t1.0-1/s200x200/10417550_10103418587420213_3389328959999895776_n.jpg?oh=619920945e4f741f2f31ef321bd5d98b&oe=58720745',
       numberOfRatings: 20,
       email: 'julkie17@gmail.com',
-      aboutMe: 'im awesome'
+      aboutMe: 'My about me is filled in with stuff'
     })
-    .then(function(seller) {
+    .then(function(julie) {
       var rightNow = new Date();
       rightNow.setSeconds(rightNow.getSeconds() + 10);
       ItemController.Item.create({
@@ -70,9 +70,10 @@ db.sync({force: true})
         startPrice: 10000.00,
         endPrice: 100.00,
         endDate: rightNow.toISOString(),
+        sellerName: 'Julie Truong',
         auctionEndDateByHighestBid: rightNow.toISOString()
       }).then(function (item) {
-        seller.addItem(item);
+        julie.addItem(item);
       });
 
       ItemController.Item.create({
@@ -81,11 +82,13 @@ db.sync({force: true})
         picture: 'http://vignette4.wikia.nocookie.net/pokemon/images/5/5f/025Pikachu_OS_anime_11.png/revision/latest?cb=20150717063951',
         startPrice: 10000.00,
         endPrice: 100.00,
-        endDate: '2016-09-13T00:00Z',
+        // endDate: '2016-09-13T00:00Z',
         auctionEndDateByHighestBid: '2016-09-13T00:00Z',
-        valid: false
+        valid: false,
+        sellerName: 'Sean Ng'
       }).then(function (item) {
-        seller.addItem(item);
+        // julie.addItem(item);
+        sean.addItem(item);
       });
 
       ItemController.Item.create({
@@ -94,28 +97,31 @@ db.sync({force: true})
         picture: 'http://res.cloudinary.com/dijpyi6ze/image/upload/v1473717852/item_photos/vx7mzeluumrn1qngrnia.jpg',
         startPrice: 10000000.00,
         endPrice: 1.00,
-        endDate: '2016-09-20T17:00Z',
+        // endDate: '2016-09-20T17:00Z',
+        sellerName: 'Sean Ng',
         auctionEndDateByHighestBid: '2016-09-20T17:00Z'
       }).then(function (item) {
-        seller.addItem(item);
+        sean.addItem(item);
       });
       ItemController.Item.create({
         title: 'Linguine',
         description: 'Some linguine!',
         picture: 'http://res.cloudinary.com/dijpyi6ze/image/upload/v1473717931/item_photos/dsnyockmsy6enburpyjt.png',
+        sellerName: 'Julie Truong',
         startPrice: 10000000.00,
         endPrice: 1000000.00
       }).then(function (item) {
-        seller.addItem(item);
+        julie.addItem(item);
       });
       ItemController.Item.create({
         title: 'Cavs vs Warriors - Game 7 tickets - Row A Seat 1 - 10',
         description: 'Some tickets! Get the perfect seats for the NBA finals game 7!',
         picture: 'http://res.cloudinary.com/dijpyi6ze/image/upload/v1473718163/item_photos/sxyqw1yolsfbvzdkvhjr.png',
+        sellerName: 'Sean Ng',
         startPrice: 20000.00,
         endPrice: 1000.00
       }).then(function (item) {
-        seller.addItem(item);
+        sean.addItem(item);
       });
       ItemController.Item.create({
         title: 'Full bed',
@@ -125,18 +131,21 @@ db.sync({force: true})
         // picture: 'http://res.cloudinary.com/dijpyi6ze/image/upload/v1473717788/item_photos/wqifur3lxghuzoysy8c2.jpg',
         // to add: http://images.cb2.com/is/image/CB2/DondraBedQueenAV1F12/$web_zoom_furn_colormap$/160914115850/DondraBedQueenAV1F12.jpg, http://images.cb2.com/is/image/CB2/DondraBedQueenAV3F12/$web_zoom_furn_colormap$/160914115850/DondraBedQueenAV3F12.jpg, http://images.cb2.com/is/image/CB2/DondraBedQueenF12/$web_zoom_furn_colormap$/130830204135/dondra-bed.jpg
         startPrice: 999.00,
+        sellerName: 'Julie Truong',
         endPrice: 1.00
       })
       .then(function(item) {
-        seller.addItem(item);
+        julie.addItem(item);
         console.log('CREATED ITEM');
+
+        
         UserController.User.find({where: {id: '10105700513297463'}})
         .then(function(bidder) {
           BidController.Bid.create({
             price: 600.00
           }).then(function(bid) {
             item.addBid(bid);
-            lex.addBid(bid);
+            sean.addBid(bid);
           });
           BidController.Bid.create({
             price: 495.95

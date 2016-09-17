@@ -85,12 +85,12 @@ h3 {
 .item-title {
   font-family: 'Copse', serif;
   color: black;
-  text-align: center;
 }
 
 h2.item-title {
   padding-left: 15px;
   font-size: 2.5rem;
+  text-align: center;
 }
 
 #navbar2 {
@@ -420,6 +420,7 @@ hr {
 }
 
 .profile-left {
+  padding-top: 90px;
   text-align: center;
 }
 
@@ -459,15 +460,19 @@ hr {
 }
 
 .star-rating {
-  padding: 7%;
-  margin-top: 3%;
+  padding: 2px;
   background: white;
   border-radius: 5px;
-  border: 1px grey solid;
+  border: 2px solid silver;
+}
+
+.about-me-header {
+  text-align: left;
 }
 
 .stars {
   max-width: 200px;
+  margin: auto;
 }
 
 .current-rating {
@@ -476,29 +481,49 @@ hr {
 }
 
 .account-name {
-  padding-left: 22px;
+  text-align: left;
+  padding-top: 10px;
 }
 
 textarea.about-me {
   font-size: 13px;
   max-width: 100%;
+  margin-bottom: 10px;
+}
+
+.account-input {
+  font-size: 13px;
 }
 
 .about-me {
-  padding: 20px;
   border: 1px solid silver;
   border-radius: 6px;
-  margin-top: 15px;
   font-size: 13px;
   background: white;
+}
+
+
+.about-me-description {
+  font-size: 13px;
+  padding: 20px;
+  background: white;
+  border: 1px solid silver;
+  border-radius: 6px;
   min-height: 100px;
 }
 
-.edit-about-me {
-  padding-top: 20px;
-  padding-bottom: 20px;
+textarea.about-me-description {
+  font-size: 13px;
+  max-width: 100%;
+  margin-bottom: 20px;
+  font-style: italic;
 }
 
+
 .settings {
-  padding: 20px;
+  padding: 20px 0 ;
+}
+
+.row.account {
+  padding: 20px 0;
 }

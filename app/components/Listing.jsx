@@ -64,9 +64,8 @@ export default class Listing extends Component {
           context.setState({
             valid: response.valid
           })
-          this.props.expire()
+          context.props.rerender()
           console.log('is this valid?', context.state.valid)
-
         }
       })
     }

@@ -27,6 +27,8 @@ module.exports = (db, Sequelize, User, Item) => {
             //check those items for their max bids and send back:
             //{item, myBid, highestBid } where myBid and highestBid are values associated with
             //the highest bid and your bid on that item.
+
+            
             return item.getBids({raw: true})
             .then(function(itemBids) {
               var maxBid = 0;
