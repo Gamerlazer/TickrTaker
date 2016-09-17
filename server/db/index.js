@@ -47,6 +47,7 @@ db.sync({force: true})
     id: '10154095627189811',
     sumOfRatings: 100,
     numberOfRatings: 20,
+    aboutMe: 'Hi my name is sean, I build cool stuff',
     email: 'voraciousscroll@gmail.com',
     photo: 'https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/11148734_10205233811059304_8200092159283226084_n.jpg?oh=a19a83eef9251ff118ccb61e0b1069df&oe=583F7305'
   }).then(function(lex) {
@@ -58,7 +59,7 @@ db.sync({force: true})
       photo: 'https://scontent.xx.fbcdn.net/v/t1.0-1/s200x200/10417550_10103418587420213_3389328959999895776_n.jpg?oh=619920945e4f741f2f31ef321bd5d98b&oe=58720745',
       numberOfRatings: 20,
       email: 'julkie17@gmail.com',
-      aboutMe: 'im awesome'
+      aboutMe: 'what what up up'
     })
     .then(function(seller) {
       var rightNow = new Date();
