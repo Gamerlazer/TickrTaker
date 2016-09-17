@@ -14,7 +14,7 @@ module.exports = function(grunt) {
       options: {
         stderr: false,
         execOptions: {
-            maxBuffer: Infinity
+             maxBuffer: Infinity
         }
       },
       compile: {
@@ -22,9 +22,11 @@ module.exports = function(grunt) {
       },
       startDevServer: {
         command: 'node start.js',
-        execOptions: {
-            maxBuffer: Infinity
-        }
+        options: {
+           execOptions: {
+               maxBuffer: Infinity
+           }
+       }
       },
       eslint: {
         command: 'eslint "**/*.js" "**/*.jsx"'
@@ -65,6 +67,6 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('eslint', ['shell:eslint']);
-  
+
   grunt.registerTask('start', ['shell:startDevServer']);
 };

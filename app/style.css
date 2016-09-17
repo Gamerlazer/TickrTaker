@@ -85,6 +85,7 @@ h3 {
 .item-title {
   font-family: 'Copse', serif;
   color: black;
+  text-align: center;
 }
 
 h2.item-title {
@@ -481,10 +482,6 @@ hr {
 textarea.about-me {
   font-size: 13px;
   max-width: 100%;
-}
-
-.account-input {
-  font-size: 13px;
 }
 
 .about-me {

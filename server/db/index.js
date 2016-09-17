@@ -47,10 +47,9 @@ db.sync({force: true})
     id: '10154095627189811',
     sumOfRatings: 100,
     numberOfRatings: 20,
-    aboutMe: 'Hi my name is sean, I build cool stuff',
     email: 'voraciousscroll@gmail.com',
     photo: 'https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/11148734_10205233811059304_8200092159283226084_n.jpg?oh=a19a83eef9251ff118ccb61e0b1069df&oe=583F7305'
-  }).then(function(sean) {
+  }).then(function(lex) {
     UserController.User.create({
       firstName: 'Julie',
       lastName: 'Truong',
@@ -59,9 +58,9 @@ db.sync({force: true})
       photo: 'https://scontent.xx.fbcdn.net/v/t1.0-1/s200x200/10417550_10103418587420213_3389328959999895776_n.jpg?oh=619920945e4f741f2f31ef321bd5d98b&oe=58720745',
       numberOfRatings: 20,
       email: 'julkie17@gmail.com',
-      aboutMe: 'what what up up'
+      aboutMe: 'im awesome'
     })
-    .then(function(julie) {
+    .then(function(seller) {
       var rightNow = new Date();
       rightNow.setSeconds(rightNow.getSeconds() + 10);
       ItemController.Item.create({
@@ -73,7 +72,7 @@ db.sync({force: true})
         endDate: rightNow.toISOString(),
         auctionEndDateByHighestBid: rightNow.toISOString()
       }).then(function (item) {
-        julie.addItem(item);
+        seller.addItem(item);
       });
 
       ItemController.Item.create({
@@ -86,7 +85,7 @@ db.sync({force: true})
         auctionEndDateByHighestBid: '2016-09-13T00:00Z',
         valid: false
       }).then(function (item) {
-        julie.addItem(item);
+        seller.addItem(item);
       });
 
       ItemController.Item.create({
@@ -98,7 +97,7 @@ db.sync({force: true})
         endDate: '2016-09-20T17:00Z',
         auctionEndDateByHighestBid: '2016-09-20T17:00Z'
       }).then(function (item) {
-        julie.addItem(item);
+        seller.addItem(item);
       });
       ItemController.Item.create({
         title: 'Linguine',
@@ -107,7 +106,7 @@ db.sync({force: true})
         startPrice: 10000000.00,
         endPrice: 1000000.00
       }).then(function (item) {
-        julie.addItem(item);
+        seller.addItem(item);
       });
       ItemController.Item.create({
         title: 'Cavs vs Warriors - Game 7 tickets - Row A Seat 1 - 10',
@@ -116,7 +115,7 @@ db.sync({force: true})
         startPrice: 20000.00,
         endPrice: 1000.00
       }).then(function (item) {
-        sean.addItem(item);
+        seller.addItem(item);
       });
       ItemController.Item.create({
         title: 'Full bed',
@@ -129,7 +128,7 @@ db.sync({force: true})
         endPrice: 1.00
       })
       .then(function(item) {
-        julie.addItem(item);
+        seller.addItem(item);
         console.log('CREATED ITEM');
         UserController.User.find({where: {id: '10105700513297463'}})
         .then(function(bidder) {
@@ -137,7 +136,7 @@ db.sync({force: true})
             price: 600.00
           }).then(function(bid) {
             item.addBid(bid);
-            sean.addBid(bid);
+            lex.addBid(bid);
           });
           BidController.Bid.create({
             price: 495.95

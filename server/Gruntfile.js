@@ -7,10 +7,10 @@ module.exports = function(grunt) {
       dev: {
         command: 'export NODE_ENV=development && nodemon app.js',
         options: {
-            execOptions: {
-                maxBuffer: Infinity
-            }
-        }
+           execOptions: {
+               maxBuffer: Infinity
+           }
+       }
       },
       prod: {
         command: 'export NODE_ENV=production && nodemon -q app.js > .logs'
@@ -24,6 +24,6 @@ module.exports = function(grunt) {
 //tasks
 
   grunt.registerTask('dev', ['shell:dev']);
-  
+
   grunt.registerTask('prod', ['shell:prod']);
 };

@@ -33,7 +33,9 @@ export default class Listing extends Component {
     });
 
     this.interval = setInterval(() => {
-      this.checkActive();
+      if (this.props.expire) {
+        this.checkActive();
+      }
       this.setState({
         timeRemaining: this.calcTime(this.state.endDate)
       });
@@ -62,6 +64,7 @@ export default class Listing extends Component {
           context.setState({
             valid: response.valid
           })
+          this.props.expire()
           console.log('is this valid?', context.state.valid)
 
         }

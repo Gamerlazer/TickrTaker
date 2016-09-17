@@ -17,12 +17,9 @@ export default class AuctionItem extends Component {
     };
   }
 
-  componentWillMount () {      // Set state properties with updated values that were calculated with calcTime and calcPrice
+  componentWillMount () {
     this.getItem();
     this.getBids();
-    this.setState({
-      currentPrice: this.calcPrice().toFixed(2)
-    });
   }
 
   componentDidMount () {       //  Set state properties with calculated values
@@ -152,7 +149,7 @@ export default class AuctionItem extends Component {
           <div className="col-md-3 col-sm-5 product-profile-image">
             <img src={thisItem.picture} />
           </div>
-          <div className={ this.props.auth() && this.state.valid ? "col-md-4 col-sm-7 item-info" : "col-md-12 item-info"}>
+          <div className={ this.props.auth() && this.state.valid ? "col-md-4 col-sm-7 item-info" : "col-sm-7 item-info"}>
           {this.state.valid ?
             <div>
               Current highest bid:
@@ -178,17 +175,15 @@ export default class AuctionItem extends Component {
             : <span>Auction ended</span>
           }
           </div>
+        { this.props.auth() && this.state.valid ?
           <div className="col-md-5">
-          { this.props.auth() && this.state.valid ?
-            <div className="col-md-5">
-              <BidNow
-              getItem={this.getItem.bind(this)}
-              getBids={this.getBids.bind(this)}
-              currentBid={this.state.currentBid}
-              item={this.state.item} />
-            </div>
-              : <div></div> }
+            <BidNow
+            getItem={this.getItem.bind(this)}
+            getBids={this.getBids.bind(this)}
+            currentBid={this.state.currentBid}
+            item={this.state.item} />
           </div>
+            : <div></div> }
         </div>
         <div className="row">
           <div className="col-md-6">

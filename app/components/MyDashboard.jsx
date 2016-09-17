@@ -36,22 +36,19 @@ export default class MyDashboard extends Component {
   }
 
   getBidItems () {
-    console.log('getBidItems gets called again')
     var context = this;
     $.ajax({
       method: 'GET',
       url: '/api/bids',
       success: function(bids) {
+        console.log('getting bid items', bids)
         var activeItems = bids.filter(function(bid) {
           return bid.item.valid === true;
         })
         var expiredItems = bids.filter(function(bid) {
           return bid.item.valid === false;
         })
-        console.log('BEFORE','activeItems', context.state.activeItems[0], 'expiredItems',context.state.activeItems[0])
-
         context.setState({activeItems: activeItems, expiredItems: expiredItems})
-        console.log('AFTER','activeItems', context.state.activeItems[0], 'expiredItems',context.state.activeItems[0])
       }
     })
   }

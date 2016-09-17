@@ -35,8 +35,8 @@ export default class BidNow extends Component {
         method: 'GET',
         url: '/api/user_data',
         success: function(user) {
-          context.refs.input.value = '';
           context.postBid(user);
+          context.refs.input.value = '';
         }
       });
     } else {

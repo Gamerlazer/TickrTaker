@@ -16,8 +16,6 @@ export default class UserSetting extends Component {
       starRating: null,
       editing: false,
       userEmail: null,
-      userPhone: null,
-      userAddress: null,
       aboutMe: ''
     };
     this.setUser = this.setUser.bind(this);
@@ -27,15 +25,11 @@ export default class UserSetting extends Component {
   setUser (user) {
     var userStarRating = user.user.numberOfRatings === 0 ? 0 : user.user.sumOfRatings / user.user.numberOfRatings;
     var userEmail = user.user.email || 'please provide email';
-    var userAddress = user.user.address || 'please provide address';
-    var userPhone = user.user.phone || 'please provide phone number';
     this.setState({
       id: user.user.id,
       firstName: user.user.firstName,
       lastName: user.user.lastName,
       userEmail: userEmail,
-      userPhone: userPhone,
-      userAddress: userAddress,
       photo: user.user.photo,
       aboutMe: user.user.aboutMe,
       starRating: userStarRating
@@ -168,22 +162,22 @@ export default class UserSetting extends Component {
   }
   
   render() {  //  On click, shows input field 
-    // var passCheck = this.state.passWord ? <div><form onSubmit={this.handleSubmit.bind(this, 'passWord')}><input id='user-password' type='password' placeholder='Type new password' className="input-xlarge"></input>
-    //                                         <button type='submit' className="setting-btn passwordBtn btn btn-primary btn-sm">Submit</button></form>
-    //                                         <div className="passwordError alert alert-danger fade in" role="alert">
-    //                                         <strong>Woah! Invalid Password </strong><small>Please enter a valid password</small></div>
-    //                                       </div> : '';
-    var mailCheck = this.state.email ? <div><form onSubmit={this.handleSubmit.bind(this, 'email')}><input id='user-email' type="email" placeholder={this.state.userEmail} className="account-input"></input>
+    var passCheck = this.state.passWord ? <div><form onSubmit={this.handleSubmit.bind(this, 'passWord')}><input id='user-password' type='password' placeholder='Type new password' className="input-xlarge"></input>
+                                            <button type='submit' className="setting-btn passwordBtn btn btn-primary btn-sm">Submit</button></form>
+                                            <div className="passwordError alert alert-danger fade in" role="alert">
+                                            <strong>Woah! Invalid Password </strong><small>Please enter a valid password</small></div>
+                                          </div> : '';
+    var mailCheck = this.state.email ? <div><form onSubmit={this.handleSubmit.bind(this, 'email')}><input id='user-email' type="email" placeholder={this.state.userEmail} className="input-xlarge"></input>
                                           <button type='submit' className="setting-btn emailBtn btn btn-primary btn-sm">Submit</button></form>
                                           <div className="emailError alert alert-danger fade in" role="alert">
                                           <strong>Woah! Invalied email </strong><small>Please enter a valid email address</small></div>
                                        </div> : '';
-    var addressCheck = this.state.address ? <div><form onSubmit={this.handleSubmit.bind(this, 'address')}><input id='user-address' type='text' placeholder={this.state.userAddress} className="account-input"></input>
+    var addressCheck = this.state.address ? <div><form onSubmit={this.handleSubmit.bind(this, 'address')}><input id='user-address' type='text' placeholder='Type new address' className="input-xlarge"></input>
                                               <button type='submit' className="setting-btn addressBtn btn btn-primary btn-sm">Submit</button></form>
                                               <div className="addressError alert alert-danger fade in" role="alert">
                                               <strong>Woah! Invalid address </strong><small>Please enter a valid address</small></div>
                                             </div> : '';
-    var phoneCheck = this.state.phone ? <div><form onSubmit={this.handleSubmit.bind(this, 'phone')}><input id='user-phone' type='tel' placeholder={this.state.userPhone} className="account-input"></input>
+    var phoneCheck = this.state.phone ? <div><form onSubmit={this.handleSubmit.bind(this, 'phone')}><input id='user-phone' type='tel' placeholder='Type new phone number' className="input-xlarge"></input>
                                           <button type='submit' className="setting-btn phoneBtn btn btn-primary btn-sm">Submit</button></form>
                                           <div className="phoneError alert alert-danger fade in" role="alert">
                                           <strong>Woah! Invalid Phone number </strong><small>Please enter a valid phone number</small></div>
@@ -226,9 +220,9 @@ export default class UserSetting extends Component {
               <img src={this.state.photo} alt="Oops! Can't find your photo" className="img-responsive profile-image"/>
           </div>
           <div className="col-md-4">
-            <div className="row">
+            <div className="row star-rating">
               <Link to={'/profile/' + this.state.id}>
-                <h3 className="account-name">{this.state.firstName} {this.state.lastName}</h3>
+                <h4 className="account-name">{this.state.firstName} {this.state.lastName}</h4>
               </Link>
               {this.state.starRating ? (<UserRating editable={'false'} starRating={ starRating }/>) : <div></div>}  
             </div>
