@@ -8,7 +8,7 @@ export default class Navbar1 extends Component {
 
   render() {      // Navbar on main page, before login
     return (
-      <nav id="navbar1" className="navbar navbar-dark bg-inverse">
+      <nav id="navbar1" className="navbar">
         <Link className="navbar-brand" id="brand-name" to="/"> Tickr </Link>
         <ul className="nav navbar-nav">
           <li className="nav-item ">

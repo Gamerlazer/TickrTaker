@@ -1,7 +1,7 @@
 @import 'https://fonts.googleapis.com/css?family=Righteous|Farsan';
 
 body {
-  background-color: #DDDDDD;
+  background-color: #E2F7FD;
 }
 
 h1 {
@@ -9,7 +9,7 @@ h1 {
   font-family: 'Righteous', cursive;
   text-align: center;
   font-size: 4rem;
-  color: dodgerblue;
+  color: #001f3f;
   margin-bottom: 20px;
 }
 
@@ -90,8 +90,13 @@ h1 {
   padding-right: 0px;
 }
 
+#navbar1 {
+  background-color: #001f3f;
+}
+
 #navbar2 {
   border-radius: 0px;
+  background-color: #001f3f;
 }
 
 #navbar2 .nav-item {
@@ -168,8 +173,8 @@ h1 {
   align-items: center;
 }*/
 
-.dashboard.container {
-  margin-top: 15px;
+div.dashboard {
+  margin-top: 20px;
 }
 
 .setting-btn {
