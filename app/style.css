@@ -201,9 +201,6 @@ div.dashboard {
   padding-left: 0px;
 }
 
-.auction-listings {
-}
-
 .auction-listings > .row {
   border-radius: 5px;
   border: 1px grey solid;
@@ -448,12 +445,29 @@ hr {
 }
 
 .star-rating {
-  padding-top: 10px;
-  padding-left: 40px;
+  padding: 7%;
+  margin-top: 3%;
+  background: white;
+  border-radius: 5px;
+  border: 1px grey solid;
 }
 
-textarea {
+.stars {
+  max-width: 200px;
+}
+
+.current-rating {
+  min-width: 200px;
+  text-align: center;
+}
+
+.account-name {
+  padding-left: 22px;
+}
+
+textarea.about-me {
   font-size: 13px;
+  max-width: 100%;
 }
 
 .about-me {
@@ -463,4 +477,14 @@ textarea {
   margin-top: 15px;
   font-size: 13px;
   background: white;
+  min-height: 100px;
+}
+
+.edit-about-me {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.settings {
+  padding: 20px;
 }

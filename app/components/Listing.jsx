@@ -17,8 +17,6 @@ export default class Listing extends Component {
       activeBid: this.props.activeBid !== undefined ? this.props.activeBid : true,
       id: this.props.item.id
     };
-
-    console.log(this.props.item.id, 'My item id')
   }
 
   componentWillMount() {    // Set state properties with updated values
@@ -51,7 +49,7 @@ export default class Listing extends Component {
   }
 
   checkActive () {
-    // console.log('this timmer is working', this.state.timeRemaining, this.state.id);
+    console.log('running check active function')
     var context = this;
     if ( new Date() > new Date(this.state.endDate) && this.state.valid) {
 
@@ -60,12 +58,12 @@ export default class Listing extends Component {
         method: 'PUT',
         url: '/api/expiredItem/' + context.props.item.id,
         success: (response) => {
-
           console.log(response.valid, 'Response Vaild');
           context.setState({
             valid: response.valid
           })
           console.log('is this valid?', context.state.valid)
+
         }
       })
     }
