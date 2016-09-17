@@ -12,13 +12,19 @@ module.exports = function(grunt) {
     },
     shell: {
       options: {
-        stderr: false
+        stderr: false,
+        execOptions: {
+            maxBuffer: Infinity
+        }
       },
       compile: {
         command: 'webpack'
       },
       startDevServer: {
-        command: 'node start.js'
+        command: 'node start.js',
+        execOptions: {
+            maxBuffer: Infinity
+        }
       },
       eslint: {
         command: 'eslint "**/*.js" "**/*.jsx"'
