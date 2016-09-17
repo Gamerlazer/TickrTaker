@@ -36,6 +36,7 @@ export default class MyDashboard extends Component {
   }
 
   getBidItems () {
+    console.log('getBidItems gets called again')
     var context = this;
     $.ajax({
       method: 'GET',
