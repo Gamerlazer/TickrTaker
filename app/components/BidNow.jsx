@@ -49,16 +49,14 @@ export default class BidNow extends Component {
   render () {
     // need to insert value="{this.props.minbid} into input"
     return (
-      <div>
-        <div className="row">
-          <form id="bid-form" onSubmit={this.sendItemBid.bind(this)}>
-            <input type="number" id="bid"
-            onChange={this.changeInput.bind(this)}/>
-            <button type="submit" className="btn btn-primary">
-              Bid Now
-            </button>
-          </form>
-        </div>
+      <div className="row">
+        <form id="bid-form" onSubmit={this.sendItemBid.bind(this)}>
+          <input type="number" id="bid"
+          onChange={this.changeInput.bind(this)}/>
+          <button type="submit" className="btn btn-sm btn-primary">
+            Bid Now
+          </button>
+        </form>
       </div>
     )
   }

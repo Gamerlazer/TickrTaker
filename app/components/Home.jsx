@@ -50,34 +50,30 @@ export default class Auction extends Component {
     var postItemUrl = '/postitem'
     return (
       <div className="home container">
+        <h1>tickr</h1>
         <div className="row">
           <div className="col-sm-4">
             <Link className='btn btn-primary' to={postItemUrl}>
               Post Item
             </Link>
           </div>
-          <div className="col-sm-8 pull-xs-right">
+          <div className="col-sm-8">
             <form className="search-form" onSubmit={this.grabAuctions.bind(this)}>
-              <input id="search" className="col-xs-6" />
-              <div className="col-xs-6 search-text">Search:</div>
+              <input id="search" />
+              <div className="search-text">Search:</div>
             </form>
           </div>
         </div>
-        <div className="row">
-          <div className="col-sm-3">
-            <Filters />
-          </div>
-          <div className="auction-listings col-sm-9">
-            {
-              this.state.entrys.map((entry, i) =>(
-                <Listing
-                key={i}
-                item={entry}
-                auth={this.props.auth}
-                bidNowActive =  {true}
-                />))
-            }
-          </div>
+        <div className="auction-listings">
+        {
+          this.state.entrys.map((entry, i) =>(
+          <Listing
+          key={i}
+          item={entry}
+          auth={this.props.auth}
+          bidNowActive =  {true} />
+          ))
+        }
         </div>
       </div>
     )
