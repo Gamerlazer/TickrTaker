@@ -9,10 +9,10 @@ module.exports = (db, Sequelize, User, Item) => {
   const getBidsForSeller = (req, res, next) => {
     //Find the user in postgres associated with the user sent in req.body
 
-    // if (req.params.id === undefined) {
-    //   res.send('user undefined');
-    //   return;
-    // }
+    if (req.user.dataValues.id === undefined) {
+      res.send('user undefined');
+      return;
+    }
 
     User.findOne({where: {id: req.user.dataValues.id}})
     .then(function(user) {
@@ -22,7 +22,7 @@ module.exports = (db, Sequelize, User, Item) => {
         var itemArr = [];
         var asyncBids = bids.map(function(bid) {
           //Get all items associated with those individual bids, only active items
-          return Item.find({where: {id: bid.itemId, valid: true}})
+          return Item.find({where: {id: bid.itemId}})
           .then(function(item) {
             //check those items for their max bids and send back:
             //{item, myBid, highestBid } where myBid and highestBid are values associated with

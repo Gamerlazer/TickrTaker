@@ -21,9 +21,6 @@ export default class Navbar2 extends Component {
               <Link className="nav-link " to="/mydashboard/sales">Selling</Link>
             </li>
             <li className="nav-item col-md-2 col-sm-12 ">
-              <Link className="nav-link" to="/postitem">Post Item</Link>
-            </li>
-            <li className="nav-item col-md-2 col-sm-12 ">
               <Link className="nav-link" to="/account">Account</Link>
             </li>
             <li className="nav-item col-md-2 col-sm-12 ">
